@@ -15,17 +15,21 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import com.example.privasee.R
+import com.example.privasee.databinding.FragmentListUserBinding
 
 class ListUser : Fragment() {
 
+    private var _binding: FragmentListUserBinding? = null
+    private val binding get() = _binding!!
     private lateinit var navController: NavController
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        navController = findNavController()
-        return inflater.inflate(R.layout.fragment_list_user, container, false)
+        _binding = FragmentListUserBinding.inflate(inflater, container, false)
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,4 +43,8 @@ class ListUser : Fragment() {
 
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
