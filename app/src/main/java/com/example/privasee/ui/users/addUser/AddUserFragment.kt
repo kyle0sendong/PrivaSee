@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.privasee.R
@@ -23,7 +24,7 @@ class AddUserFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAddUserBinding.inflate(inflater, container, false)
         mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
 
@@ -51,6 +52,18 @@ class AddUserFragment : Fragment() {
 
     private fun checkInput(name: String): Boolean {
         return name.isNotEmpty()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        (activity as? AppCompatActivity)?.supportActionBar?.show()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        (activity as? AppCompatActivity)?.supportActionBar?.hide()
     }
 
     override fun onDestroyView() {
