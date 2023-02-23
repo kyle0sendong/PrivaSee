@@ -17,11 +17,13 @@ import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import com.example.privasee.R
 import com.example.privasee.databinding.FragmentListUserBinding
 
+
 class ListUser : Fragment() {
 
     private var _binding: FragmentListUserBinding? = null
     private val binding get() = _binding!!
     private lateinit var navController: NavController
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +34,7 @@ class ListUser : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -40,8 +43,8 @@ class ListUser : Fragment() {
 
         // set up the ActionBar
         setupActionBarWithNavController(activity as AppCompatActivity, navController)
-
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

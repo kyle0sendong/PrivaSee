@@ -19,6 +19,7 @@ class UserFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var mUserViewModel: UserViewModel
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,12 +41,14 @@ class UserFragment : Fragment() {
             findNavController().navigate(R.id.action_userFragment_to_addUserFragment)
         }
 
-
         return binding.root
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }

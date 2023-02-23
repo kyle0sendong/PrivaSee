@@ -22,6 +22,7 @@ import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
+
 class AddUserCapturePhoto : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddUserCapturePhotoBinding
@@ -29,7 +30,9 @@ class AddUserCapturePhoto : AppCompatActivity() {
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         binding = ActivityAddUserCapturePhotoBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -47,10 +50,12 @@ class AddUserCapturePhoto : AppCompatActivity() {
         binding.addUserCaptureButton.setOnClickListener {
             takePhoto()
         }
+
     }
 
 
-    private fun getOutputDirectory(): File{
+    private fun getOutputDirectory(): File {
+
         val mediaDir = externalMediaDirs.firstOrNull()?.let {
             File(it, resources.getString(R.string.app_name)).apply { mkdirs() }
         }
@@ -61,6 +66,7 @@ class AddUserCapturePhoto : AppCompatActivity() {
 
 
     private fun takePhoto() {
+
         val imageCapture = imageCapture ?: return
 
         val photoFile = File(
@@ -74,6 +80,7 @@ class AddUserCapturePhoto : AppCompatActivity() {
         imageCapture.takePicture(
             outputOption, ContextCompat.getMainExecutor(this),
             object :ImageCapture.OnImageSavedCallback{
+
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                     val savedUri = Uri.fromFile(photoFile)
                     val msg = "Photo Saved"
@@ -83,7 +90,6 @@ class AddUserCapturePhoto : AppCompatActivity() {
                         "$msg $savedUri",
                         Toast.LENGTH_LONG
                     ).show()
-
                 }
 
                 override fun onError(exception: ImageCaptureException) {
@@ -131,6 +137,7 @@ class AddUserCapturePhoto : AppCompatActivity() {
         permissions: Array<String>,
         grantResults: IntArray
     ) {
+
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if ((REQUEST_CODE_PERMISSION == 111) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
             startCamera()

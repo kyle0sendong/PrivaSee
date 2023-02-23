@@ -15,11 +15,13 @@ import com.example.privasee.database.model.User
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentAddUserBinding
 
+
 class AddUserFragment : Fragment() {
 
-    private lateinit var mUserViewModel: UserViewModel
     private var _binding: FragmentAddUserBinding? = null
     private val binding get() = _binding!!
+    private lateinit var mUserViewModel: UserViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +40,7 @@ class AddUserFragment : Fragment() {
         return binding.root
     }
 
+
     private fun insertToDatabase() {
         val name = binding.etAddUserName.text.toString()
 
@@ -48,23 +51,26 @@ class AddUserFragment : Fragment() {
         } else {
             Toast.makeText(requireContext(), "Fill all fields", Toast.LENGTH_SHORT).show()
         }
+
     }
+
 
     private fun checkInput(name: String): Boolean {
         return name.isNotEmpty()
     }
 
+
     override fun onResume() {
         super.onResume()
-
         (activity as? AppCompatActivity)?.supportActionBar?.show()
     }
 
+
     override fun onPause() {
         super.onPause()
-
         (activity as? AppCompatActivity)?.supportActionBar?.hide()
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
