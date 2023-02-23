@@ -34,10 +34,6 @@ class AddUserFragment : Fragment() {
             }
         }
 
-        binding.addUserBackButton.setOnClickListener {
-            findNavController().navigate(R.id.action_addUserFragment_to_userFragment)
-        }
-
         return binding.root
     }
 
