@@ -26,14 +26,14 @@ class UserAdapter(): RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         var currentUser = userList[position]
 
-//        holder.binding.apply {
-//            tvUserName.text = currentUser.name
-//
+        holder.binding.apply {
+            tvUserName.text = currentUser.name
+
 //            rowUser.setOnClickListener{
-//                val action = UserFragmentDirections.actionUsersFragmentToAddUserFragment(currentUser)
+//                val action = UserFragmentDirections.actionUserFragmentToAddUserFragment()
 //                rowUser.findNavController().navigate(action)
 //            }
-//        }
+        }
     }
 
 
