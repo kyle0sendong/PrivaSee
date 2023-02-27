@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
@@ -23,6 +24,7 @@ class UpdateUserFragment : Fragment(), MenuProvider {
     private lateinit var mUserViewModel: UserViewModel
     private val args by navArgs<UpdateUserFragmentArgs>()
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,14 +41,17 @@ class UpdateUserFragment : Fragment(), MenuProvider {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity?.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
+
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.delete_menu, menu)
     }
+
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         if (menuItem.itemId == R.id.delete_menu) {
@@ -55,6 +60,7 @@ class UpdateUserFragment : Fragment(), MenuProvider {
         }
         return false
     }
+
 
     private fun deleteUser() {
         val builder = AlertDialog.Builder(requireContext())
@@ -72,6 +78,7 @@ class UpdateUserFragment : Fragment(), MenuProvider {
         builder.create().show()
     }
 
+
     private fun updateItem(){
         val name = binding.updateName.text.toString()
 
@@ -83,9 +90,23 @@ class UpdateUserFragment : Fragment(), MenuProvider {
         }
     }
 
+
     private fun checkInput(name: String): Boolean {
         return name.isNotEmpty()
     }
+
+
+    override fun onResume() {
+        super.onResume()
+        (activity as? AppCompatActivity)?.supportActionBar?.show()
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+        (activity as? AppCompatActivity)?.supportActionBar?.hide()
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
