@@ -29,10 +29,10 @@ class UserAdapter(): RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         holder.binding.apply {
             tvUserName.text = currentUser.name
 
-//            rowUser.setOnClickListener{
-//                val action = UserFragmentDirections.actionUserFragmentToAddUserFragment()
-//                rowUser.findNavController().navigate(action)
-//            }
+            rowUser.setOnClickListener {
+                val action = UserFragmentDirections.actionUserFragmentToUpdateUserFragment(currentUser)
+                rowUser.findNavController().navigate(action)
+            }
         }
     }
 
