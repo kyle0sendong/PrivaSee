@@ -21,5 +21,5 @@
     - [ ] Taking photos
     - [ ] Face verification for valid access
 - [ ] Calendar View for viewing all app accessed by unauthorized user -@kyle0sendong
-- 
+
 ### Completed
