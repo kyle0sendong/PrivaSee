@@ -7,13 +7,7 @@
     - [ ] Login information for everytime PrivaSee is opened
     - [ ] Face Verification register 
   - [ ] Request relevant permissions
-- [ ] Integrate Facial Verification
 - [ ] Login access before PrivaSee is opened
-- [ ] Everytime an application is opened triggers :
-  - [ ] Storing accesses
-  - [ ] Taking photos
-  - [ ] Face verification for valid access
-- [ ] Calendar View for viewing all app accessed by unauthorized user
 - [ ] Parental Control
   - [ ] Time Control
   - [ ] App Control
@@ -22,4 +16,10 @@
 
 ### In Progress
 
+- [ ] Everytime an application is opened triggers -@kyle0sendong
+    - [ ] Storing accesses
+    - [ ] Taking photos
+    - [ ] Face verification for valid access
+- [ ] Calendar View for viewing all app accessed by unauthorized user -@kyle0sendong
+- 
 ### Completed
