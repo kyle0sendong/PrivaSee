@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.row_user.view.*
 
 class UserAdapter(): RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
-    inner class UserViewHolder(val binding: RowUserBinding) :RecyclerView.ViewHolder(binding.root)
+    inner class UserViewHolder(val binding: RowUserBinding): RecyclerView.ViewHolder(binding.root)
     private var userList = emptyList<User>()
 
 
