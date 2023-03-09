@@ -5,7 +5,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.privasee.database.repository.dao.PrivaSeeDao
+import com.example.privasee.database.viewmodel.repository.dao.PrivaSeeDao
 import com.example.privasee.database.model.Monitor
 import com.example.privasee.database.model.User
 

@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.privasee.database.PrivaSeeDatabase
 import com.example.privasee.database.model.User
-import com.example.privasee.database.repository.UserRepository
+import com.example.privasee.database.viewmodel.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
