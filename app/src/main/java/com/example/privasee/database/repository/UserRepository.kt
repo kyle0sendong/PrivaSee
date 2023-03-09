@@ -1,7 +1,7 @@
 package com.example.privasee.database.repository
 
 import androidx.lifecycle.LiveData
-import com.example.privasee.database.dao.PrivaSeeDao
+import com.example.privasee.database.repository.dao.PrivaSeeDao
 import com.example.privasee.database.model.User
 
 class UserRepository (private val privaSeeDao: PrivaSeeDao) {

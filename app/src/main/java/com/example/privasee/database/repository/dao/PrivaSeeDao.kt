@@ -1,4 +1,4 @@
-package com.example.privasee.database.dao
+package com.example.privasee.database.repository.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
