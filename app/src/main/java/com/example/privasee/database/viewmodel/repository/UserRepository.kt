@@ -1,25 +1,25 @@
 package com.example.privasee.database.viewmodel.repository
 
 import androidx.lifecycle.LiveData
-import com.example.privasee.database.viewmodel.repository.dao.PrivaSeeDao
+import com.example.privasee.database.viewmodel.repository.dao.UserDao
 import com.example.privasee.database.model.User
 
-class UserRepository (private val privaSeeDao: PrivaSeeDao) {
+class UserRepository (private val userDao: UserDao) {
 
-    val readAllData: LiveData<List<User>> = privaSeeDao.readAllData()
+    val readAllData: LiveData<List<User>> = userDao.readAllData()
 
 
     suspend fun addUser(user: User) {
-        privaSeeDao.addUser(user)
+        userDao.addUser(user)
     }
 
 
     suspend fun updateUser(user: User) {
-        privaSeeDao.updateUser(user)
+        userDao.updateUser(user)
     }
 
 
     suspend fun deleteUser(user: User) {
-        privaSeeDao.deleteUser(user)
+        userDao.deleteUser(user)
     }
 }

@@ -5,17 +5,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.privasee.database.viewmodel.repository.dao.PrivaSeeDao
 import com.example.privasee.database.model.Monitor
 import com.example.privasee.database.model.User
+import com.example.privasee.database.viewmodel.repository.dao.UserDao
 
 @Database (entities = [User::class, Monitor::class],
-            version = 2,
+            version = 2.5.toInt(),
             exportSchema = false)
 
 abstract class PrivaSeeDatabase: RoomDatabase() {
 
-    abstract fun privaSeeDao(): PrivaSeeDao
+    abstract fun userDao(): UserDao
 
     companion object {
         @Volatile

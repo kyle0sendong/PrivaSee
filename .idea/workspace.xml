@@ -11,6 +11,9 @@
   <component name="ChangeListManager">
     <list default="true" id="3c13e50c-a3d6-46d9-92af-83d9b5d3c4da" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/privasee/database/PrivaSeeDatabase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/privasee/database/PrivaSeeDatabase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/privasee/database/viewmodel/repository/UserRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/privasee/database/viewmodel/repository/UserRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/privasee/database/viewmodel/repository/dao/PrivaSeeDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/privasee/database/viewmodel/repository/dao/UserDao.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

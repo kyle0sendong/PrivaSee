@@ -5,7 +5,7 @@ import androidx.room.*
 import com.example.privasee.database.model.User
 
 @Dao
-interface PrivaSeeDao {
+interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addUser(user: User)

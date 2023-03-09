@@ -16,8 +16,8 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: UserRepository
 
     init {
-        val privaSeeDao = PrivaSeeDatabase.getDatabase(application).privaSeeDao()
-        repository = UserRepository(privaSeeDao)
+        val userDao = PrivaSeeDatabase.getDatabase(application).userDao()
+        repository = UserRepository(userDao)
         readAllData = repository.readAllData
     }
 
