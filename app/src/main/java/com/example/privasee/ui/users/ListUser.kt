@@ -3,16 +3,11 @@ package com.example.privasee.ui.users
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import com.example.privasee.R
 import com.example.privasee.databinding.FragmentListUserBinding
@@ -38,7 +33,7 @@ class ListUser : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val navHostFragment = childFragmentManager.findFragmentById(R.id.list_user_fcv) as NavHostFragment
+        val navHostFragment = childFragmentManager.findFragmentById(R.id.fcvUser) as NavHostFragment
         navController = navHostFragment.navController
 
         // set up the ActionBar

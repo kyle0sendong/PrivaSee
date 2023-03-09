@@ -40,14 +40,14 @@ class AddUserCapturePhoto : AppCompatActivity() {
         outputDirectory = getOutputDirectory()
         cameraExecutor = Executors.newSingleThreadExecutor()
 
-        binding.addUserCaptureButton.isEnabled = false
+        binding.btnCapture.isEnabled = false
         if (allPermissionGranted()) {
             startCamera()
-            binding.addUserCaptureButton.isEnabled = true
+            binding.btnCapture.isEnabled = true
         } else
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSION)
 
-        binding.addUserCaptureButton.setOnClickListener {
+        binding.btnCapture.setOnClickListener {
             takePhoto()
         }
 
@@ -141,7 +141,7 @@ class AddUserCapturePhoto : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if ((REQUEST_CODE_PERMISSION == 111) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
             startCamera()
-            binding.addUserCaptureButton.isEnabled = true
+            binding.btnCapture.isEnabled = true
         }
     }
 

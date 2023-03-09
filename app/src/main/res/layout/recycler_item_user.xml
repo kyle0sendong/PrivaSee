@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:padding="5dp"
-    android:id="@+id/row_user">
+    android:id="@+id/recyclerItemUser">
 
     <ImageView
         android:id="@+id/imageView"
@@ -52,7 +52,7 @@
         app:layout_constraintStart_toEndOf="@+id/imageView" />
 
     <TextView
-        android:id="@+id/tv_user_name"
+        android:id="@+id/tvUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="148dp"
@@ -63,20 +63,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_user_last_app"
+        android:id="@+id/tvLastAppUsed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/tv_user_last_app_time"
+        app:layout_constraintBottom_toTopOf="@+id/tvLastAppAccess"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.052"
         app:layout_constraintStart_toEndOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/tv_user_name"
+        app:layout_constraintTop_toBottomOf="@+id/tvUserName"
         app:layout_constraintVertical_bias="0.636" />
 
     <TextView
-        android:id="@+id/tv_user_last_app_time"
+        android:id="@+id/tvLastAppAccess"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"

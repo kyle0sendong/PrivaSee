@@ -21,15 +21,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val bottomNavigationView = binding.bottomNavMenu
-        BottomNavController = findNavController(R.id.bottom_nav_menu_fcv)
+        val bottomNavigationView = binding.botNav
+        BottomNavController = findNavController(R.id.fcvBotNav)
         bottomNavigationView.setupWithNavController(BottomNavController)
 
     }
 
 
     override fun onSupportNavigateUp(): Boolean { // make the back button in AddFragment functional
-        val navController = findNavController(R.id.list_user_fcv)
+        val navController = findNavController(R.id.fcvUser)
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 

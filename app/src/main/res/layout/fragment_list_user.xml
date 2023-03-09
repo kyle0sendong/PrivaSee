@@ -7,7 +7,7 @@
     tools:context=".ui.users.ListUser">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/list_user_fcv"
+        android:id="@+id/fcvUser"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

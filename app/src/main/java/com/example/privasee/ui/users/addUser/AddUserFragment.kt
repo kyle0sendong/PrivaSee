@@ -30,7 +30,7 @@ class AddUserFragment : Fragment() {
         _binding = FragmentAddUserBinding.inflate(inflater, container, false)
         mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
 
-        binding.btnAddUserNext.setOnClickListener {
+        binding.btnNext.setOnClickListener {
             insertToDatabase()
             Intent(requireContext(), AddUserCapturePhoto::class.java).also {
                 startActivity(it)

@@ -29,15 +29,15 @@ class UserFragment : Fragment() {
 
         // Recyclerview
         val adapter = UserAdapter()
-        binding.userFragment.adapter = adapter
-        binding.userFragment.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvUser.adapter = adapter
+        binding.rvUser.layoutManager = LinearLayoutManager(requireContext())
 
         mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         mUserViewModel.readAllData.observe(viewLifecycleOwner, Observer {
             adapter.setData(it)
         })
 
-        binding.addUserButton.setOnClickListener {
+        binding.btnAddUser.setOnClickListener {
             findNavController().navigate(R.id.action_userFragment_to_addUserFragment)
         }
 

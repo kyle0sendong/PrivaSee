@@ -2,23 +2,21 @@ package com.example.privasee.ui.users
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.ListFragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.privasee.R
 import com.example.privasee.database.model.User
-import com.example.privasee.databinding.RowUserBinding
-import kotlinx.android.synthetic.main.row_user.view.*
+import com.example.privasee.databinding.RecyclerItemUserBinding
+
 
 class UserAdapter(): RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
-    inner class UserViewHolder(val binding: RowUserBinding): RecyclerView.ViewHolder(binding.root)
+    inner class UserViewHolder(val binding: RecyclerItemUserBinding): RecyclerView.ViewHolder(binding.root)
     private var userList = emptyList<User>()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = RowUserBinding.inflate(layoutInflater, parent, false)
+        val binding = RecyclerItemUserBinding.inflate(layoutInflater, parent, false)
         return UserViewHolder(binding)
     }
 
@@ -29,9 +27,9 @@ class UserAdapter(): RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         holder.binding.apply {
             tvUserName.text = currentUser.name
 
-            rowUser.setOnClickListener {
+            recyclerItemUser.setOnClickListener {
                 val action = UserFragmentDirections.actionUserFragmentToUpdateUserFragment(currentUser)
-                rowUser.findNavController().navigate(action)
+                recyclerItemUser.findNavController().navigate(action)
             }
         }
     }
