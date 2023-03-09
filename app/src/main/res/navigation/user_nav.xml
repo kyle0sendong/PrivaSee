@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/userFragment"
-        android:name="com.example.privasee.ui.users.UserFragment"
+        android:name="com.example.privasee.ui.users.listUser.UserFragment"
         android:label="fragment_user"
         tools:layout="@layout/fragment_user" >
         <action

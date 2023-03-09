@@ -1,4 +1,4 @@
-package com.example.privasee.ui.users
+package com.example.privasee.ui.users.listUser
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
