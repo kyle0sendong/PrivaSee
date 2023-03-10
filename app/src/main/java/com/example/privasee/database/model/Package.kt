@@ -20,8 +20,7 @@ import androidx.room.PrimaryKey
 )
 
 data class Package(
-    @PrimaryKey (autoGenerate = true) val id : Int,
-    val packageName : String,
+    @PrimaryKey val packageName : String,
     val appName : String,
     val restrict : Boolean,
     val userId : Int

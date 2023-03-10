@@ -15,14 +15,14 @@ import androidx.room.PrimaryKey
             ),
             ForeignKey(
                 entity = Package::class,
-                parentColumns = ["id"],
-                childColumns = ["packageId"],
+                parentColumns = ["packageName"],
+                childColumns = ["packageName"],
                 onDelete = ForeignKey.NO_ACTION // Don't delete any records
             )
         ],
         indices = [
             Index(value = ["userId"]),
-            Index(value = ["packageId"])
+            Index(value = ["packageName"])
         ]
 )
 
@@ -31,5 +31,5 @@ data class Monitor(
     val dateAccess : Long,
     val timeAccess : Long,
     val userId : Int,
-    val packageId : Int
+    val packageName : String
 )
