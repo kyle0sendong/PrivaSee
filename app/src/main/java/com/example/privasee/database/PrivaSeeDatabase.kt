@@ -7,16 +7,18 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.privasee.database.model.Monitor
 import com.example.privasee.database.model.User
-import com.example.privasee.database.model.Package
+import com.example.privasee.database.model.App
+import com.example.privasee.database.viewmodel.repository.dao.AppDao
 import com.example.privasee.database.viewmodel.repository.dao.UserDao
 
-@Database (entities = [User::class, Monitor::class, Package::class],
+@Database (entities = [User::class, Monitor::class, App::class],
             version = 2,
             exportSchema = false)
 
 abstract class PrivaSeeDatabase: RoomDatabase() {
 
     abstract fun userDao(): UserDao
+    abstract fun appDao(): AppDao
 
     companion object {
         @Volatile
@@ -39,6 +41,6 @@ abstract class PrivaSeeDatabase: RoomDatabase() {
                 return instance
             }
         }
-
     }
+
 }
