@@ -5,7 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity (tableName = "package",
+@Entity (tableName = "app",
          foreignKeys = [
              ForeignKey(
                 entity = User::class,
@@ -19,7 +19,7 @@ import androidx.room.PrimaryKey
         ]
 )
 
-data class Package(
+data class App(
     @PrimaryKey val packageName : String,
     val appName : String,
     val restrict : Boolean,

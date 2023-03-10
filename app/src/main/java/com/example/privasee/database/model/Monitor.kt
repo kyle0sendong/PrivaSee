@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
                 onDelete = ForeignKey.NO_ACTION // Don't delete any records
             ),
             ForeignKey(
-                entity = Package::class,
+                entity = App::class,
                 parentColumns = ["packageName"],
                 childColumns = ["packageName"],
                 onDelete = ForeignKey.NO_ACTION // Don't delete any records
