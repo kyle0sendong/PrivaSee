@@ -10,12 +10,11 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import com.example.privasee.R
-import com.example.privasee.databinding.FragmentListUserBinding
+import com.example.privasee.databinding.FragmentContainerUserBinding
 
+class UserFragmentContainer : Fragment() {
 
-class ListUser : Fragment() {
-
-    private var _binding: FragmentListUserBinding? = null
+    private var _binding: FragmentContainerUserBinding? = null
     private val binding get() = _binding!!
     private lateinit var navController: NavController
 
@@ -24,7 +23,7 @@ class ListUser : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentListUserBinding.inflate(inflater, container, false)
+        _binding = FragmentContainerUserBinding.inflate(inflater, container, false)
 
         return binding.root
     }
