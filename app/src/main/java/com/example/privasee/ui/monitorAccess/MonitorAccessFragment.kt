@@ -1,27 +1,24 @@
-package com.example.privasee.ui.monitor
+package com.example.privasee.ui.monitorAccess
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.privasee.R
-import com.example.privasee.databinding.FragmentMonitorBinding
+import com.example.privasee.databinding.FragmentMonitorAccessBinding
 
-class MonitorFragment : Fragment() {
+class MonitorAccessFragment : Fragment() {
 
-    private var _binding: FragmentMonitorBinding? = null
+    private var _binding: FragmentMonitorAccessBinding? = null
     private val binding get() = _binding!!
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMonitorBinding.inflate(inflater, container, false)
+        _binding = FragmentMonitorAccessBinding.inflate(inflater, container, false)
         return binding.root
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
