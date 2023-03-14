@@ -1,21 +1,23 @@
 package com.example.privasee.ui.initialRun
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.example.privasee.R
-import com.example.privasee.databinding.ActivityMainBinding
+import com.example.privasee.database.model.App
+import com.example.privasee.database.viewmodel.AppViewModel
 import com.example.privasee.databinding.ActivitySetupBinding
 
 class SetupActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySetupBinding
     private lateinit var setupNavController: NavController
+    private lateinit var mAppViewModel: AppViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,5 +28,21 @@ class SetupActivity : AppCompatActivity() {
         setupNavController = navHostFragment.navController
         setupActionBarWithNavController(setupNavController)
 
+        mAppViewModel = ViewModelProvider(this)[AppViewModel::class.java]
+        val intent = Intent(Intent.ACTION_MAIN)
+        intent.addCategory(Intent.CATEGORY_LAUNCHER)
+        val packageManager = this.packageManager
+        val resolveInfoList = packageManager?.queryIntentActivities(intent, PackageManager.MATCH_ALL)
+
+        if (resolveInfoList != null) {
+            for (resolveInfo in resolveInfoList) {
+
+                val packageName = resolveInfo.activityInfo.packageName
+                val applicationInfo = packageManager.getApplicationLabel(resolveInfo.activityInfo.applicationInfo).toString()
+                val appInfo = App(0, packageName, applicationInfo)
+                mAppViewModel.addApp(appInfo)
+
+            }
+        }
     }
 }
