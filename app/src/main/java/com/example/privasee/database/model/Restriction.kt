@@ -15,14 +15,14 @@ import androidx.room.PrimaryKey
             ),
             ForeignKey(
                 entity = App::class,
-                parentColumns = ["packageName"],
-                childColumns = ["packageName"],
+                parentColumns = ["id"],
+                childColumns = ["packageId"],
                 onDelete = ForeignKey.CASCADE
             )
         ],
         indices = [
             Index(value = ["userId"]),
-            Index(value = ["packageName"])
+            Index(value = ["packageId"])
         ]
 )
 
@@ -30,5 +30,5 @@ data class Restriction(
     @PrimaryKey (autoGenerate = true) val id : Int,
     val restriction : Boolean,
     val user_id : Int,
-    val packageName : String
+    val packageId : Int
 )

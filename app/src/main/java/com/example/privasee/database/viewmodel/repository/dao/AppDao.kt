@@ -10,7 +10,7 @@ import com.example.privasee.database.model.App
 @Dao
 interface AppDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun addApp(app: App)
 
     @Query ("SELECT * from app")
