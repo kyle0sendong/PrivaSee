@@ -9,7 +9,7 @@ import android.view.accessibility.AccessibilityEvent
 import com.example.privasee.ui.appRestriction.applock.BlockScreen
 
 
-class Applock : AccessibilityService() {
+class AppAccessService : AccessibilityService() {
 
     private var packageNames: MutableList<String> = mutableListOf()
     private var previousPackageName = ""
