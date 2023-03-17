@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/restriction_nav"
+    app:startDestination="@id/appWhitelistFragment">
+
+    <fragment
+        android:id="@+id/appWhitelistFragment"
+        android:name="com.example.privasee.ui.appRestriction.whitelist.AppWhitelistFragment"
+        android:label="AppWhitelistFragment" >
+        <action
+            android:id="@+id/action_appWhitelistFragment_to_appBlocklistFragment"
+            app:destination="@id/appBlocklistFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/appBlocklistFragment"
+        android:name="com.example.privasee.ui.appRestriction.blocklist.AppBlocklistFragment"
+        android:label="AppBlocklistFragment" >
+        <action
+            android:id="@+id/action_appBlocklistFragment_to_appWhitelistFragment"
+            app:destination="@id/appWhitelistFragment" />
+    </fragment>
+</navigation>
