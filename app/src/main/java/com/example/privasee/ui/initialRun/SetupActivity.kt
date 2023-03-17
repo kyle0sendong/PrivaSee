@@ -6,7 +6,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.privasee.R
 import com.example.privasee.database.model.App
@@ -48,4 +50,13 @@ class SetupActivity : AppCompatActivity() {
         }
 
     }
+
+    // Enable action bar's back button
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.fcvSetup)
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    // Disable back pressed
+    override fun onBackPressed() {}
 }
