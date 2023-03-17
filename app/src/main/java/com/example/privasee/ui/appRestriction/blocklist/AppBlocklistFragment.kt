@@ -1,4 +1,4 @@
-package com.example.privasee.ui.appPackages.whitelist
+package com.example.privasee.ui.appRestriction.blocklist
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.privasee.R
 
-class AppWhitelistFragment : Fragment() {
+class AppBlocklistFragment : Fragment() {
 
 
     override fun onCreateView(
@@ -15,7 +15,6 @@ class AppWhitelistFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_app_whitelist, container, false)
+        return inflater.inflate(R.layout.fragment_app_blocklist, container, false)
     }
-
 }
