@@ -24,10 +24,12 @@ class SetupActivity : AppCompatActivity() {
         binding = ActivitySetupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Make this activity the nav host fragment for the navgraph for the initial run fragments
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcvSetup) as NavHostFragment
         setupNavController = navHostFragment.navController
         setupActionBarWithNavController(setupNavController)
 
+        // Get all the installed app packages in the first run and store it in the database
         mAppViewModel = ViewModelProvider(this)[AppViewModel::class.java]
         val intent = Intent(Intent.ACTION_MAIN)
         intent.addCategory(Intent.CATEGORY_LAUNCHER)
@@ -44,5 +46,6 @@ class SetupActivity : AppCompatActivity() {
 
             }
         }
+
     }
 }
