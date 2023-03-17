@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/setupTermsFragment"
         android:name="com.example.privasee.ui.initialRun.SetupTermsFragment"
-        android:label="fragment_setup_terms"
+        android:label="Terms &amp; Conditions"
         tools:layout="@layout/fragment_setup_terms" >
         <action
             android:id="@+id/action_setupTermsFragment_to_setupPermissionsFragment"
@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/setupPermissionsFragment"
         android:name="com.example.privasee.ui.initialRun.SetupPermissionsFragment"
-        android:label="fragment_setup_permissions"
+        android:label="Enable Permissions"
         tools:layout="@layout/fragment_setup_permissions" >
         <action
             android:id="@+id/action_setupPermissionsFragment_to_setupOwnerFragment"
@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/setupOwnerFragment"
         android:name="com.example.privasee.ui.initialRun.SetupOwnerFragment"
-        android:label="fragment_setup_owner"
+        android:label="Register"
         tools:layout="@layout/fragment_setup_owner" >
         <action
             android:id="@+id/action_setupOwnerFragment_to_setupPermissionsFragment"
