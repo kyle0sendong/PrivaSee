@@ -1,6 +1,5 @@
-package com.example.privasee.ui.appRestriction.blocklist
+package com.example.privasee.ui.appControl.blocklist
 
-import android.content.Context
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.privasee.database.model.Restriction

@@ -1,4 +1,4 @@
-package com.example.privasee.ui.appRestriction.blocklist
+package com.example.privasee.ui.appControl.blocklist
 
 import android.os.Bundle
 import android.view.LayoutInflater

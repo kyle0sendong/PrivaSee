@@ -1,4 +1,4 @@
-package com.example.privasee.ui.appRestriction.whitelist
+package com.example.privasee.ui.appControl.whitelist
 
 import android.os.Bundle
 import android.view.LayoutInflater

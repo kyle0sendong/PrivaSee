@@ -1,16 +1,15 @@
-package com.example.privasee.ui.appRestriction
+package com.example.privasee.ui.appControl
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.privasee.R
-import com.example.privasee.databinding.ActivityAppRestrictionBinding
+import androidx.appcompat.app.AppCompatActivity
+import com.example.privasee.databinding.ActivityAppControllingBinding
 
-class AppRestrictionActivity : AppCompatActivity() {
+class AppControllingActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAppRestrictionBinding
+    private lateinit var binding: ActivityAppControllingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        binding = ActivityAppRestrictionBinding.inflate(layoutInflater)
+        binding = ActivityAppControllingBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 

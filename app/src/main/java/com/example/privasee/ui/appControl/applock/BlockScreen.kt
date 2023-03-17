@@ -1,4 +1,4 @@
-package com.example.privasee.ui.appRestriction.applock
+package com.example.privasee.ui.appControl.applock
 
 import android.graphics.PixelFormat
 import androidx.appcompat.app.AppCompatActivity
