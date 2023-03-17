@@ -28,7 +28,8 @@ import androidx.room.PrimaryKey
 
 data class Restriction(
     @PrimaryKey (autoGenerate = true) val id : Int,
-    val restriction : Boolean,
+    val monitored : Boolean,
+    val locked : Boolean,
     val user_id : Int,
     val packageId : Int
 )
