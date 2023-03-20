@@ -6,7 +6,8 @@ import com.example.privasee.database.viewmodel.repository.dao.AppDao
 
 class AppRepository(private val appDao: AppDao) {
 
-    val readAllData: LiveData<List<App>> = appDao.readAllData()
+    val readAllDataLive: LiveData<List<App>> = appDao.readAllDataLive()
+    val readAllData: List<App> = appDao.readAllData()
 
     suspend fun addApp(app: App) {
         appDao.addApp(app)

@@ -6,7 +6,8 @@ import com.example.privasee.database.model.User
 
 class UserRepository(private val userDao: UserDao) {
 
-    val readAllData: LiveData<List<User>> = userDao.readAllData()
+    val readAllDataLive: LiveData<List<User>> = userDao.readAllDataLive()
+    val readAllData: List<User> = userDao.readAllData()
 
     suspend fun addUser(user: User) {
         userDao.addUser(user)
