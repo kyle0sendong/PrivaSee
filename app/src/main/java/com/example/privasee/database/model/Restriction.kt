@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
             ForeignKey(
                 entity = User::class,
                 parentColumns = ["id"],
-                childColumns = ["user_id"],
+                childColumns = ["userId"],
                 onDelete = ForeignKey.CASCADE
             ),
             ForeignKey(
@@ -30,6 +30,6 @@ data class Restriction(
     @PrimaryKey (autoGenerate = true) val id : Int,
     val monitored : Boolean,
     val locked : Boolean,
-    val user_id : Int,
+    val userId : Int,
     val packageId : Int
 )
