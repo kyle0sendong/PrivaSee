@@ -13,7 +13,12 @@ interface AppDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun addApp(app: App)
 
-    @Query ("SELECT * from app")
-    fun readAllData() : LiveData<List<App>>
+    @Query("SELECT * FROM app")
+    fun readAllDataLive(): LiveData<List<App>>
 
+    @Query("SELECT * FROM app")
+    fun readAllData(): List<App>
+
+    @Query("SELECT id FROM app")
+    fun readAllAppId(): List<Int>
 }
