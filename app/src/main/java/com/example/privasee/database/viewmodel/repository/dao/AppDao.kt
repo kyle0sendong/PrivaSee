@@ -10,9 +10,6 @@ import com.example.privasee.database.model.App
 @Dao
 interface AppDao {
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun addApp(app: App)
-
     @Query("SELECT * FROM app")
     fun readAllDataLive(): LiveData<List<App>>
 
@@ -21,4 +18,8 @@ interface AppDao {
 
     @Query("SELECT id FROM app")
     fun readAllAppId(): List<Int>
+
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    suspend fun addApp(app: App)
+
 }

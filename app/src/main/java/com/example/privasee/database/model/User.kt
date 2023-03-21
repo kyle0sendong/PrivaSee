@@ -9,5 +9,6 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "user")
 data class User(
     @PrimaryKey(autoGenerate = true) val id: Int,
-    val name: String
+    val name: String,
+    val isOwner: Boolean
 ) : Parcelable

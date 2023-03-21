@@ -7,7 +7,18 @@ import com.example.privasee.database.model.User
 class UserRepository(private val userDao: UserDao) {
 
     val readAllDataLive: LiveData<List<User>> = userDao.readAllDataLive()
-    val readAllData: List<User> = userDao.readAllData()
+
+    fun getOwnerId(isOwner: Boolean): Int {
+        return userDao.getOwnerId(isOwner)
+    }
+
+    fun readAllData(): List<User> {
+        return userDao.readAllData()
+    }
+
+    fun readAllUserId(): List<Int> {
+        return userDao.readAllUserId()
+    }
 
     suspend fun addUser(user: User) {
         userDao.addUser(user)
@@ -20,4 +31,5 @@ class UserRepository(private val userDao: UserDao) {
     suspend fun deleteUser(user: User) {
         userDao.deleteUser(user)
     }
+
 }
