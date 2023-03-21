@@ -2,9 +2,13 @@ package com.example.privasee.ui.initialRun
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.AsyncTask
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -12,14 +16,23 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.privasee.R
 import com.example.privasee.database.model.App
+import com.example.privasee.database.model.Restriction
+import com.example.privasee.database.model.User
 import com.example.privasee.database.viewmodel.AppViewModel
+import com.example.privasee.database.viewmodel.RestrictionViewModel
+import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.ActivitySetupBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SetupActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySetupBinding
     private lateinit var setupNavController: NavController
+
     private lateinit var mAppViewModel: AppViewModel
+    private lateinit var mUserViewModel: UserViewModel
+    private lateinit var mRestrictionViewModel: RestrictionViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +44,15 @@ class SetupActivity : AppCompatActivity() {
         setupNavController = navHostFragment.navController
         setupActionBarWithNavController(setupNavController)
 
-        // Get all the installed app packages in the first run and store it in the database
+
+        // Initialize the Owner information
+        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+        val userInfo = User(0, "owner", isOwner = true)
+        mUserViewModel.addUser(userInfo)
+
+        // Get all the installed app packages in the first run and store it in the database.
         mAppViewModel = ViewModelProvider(this)[AppViewModel::class.java]
+
         val intent = Intent(Intent.ACTION_MAIN)
         intent.addCategory(Intent.CATEGORY_LAUNCHER)
         val packageManager = this.packageManager
@@ -40,12 +60,23 @@ class SetupActivity : AppCompatActivity() {
 
         if (resolveInfoList != null) {
             for (resolveInfo in resolveInfoList) {
-
                 val packageName = resolveInfo.activityInfo.packageName
                 val applicationInfo = packageManager.getApplicationLabel(resolveInfo.activityInfo.applicationInfo).toString()
                 val appInfo = App(0, packageName, applicationInfo)
                 mAppViewModel.addApp(appInfo)
+            }
+        }
 
+        mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
+
+        // run in coroutines
+        lifecycleScope.launch(Dispatchers.IO) {
+            val allAppId = mAppViewModel.readAllAppId()
+            val ownerId = mUserViewModel.getOwnerId(true)
+
+            for(appId in allAppId) {
+                val restriction = Restriction(0, monitored = false, locked = false, ownerId, appId)
+                mRestrictionViewModel.addRestriction(restriction)
             }
         }
 
