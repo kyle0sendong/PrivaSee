@@ -14,16 +14,24 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: UserRepository
 
-    val readAllDataLive: LiveData<List<User>>
-    val readAllData: List<User>
-
     init {
         val userDao = PrivaSeeDatabase.getDatabase(application).userDao()
         repository = UserRepository(userDao)
-        readAllDataLive = repository.readAllDataLive
-        readAllData = repository.readAllData
     }
 
+    val readAllDataLive: LiveData<List<User>> = repository.readAllDataLive
+
+    fun readAllData(): List<User> {
+        return repository.readAllData()
+    }
+
+    fun readAllUserId(): List<Int> {
+        return repository.readAllUserId()
+    }
+
+    fun getOwnerId(isOwner: Boolean): Int {
+        return repository.getOwnerId(isOwner)
+    }
 
     fun addUser(user: User) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -31,13 +39,11 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-
     fun updateUser(user: User) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateUser(user)
         }
     }
-
 
     fun deleteUser(user: User) {
         viewModelScope.launch(Dispatchers.IO) {

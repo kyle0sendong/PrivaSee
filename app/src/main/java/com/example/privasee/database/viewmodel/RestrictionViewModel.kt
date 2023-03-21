@@ -14,19 +14,20 @@ class RestrictionViewModel(application: Application): AndroidViewModel(applicati
 
     private val repository: RestrictionRepository
 
-    val readAllData: List<Restriction>
-    val readAllDataLive: LiveData<List<Restriction>>
-
     init {
         val restrictionDao = PrivaSeeDatabase.getDatabase(application).restrictionDao()
         repository = RestrictionRepository(restrictionDao)
-        readAllData = repository.readAllData
-        readAllDataLive = repository.readAllDataLive
     }
+
+    val readAllDataLive: LiveData<List<Restriction>> = repository.readAllDataLive
 
     fun addRestriction(restriction: Restriction) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addRestriction(restriction)
         }
+    }
+
+    fun readAllData(): List<Restriction> {
+        return readAllData()
     }
 }

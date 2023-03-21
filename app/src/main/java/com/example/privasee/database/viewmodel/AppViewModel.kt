@@ -13,13 +13,20 @@ import kotlinx.coroutines.launch
 class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: AppRepository
-    val readAllData: List<App>
-    val readAllDataLive: LiveData<List<App>>
+
     init {
         val appDao = PrivaSeeDatabase.getDatabase(application).appDao()
         repository = AppRepository(appDao)
-        readAllData = repository.readAllData
-        readAllDataLive = repository.readAllDataLive
+    }
+
+    val readAllDataLive: LiveData<List<App>> = repository.readAllDataLive
+
+    fun readAllData(): List<App> {
+        return repository.readAllData()
+    }
+
+    fun readAllAppId(): List<Int> {
+        return repository.readAllAppId()
     }
 
     fun addApp(app: App) {
