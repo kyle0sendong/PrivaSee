@@ -1,11 +1,13 @@
 package com.example.privasee.ui.monitorAccess
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.privasee.databinding.FragmentMonitorAccessBinding
+import com.example.privasee.ui.appMonitoring.AppMonitoringActivity
 
 class MonitorAccessFragment : Fragment() {
 
@@ -17,6 +19,14 @@ class MonitorAccessFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMonitorAccessBinding.inflate(inflater, container, false)
+
+        // Test
+        binding.test123.setOnClickListener {
+            Intent(requireContext(), AppMonitoringActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
         return binding.root
     }
 
