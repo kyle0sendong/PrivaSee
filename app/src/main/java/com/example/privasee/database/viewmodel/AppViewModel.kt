@@ -19,7 +19,9 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         repository = AppRepository(appDao)
     }
 
-    val getAllDataLive: LiveData<List<App>> = repository.getAllDataLive
+    fun getAllDataLive(): LiveData<List<App>> {
+        return repository.getAllDataLive()
+    }
 
     fun getAllData(): List<App> {
         return repository.getAllData()

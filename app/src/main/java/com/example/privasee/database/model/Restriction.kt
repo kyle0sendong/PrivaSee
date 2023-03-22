@@ -23,7 +23,7 @@ import androidx.room.*
         ]
 )
 data class Restriction(
-    @PrimaryKey (autoGenerate = true) val id : Int,
+    @PrimaryKey (autoGenerate = true) val id : Int = 0,
     val appName: String,
     val monitored: Boolean,
     val controlled: Boolean,

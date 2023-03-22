@@ -19,9 +19,19 @@ interface RestrictionDao {
     @Query("SELECT * FROM restriction")
     fun getAllDataLive(): LiveData<List<Restriction>>
 
-    @Query("SELECT * FROM restriction WHERE monitored = true AND userId = :userId")
-    fun getAllMonitoredApps(userId: Int): List<Restriction>
+    @Query("SELECT * FROM restriction " +
+            "WHERE monitored = true " +
+            "AND userId = :userId")
+    fun getAllMonitoredApps(userId: Int): LiveData<List<Restriction>>
 
-    @Query("SELECT * FROM restriction WHERE monitored = false AND userId = :userId")
-    fun getAllUnmonitoredApps(userId: Int): List<Restriction>
+    @Query("SELECT * FROM restriction " +
+            "WHERE monitored = false " +
+            "AND userId = :userId")
+    fun getAllUnmonitoredApps(userId: Int): LiveData<List<Restriction>>
+
+    @Query("UPDATE restriction SET monitored = :isMonitored " +
+            "WHERE id = :restrictionId")
+    fun updateMonitored(restrictionId: Int, isMonitored: Boolean)
+
+
 }

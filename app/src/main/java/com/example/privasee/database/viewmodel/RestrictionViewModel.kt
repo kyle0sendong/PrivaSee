@@ -31,12 +31,16 @@ class RestrictionViewModel(application: Application): AndroidViewModel(applicati
         return repository.getAllData()
     }
 
-    fun getAllMonitoredApps(userId: Int): List<Restriction> {
+    fun getAllMonitoredApps(userId: Int): LiveData<List<Restriction>> {
         return repository.getAllMonitoredApps(userId)
     }
 
-    fun getAllUnmonitoredApps(userId: Int): List<Restriction> {
+    fun getAllUnmonitoredApps(userId: Int): LiveData<List<Restriction>> {
         return repository.getAllUnmonitoredApps(userId)
+    }
+
+    fun updateMonitored(restrictionId: Int, isMonitored: Boolean) {
+        return repository.updateMonitored(restrictionId, isMonitored)
     }
 
 }

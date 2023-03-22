@@ -16,12 +16,16 @@ class RestrictionRepository(private val restrictionDao: RestrictionDao) {
         return restrictionDao.getAllData()
     }
 
-    fun getAllMonitoredApps(userId: Int): List<Restriction> {
+    fun getAllMonitoredApps(userId: Int): LiveData<List<Restriction>> {
         return restrictionDao.getAllMonitoredApps(userId)
     }
 
-    fun getAllUnmonitoredApps(userId: Int): List<Restriction> {
+    fun getAllUnmonitoredApps(userId: Int): LiveData<List<Restriction>> {
         return restrictionDao.getAllUnmonitoredApps(userId)
+    }
+
+    fun updateMonitored(restrictionId: Int, isMonitored: Boolean) {
+        return restrictionDao.updateMonitored(restrictionId, isMonitored)
     }
 
 }
