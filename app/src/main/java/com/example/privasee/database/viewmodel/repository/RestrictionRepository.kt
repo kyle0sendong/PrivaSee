@@ -6,14 +6,22 @@ import com.example.privasee.database.viewmodel.repository.dao.RestrictionDao
 
 class RestrictionRepository(private val restrictionDao: RestrictionDao) {
 
-    val readAllDataLive: LiveData<List<Restriction>> = restrictionDao.readAllDataLive()
+    val getAllDataLive: LiveData<List<Restriction>> = restrictionDao.getAllDataLive()
 
     suspend fun addRestriction(restriction: Restriction) {
         restrictionDao.addRestriction(restriction)
     }
 
-    fun readAllData(): List<Restriction> {
-        return restrictionDao.readAllData()
+    fun getAllData(): List<Restriction> {
+        return restrictionDao.getAllData()
+    }
+
+    fun getAllMonitoredApps(userId: Int): List<Restriction> {
+        return restrictionDao.getAllMonitoredApps(userId)
+    }
+
+    fun getAllUnmonitoredApps(userId: Int): List<Restriction> {
+        return restrictionDao.getAllUnmonitoredApps(userId)
     }
 
 }

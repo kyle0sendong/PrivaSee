@@ -1,9 +1,6 @@
 package com.example.privasee.database.model
 
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.Index
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 @Entity( tableName = "restriction",
         foreignKeys = [
@@ -25,11 +22,11 @@ import androidx.room.PrimaryKey
             Index(value = ["packageId"])
         ]
 )
-
 data class Restriction(
     @PrimaryKey (autoGenerate = true) val id : Int,
-    val monitored : Boolean,
-    val locked : Boolean,
-    val userId : Int,
-    val packageId : Int
+    val appName: String,
+    val monitored: Boolean,
+    val controlled: Boolean,
+    val userId: Int,
+    val packageId: Int
 )

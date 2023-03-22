@@ -13,10 +13,15 @@ interface RestrictionDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun addRestriction(restriction: Restriction)
 
-    @Query("SELECT * from restriction")
-    fun readAllData(): List<Restriction>
+    @Query("SELECT * FROM restriction")
+    fun getAllData(): List<Restriction>
 
-    @Query("SELECT * from restriction")
-    fun readAllDataLive(): LiveData<List<Restriction>>
+    @Query("SELECT * FROM restriction")
+    fun getAllDataLive(): LiveData<List<Restriction>>
 
+    @Query("SELECT * FROM restriction WHERE monitored = true AND userId = :userId")
+    fun getAllMonitoredApps(userId: Int): List<Restriction>
+
+    @Query("SELECT * FROM restriction WHERE monitored = false AND userId = :userId")
+    fun getAllUnmonitoredApps(userId: Int): List<Restriction>
 }

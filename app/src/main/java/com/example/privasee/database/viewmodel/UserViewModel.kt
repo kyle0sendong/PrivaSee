@@ -19,14 +19,18 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         repository = UserRepository(userDao)
     }
 
-    val readAllDataLive: LiveData<List<User>> = repository.readAllDataLive
+    val getAllDataLive: LiveData<List<User>> = repository.getAllDataLive
 
-    fun readAllData(): List<User> {
-        return repository.readAllData()
+    fun getAllData(): List<User> {
+        return repository.getAllData()
     }
 
-    fun readAllUserId(): List<Int> {
-        return repository.readAllUserId()
+    fun getAllUserId(): List<Int> {
+        return repository.getAllUserId()
+    }
+
+    fun getUserId(name: String): Int {
+        return repository.getUserId(name)
     }
 
     fun getOwnerId(isOwner: Boolean): Int {

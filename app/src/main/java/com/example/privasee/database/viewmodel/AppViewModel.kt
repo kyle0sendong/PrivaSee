@@ -19,14 +19,18 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         repository = AppRepository(appDao)
     }
 
-    val readAllDataLive: LiveData<List<App>> = repository.readAllDataLive
+    val getAllDataLive: LiveData<List<App>> = repository.getAllDataLive
 
-    fun readAllData(): List<App> {
-        return repository.readAllData()
+    fun getAllData(): List<App> {
+        return repository.getAllData()
     }
 
     fun readAllAppId(): List<Int> {
-        return repository.readAllAppId()
+        return repository.getAllAppId()
+    }
+
+    fun getAppName(packageId: Int): String {
+        return repository.getAppName(packageId)
     }
 
     fun addApp(app: App) {
@@ -34,5 +38,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
             repository.addApp(app)
         }
     }
+
+
 
 }

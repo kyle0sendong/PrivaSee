@@ -6,20 +6,23 @@ import com.example.privasee.database.model.User
 
 class UserRepository(private val userDao: UserDao) {
 
-    val readAllDataLive: LiveData<List<User>> = userDao.readAllDataLive()
+    val getAllDataLive: LiveData<List<User>> = userDao.getAllDataLive()
 
     fun getOwnerId(isOwner: Boolean): Int {
         return userDao.getOwnerId(isOwner)
     }
 
-    fun readAllData(): List<User> {
-        return userDao.readAllData()
+    fun getAllData(): List<User> {
+        return userDao.getAllData()
     }
 
-    fun readAllUserId(): List<Int> {
-        return userDao.readAllUserId()
+    fun getAllUserId(): List<Int> {
+        return userDao.getAllUserId()
     }
 
+    fun getUserId(name: String): Int {
+        return userDao.getUserId(name)
+    }
     suspend fun addUser(user: User) {
         userDao.addUser(user)
     }

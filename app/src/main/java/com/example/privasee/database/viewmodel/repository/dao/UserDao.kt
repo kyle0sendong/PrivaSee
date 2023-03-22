@@ -8,13 +8,16 @@ import com.example.privasee.database.model.User
 interface UserDao {
 
     @Query("SELECT * FROM user ORDER BY id ASC")
-    fun readAllDataLive(): LiveData<List<User>>
+    fun getAllDataLive(): LiveData<List<User>>
 
     @Query("SELECT * FROM user ORDER BY id ASC")
-    fun readAllData(): List<User>
+    fun getAllData(): List<User>
 
     @Query("SELECT id FROM user")
-    fun readAllUserId(): List<Int>
+    fun getAllUserId(): List<Int>
+
+    @Query("SELECT id FROM user WHERE name = :name")
+    fun getUserId(name: String): Int
 
     // This is used in the system so that the owner entity will never be deleted.
     @Query("SELECT id FROM user WHERE isOwner = :isOwner")

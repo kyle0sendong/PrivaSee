@@ -19,7 +19,7 @@ class RestrictionViewModel(application: Application): AndroidViewModel(applicati
         repository = RestrictionRepository(restrictionDao)
     }
 
-    val readAllDataLive: LiveData<List<Restriction>> = repository.readAllDataLive
+    val getAllDataLive: LiveData<List<Restriction>> = repository.getAllDataLive
 
     fun addRestriction(restriction: Restriction) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -27,7 +27,16 @@ class RestrictionViewModel(application: Application): AndroidViewModel(applicati
         }
     }
 
-    fun readAllData(): List<Restriction> {
-        return readAllData()
+    fun getAllData(): List<Restriction> {
+        return repository.getAllData()
     }
+
+    fun getAllMonitoredApps(userId: Int): List<Restriction> {
+        return repository.getAllMonitoredApps(userId)
+    }
+
+    fun getAllUnmonitoredApps(userId: Int): List<Restriction> {
+        return repository.getAllUnmonitoredApps(userId)
+    }
+
 }

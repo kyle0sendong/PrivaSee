@@ -11,13 +11,16 @@ import com.example.privasee.database.model.App
 interface AppDao {
 
     @Query("SELECT * FROM app")
-    fun readAllDataLive(): LiveData<List<App>>
+    fun getAllDataLive(): LiveData<List<App>>
 
     @Query("SELECT * FROM app")
-    fun readAllData(): List<App>
+    fun getAllData(): List<App>
 
     @Query("SELECT id FROM app")
-    fun readAllAppId(): List<Int>
+    fun getAllAppId(): List<Int>
+
+    @Query("SELECT appName FROM app WHERE id = :packageId")
+    fun getAppName(packageId: Int): String
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun addApp(app: App)
