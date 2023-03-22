@@ -37,6 +37,7 @@ class AppMonitoredAdapter: RecyclerView.Adapter<AppMonitoredAdapter.AppViewHolde
 
     fun setData(data: List<Restriction>) {
         this.monitoredList = data
+        notifyDataSetChanged()
     }
 
 }

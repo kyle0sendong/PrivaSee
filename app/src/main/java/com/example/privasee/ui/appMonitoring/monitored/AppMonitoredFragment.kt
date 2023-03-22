@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -25,6 +26,7 @@ class AppMonitoredFragment : Fragment() {
 
     private lateinit var mUserViewModel: UserViewModel
     private lateinit var mRestrictionViewModel: RestrictionViewModel
+    private var ownerId: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,16 +42,18 @@ class AppMonitoredFragment : Fragment() {
         // Database queries
         mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
+
         lifecycleScope.launch(Dispatchers.IO) {
             // for testing only. test owner
-            val ownerId = mUserViewModel.getOwnerId(isOwner = true)
-            val monitoredList = mRestrictionViewModel.getAllMonitoredApps(ownerId)
-            val unmonitoredList = mRestrictionViewModel.getAllUnmonitoredApps(ownerId)
-            Log.d("450263698", "$monitoredList")
-            Log.d("450263698", "$unmonitoredList")
-            adapter.setData(monitoredList)
+            ownerId = mUserViewModel.getOwnerId(isOwner = true)
+
         }
 
+        mRestrictionViewModel.getAllMonitoredApps(ownerId).observe(viewLifecycleOwner) {
+            adapter.setData(it)
+        }
+
+        // Buttons
         binding.btnDisable0.isEnabled = false
         binding.btnUnmonitoredList.setOnClickListener {
             findNavController().navigate(R.id.action_appMonitoredFragment_to_appUnmonitoredFragment)
