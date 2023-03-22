@@ -30,10 +30,6 @@ class SetupActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySetupBinding
     private lateinit var setupNavController: NavController
 
-    private lateinit var mAppViewModel: AppViewModel
-    private lateinit var mUserViewModel: UserViewModel
-    private lateinit var mRestrictionViewModel: RestrictionViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySetupBinding.inflate(layoutInflater)
@@ -43,42 +39,6 @@ class SetupActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcvSetup) as NavHostFragment
         setupNavController = navHostFragment.navController
         setupActionBarWithNavController(setupNavController)
-
-        // Initialize the Owner information
-        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
-        val userInfo = User(0, "owner", isOwner = true)
-        mUserViewModel.addUser(userInfo)
-
-        // Get all the installed app packages in the first run and store it in the database.
-        mAppViewModel = ViewModelProvider(this)[AppViewModel::class.java]
-
-        val intent = Intent(Intent.ACTION_MAIN)
-        intent.addCategory(Intent.CATEGORY_LAUNCHER)
-        val packageManager = this.packageManager
-        val resolveInfoList = packageManager?.queryIntentActivities(intent, PackageManager.MATCH_ALL)
-
-        if (resolveInfoList != null) {
-            for (resolveInfo in resolveInfoList) {
-                val packageName = resolveInfo.activityInfo.packageName
-                val applicationInfo = packageManager.getApplicationLabel(resolveInfo.activityInfo.applicationInfo).toString()
-                val appInfo = App(0, packageName, applicationInfo)
-                mAppViewModel.addApp(appInfo)
-            }
-        }
-
-        mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
-
-        // run in coroutines
-        lifecycleScope.launch(Dispatchers.IO) {
-            val allAppId = mAppViewModel.readAllAppId()
-            val ownerId = mUserViewModel.getOwnerId(true)
-
-            for(appId in allAppId) {
-                val appName = mAppViewModel.getAppName(appId)
-                val restriction = Restriction(0, appName, monitored = false, controlled = false, ownerId, appId)
-                mRestrictionViewModel.addRestriction(restriction)
-            }
-        }
 
     }
 
