@@ -2,12 +2,12 @@ package com.example.privasee.ui.users.addUser
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.privasee.R
@@ -40,12 +40,11 @@ class AddUserFragment : Fragment() {
         return binding.root
     }
 
-
     private fun insertToDatabase() {
         val name = binding.etAddUserName.text.toString()
 
         if (checkInput(name)) {
-            val user = User(0, name)
+            val user = User(0, name, true)
             mUserViewModel.addUser(user)
             findNavController().navigate(R.id.action_addUserFragment_to_userFragment)
         } else {
@@ -54,23 +53,19 @@ class AddUserFragment : Fragment() {
 
     }
 
-
     private fun checkInput(name: String): Boolean {
         return name.isNotEmpty()
     }
-
 
     override fun onResume() {
         super.onResume()
         (activity as? AppCompatActivity)?.supportActionBar?.show()
     }
 
-
     override fun onPause() {
         super.onPause()
         (activity as? AppCompatActivity)?.supportActionBar?.hide()
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

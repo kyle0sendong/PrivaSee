@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.privasee.R
 import com.example.privasee.databinding.FragmentSetupOwnerBinding
 import com.example.privasee.ui.appMonitoring.AppMonitoringActivity
-import com.example.privasee.ui.appRestriction.AppRestrictionActivity
 
 
 class SetupOwnerFragment : Fragment() {

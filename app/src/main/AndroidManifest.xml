@@ -31,14 +31,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.appRestriction.AppRestrictionActivity"
+            android:name=".ui.appControl.AppControllingActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.appRestriction.applock.BlockScreen"
+            android:name=".ui.appControl.applock.BlockScreen"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

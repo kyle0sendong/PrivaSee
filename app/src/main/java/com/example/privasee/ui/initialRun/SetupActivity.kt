@@ -44,7 +44,6 @@ class SetupActivity : AppCompatActivity() {
         setupNavController = navHostFragment.navController
         setupActionBarWithNavController(setupNavController)
 
-
         // Initialize the Owner information
         mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         val userInfo = User(0, "owner", isOwner = true)
@@ -75,7 +74,8 @@ class SetupActivity : AppCompatActivity() {
             val ownerId = mUserViewModel.getOwnerId(true)
 
             for(appId in allAppId) {
-                val restriction = Restriction(0, monitored = false, locked = false, ownerId, appId)
+                val appName = mAppViewModel.getAppName(appId)
+                val restriction = Restriction(0, appName, monitored = false, controlled = false, ownerId, appId)
                 mRestrictionViewModel.addRestriction(restriction)
             }
         }

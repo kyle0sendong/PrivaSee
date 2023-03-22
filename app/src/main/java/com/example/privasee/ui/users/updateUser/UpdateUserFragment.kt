@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -23,7 +23,6 @@ class UpdateUserFragment : Fragment(), MenuProvider {
 
     private lateinit var mUserViewModel: UserViewModel
     private val args by navArgs<UpdateUserFragmentArgs>()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,7 +82,7 @@ class UpdateUserFragment : Fragment(), MenuProvider {
         val name = binding.updateName.text.toString()
 
         if(checkInput(name)) {
-            val updatedUser = User(args.currentUser.id, name)
+            val updatedUser = User(args.currentUser.id, name, args.currentUser.isOwner)
             mUserViewModel.updateUser(updatedUser)
             Toast.makeText(requireContext(), "Updated $name", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_updateUserFragment_to_userFragment)
