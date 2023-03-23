@@ -25,10 +25,9 @@ class AppUnmonitoredAdapter(): RecyclerView.Adapter<AppUnmonitoredAdapter.AppVie
 
         holder.binding.apply {
             val appName = unmonitoredList[position].appName
-            val isChecked = unmonitoredList[position].monitored
             holder.binding.apply {
                 tvAppName.text = appName
-                cbRestrict.isChecked = isChecked
+                cbRestrict.isChecked = false
             }
         }
 

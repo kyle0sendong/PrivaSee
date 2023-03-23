@@ -67,21 +67,14 @@ class AppUnmonitoredFragment : Fragment() {
         }
 
         // Update new list of monitored apps
-        binding.btnUnmonitoredAppsApply.setOnClickListener {
-
-            val newMonitoringList = adapter.getCheckedApps()
-
+        binding.btnApplyUnmonitored.setOnClickListener {
+            val newMonitoredList = adapter.getCheckedApps()
             lifecycleScope.launch(Dispatchers.IO) {
-
-                for (newMonitor in newMonitoringList)
-                    mRestrictionViewModel.updateMonitored(newMonitor, true)
-                Log.d("tagimandos", "$newMonitoringList")
+                for (restrictionId in newMonitoredList)
+                    mRestrictionViewModel.updateMonitored(restrictionId, true)
             }
-
-            if (newMonitoringList.isNotEmpty()) {
+            if (newMonitoredList.isNotEmpty())
                 findNavController().navigate(R.id.action_appUnmonitoredFragment_to_appMonitoredFragment)
-            }
-
         }
 
         return binding.root
