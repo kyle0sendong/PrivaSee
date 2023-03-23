@@ -14,9 +14,6 @@ interface RestrictionDao {
     suspend fun addRestriction(restriction: Restriction)
 
     @Query("SELECT * FROM restriction")
-    fun getAllData(): List<Restriction>
-
-    @Query("SELECT * FROM restriction")
     fun getAllDataLive(): LiveData<List<Restriction>>
 
     @Query("SELECT * FROM restriction " +

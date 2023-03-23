@@ -12,10 +12,6 @@ class RestrictionRepository(private val restrictionDao: RestrictionDao) {
         restrictionDao.addRestriction(restriction)
     }
 
-    fun getAllData(): List<Restriction> {
-        return restrictionDao.getAllData()
-    }
-
     fun getAllMonitoredApps(userId: Int): LiveData<List<Restriction>> {
         return restrictionDao.getAllMonitoredApps(userId)
     }
