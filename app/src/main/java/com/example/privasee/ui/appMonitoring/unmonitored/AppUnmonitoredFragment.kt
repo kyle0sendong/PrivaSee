@@ -1,5 +1,6 @@
 package com.example.privasee.ui.appMonitoring.unmonitored
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,11 +13,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.privasee.R
-import com.example.privasee.database.model.Restriction
 import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentAppUnmonitoredBinding
-import com.example.privasee.ui.appMonitoring.monitored.AppMonitoredAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -32,6 +31,7 @@ class AppUnmonitoredFragment : Fragment() {
 
     private var ownerId: Int = 0
 
+    @SuppressLint("DetachAndAttachSameFragment")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,11 +60,6 @@ class AppUnmonitoredFragment : Fragment() {
             }
         }
 
-
-
-
-
-
         // Buttons
         binding.btnDisable1.isEnabled = false
         binding.btnMonitoredList.setOnClickListener {
@@ -73,11 +68,18 @@ class AppUnmonitoredFragment : Fragment() {
 
         // Update new list of monitored apps
         binding.btnUnmonitoredAppsApply.setOnClickListener {
+
+            val newMonitoringList = adapter.getCheckedApps()
+
             lifecycleScope.launch(Dispatchers.IO) {
-                val newMonitoringList = adapter.getCheckedApps()
+
                 for (newMonitor in newMonitoringList)
                     mRestrictionViewModel.updateMonitored(newMonitor, true)
                 Log.d("tagimandos", "$newMonitoringList")
+            }
+
+            if (newMonitoringList.isNotEmpty()) {
+                findNavController().navigate(R.id.action_appUnmonitoredFragment_to_appMonitoredFragment)
             }
 
         }
