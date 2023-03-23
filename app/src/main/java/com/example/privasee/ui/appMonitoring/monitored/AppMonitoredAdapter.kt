@@ -13,7 +13,9 @@ import kotlinx.coroutines.launch
 class AppMonitoredAdapter: RecyclerView.Adapter<AppMonitoredAdapter.AppViewHolder>() {
 
     inner class AppViewHolder(val binding: RecyclerItemAppCbBinding): RecyclerView.ViewHolder(binding.root)
+
     private var monitoredList = emptyList<Restriction>()
+    private val checkedApps = mutableListOf<Int>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -24,10 +26,17 @@ class AppMonitoredAdapter: RecyclerView.Adapter<AppMonitoredAdapter.AppViewHolde
 
     override fun onBindViewHolder(holder: AppViewHolder, position: Int) {
         val appName = monitoredList[position].appName
-        val isChecked = monitoredList[position].monitored
+
         holder.binding.apply {
             tvAppName.text = appName
-            cbRestrict.isChecked = isChecked
+            cbRestrict.isChecked = false
+        }
+
+        holder.binding.cbRestrict.setOnCheckedChangeListener { _, isChecked ->
+            val restrictionId = this.monitoredList[position].id
+            if (isChecked) {
+                checkedApps.add(restrictionId)
+            }
         }
     }
 
@@ -37,7 +46,11 @@ class AppMonitoredAdapter: RecyclerView.Adapter<AppMonitoredAdapter.AppViewHolde
 
     fun setData(data: List<Restriction>) {
         this.monitoredList = data
-        notifyDataSetChanged()
+        notifyItemInserted(monitoredList.size-1)
+    }
+
+    fun getCheckedApps(): List<Int> {
+        return this.checkedApps
     }
 
 }

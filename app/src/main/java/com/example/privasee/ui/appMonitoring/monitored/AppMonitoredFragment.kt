@@ -1,7 +1,6 @@
 package com.example.privasee.ui.appMonitoring.monitored
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +16,7 @@ import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentAppMonitoredBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class AppMonitoredFragment : Fragment() {
@@ -44,9 +44,15 @@ class AppMonitoredFragment : Fragment() {
         mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
 
         lifecycleScope.launch(Dispatchers.IO) {
-            // for testing only. test owner
-            ownerId = mUserViewModel.getOwnerId(isOwner = true)
 
+            ownerId = mUserViewModel.getOwnerId(isOwner = true)
+            val restrictionList = mRestrictionViewModel.getAllMonitoredApps(ownerId)
+
+            withContext(Dispatchers.Main) {
+                restrictionList.observe(viewLifecycleOwner, Observer {
+                    adapter.setData(it)
+                })
+            }
         }
 
         mRestrictionViewModel.getAllMonitoredApps(ownerId).observe(viewLifecycleOwner) {
@@ -55,8 +61,21 @@ class AppMonitoredFragment : Fragment() {
 
         // Buttons
         binding.btnDisable0.isEnabled = false
+
+        // Navigate to Unmonitored List
         binding.btnUnmonitoredList.setOnClickListener {
             findNavController().navigate(R.id.action_appMonitoredFragment_to_appUnmonitoredFragment)
+        }
+
+        // Update new list of monitored apps
+        binding.btnApplyMonitored.setOnClickListener {
+            val newUnmonitoredList = adapter.getCheckedApps()
+            lifecycleScope.launch(Dispatchers.IO) {
+                for (restrictionId in newUnmonitoredList)
+                    mRestrictionViewModel.updateMonitored(restrictionId, false)
+            }
+            if (newUnmonitoredList.isNotEmpty())
+                findNavController().navigate(R.id.action_appMonitoredFragment_to_appUnmonitoredFragment)
         }
 
         return binding.root
