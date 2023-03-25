@@ -14,8 +14,8 @@ class UserAppControllingActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        binding = ActivityUserAppControllingBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
+        binding = ActivityUserAppControllingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcvControlling) as NavHostFragment
