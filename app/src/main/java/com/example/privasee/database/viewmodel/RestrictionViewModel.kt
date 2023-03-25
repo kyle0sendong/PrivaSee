@@ -25,6 +25,7 @@ class RestrictionViewModel(application: Application): AndroidViewModel(applicati
         }
     }
 
+    // Monitoring Access viewmodel
     fun getAllMonitoredApps(userId: Int): LiveData<List<Restriction>> {
         return repository.getAllMonitoredApps(userId)
     }
@@ -35,5 +36,18 @@ class RestrictionViewModel(application: Application): AndroidViewModel(applicati
 
     fun updateMonitoredApps(restrictionId: Int, isMonitored: Boolean) {
         return repository.updateMonitoredApps(restrictionId, isMonitored)
+    }
+
+    // Controlling Access viewmodel
+    fun getAllControlledApps(userId: Int): LiveData<List<Restriction>> {
+        return repository.getAllControlledApps(userId)
+    }
+
+    fun getAllUncontrolledApps(userId: Int): LiveData<List<Restriction>> {
+        return repository.getAllUncontrolledApps(userId)
+    }
+
+    fun updateControlledApps(restrictionId: Int, isControlled: Boolean) {
+        return repository.updateControlledApps(restrictionId, isControlled)
     }
 }

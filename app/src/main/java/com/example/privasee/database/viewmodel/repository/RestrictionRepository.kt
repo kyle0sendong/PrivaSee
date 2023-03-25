@@ -10,6 +10,7 @@ class RestrictionRepository(private val restrictionDao: RestrictionDao) {
         restrictionDao.addRestriction(restriction)
     }
 
+    // Monitoring app access repository
     fun getAllMonitoredApps(userId: Int): LiveData<List<Restriction>> {
         return restrictionDao.getAllMonitoredApps(userId)
     }
@@ -20,6 +21,19 @@ class RestrictionRepository(private val restrictionDao: RestrictionDao) {
 
     fun updateMonitoredApps(restrictionId: Int, isMonitored: Boolean) {
         return restrictionDao.updateMonitoredApps(restrictionId, isMonitored)
+    }
+
+    // Controlling app access repository
+    fun getAllControlledApps(userId: Int): LiveData<List<Restriction>> {
+        return restrictionDao.getAllControlledApps(userId)
+    }
+
+    fun getAllUncontrolledApps(userId: Int): LiveData<List<Restriction>> {
+        return restrictionDao.getAllUncontrolledApps(userId)
+    }
+
+    fun updateControlledApps(restrictionId: Int, isControlled: Boolean) {
+        return restrictionDao.updateControlledApps(restrictionId, isControlled)
     }
 
 }
