@@ -55,10 +55,6 @@ class UserAppMonitoredFragment : Fragment() {
             }
         }
 
-        mRestrictionViewModel.getAllMonitoredApps(ownerId).observe(viewLifecycleOwner) {
-            adapter.setData(it)
-        }
-
         // Buttons
         binding.btnDisable0.isEnabled = false
 
