@@ -39,26 +39,22 @@ class UserAppMonitoredFragment : Fragment() {
         binding.rvAppMonitored.adapter = adapter
         binding.rvAppMonitored.layoutManager = LinearLayoutManager(requireContext())
 
-        // Database queries
+        // Database view-models
         mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
 
+        // Observe Live data of unmonitored list
         lifecycleScope.launch(Dispatchers.IO) {
-
-            ownerId = mUserViewModel.getOwnerId(isOwner = true)
-            val restrictionList = mRestrictionViewModel.getAllMonitoredApps(ownerId)
-
+            ownerId = mUserViewModel.getOwnerId(isOwner = true) // this is for testing only
+            val monitoredList = mRestrictionViewModel.getAllMonitoredApps(ownerId)
             withContext(Dispatchers.Main) {
-                restrictionList.observe(viewLifecycleOwner, Observer {
+                monitoredList.observe(viewLifecycleOwner, Observer {
                     adapter.setData(it)
                 })
             }
         }
 
         // Buttons
-        binding.btnDisable0.isEnabled = false
-
-        // Navigate to Unmonitored List
         binding.btnUnmonitoredList.setOnClickListener {
             findNavController().navigate(R.id.action_appMonitoredFragment_to_appUnmonitoredFragment)
         }
