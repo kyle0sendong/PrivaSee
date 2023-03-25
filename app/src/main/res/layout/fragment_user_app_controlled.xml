@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".ui.user.userSettings.userAppControl.controlled.UserAppControlledFragment">
 
+    <!-- Disable button for controlled list -->
     <Button
-        android:id="@+id/btnDisabl2"
+        android:enabled="false"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"

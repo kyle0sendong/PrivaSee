@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".ui.user.userSettings.userAppMonitoring.monitored.UserAppMonitoredFragment">
 
-    <!--Disabled button for monitored -->
+    <!--Disabled button for monitored list -->
     <Button
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="40dp"
         android:text="Monitored"
-        android:enable="false"
+        android:enabled="false"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
