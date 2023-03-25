@@ -13,9 +13,8 @@ interface RestrictionDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun addRestriction(restriction: Restriction)
 
-    @Query("SELECT * FROM restriction")
-    fun getAllDataLive(): LiveData<List<Restriction>>
 
+    // App Monitoring Access
     @Query("SELECT * FROM restriction " +
             "WHERE monitored = true " +
             "AND userId = :userId")
@@ -28,7 +27,6 @@ interface RestrictionDao {
 
     @Query("UPDATE restriction SET monitored = :isMonitored " +
             "WHERE id = :restrictionId")
-    fun updateMonitored(restrictionId: Int, isMonitored: Boolean)
-
+    fun updateMonitoredApps(restrictionId: Int, isMonitored: Boolean)
 
 }

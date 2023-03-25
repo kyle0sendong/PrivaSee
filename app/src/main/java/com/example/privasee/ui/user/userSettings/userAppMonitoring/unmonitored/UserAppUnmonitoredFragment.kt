@@ -70,7 +70,7 @@ class UserAppUnmonitoredFragment : Fragment() {
             val newMonitoredList = adapter.getCheckedApps()
             lifecycleScope.launch(Dispatchers.IO) {
                 for (restrictionId in newMonitoredList)
-                    mRestrictionViewModel.updateMonitored(restrictionId, true)
+                    mRestrictionViewModel.updateMonitoredApps(restrictionId, true)
             }
             if (newMonitoredList.isNotEmpty())
                 findNavController().navigate(R.id.action_appUnmonitoredFragment_to_appMonitoredFragment)
