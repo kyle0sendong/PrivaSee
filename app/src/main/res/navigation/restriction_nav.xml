@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/appWhitelistFragment"
-        android:name="com.example.privasee.ui.appControl.whitelist.AppWhitelistFragment"
+        android:name="com.example.privasee.ui.user.userSettings.userAppControl.uncontrolled.UserAppUncontrolledFragment"
         android:label="AppWhitelistFragment" >
         <action
             android:id="@+id/action_appWhitelistFragment_to_appBlocklistFragment"
@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/appBlocklistFragment"
-        android:name="com.example.privasee.ui.appControl.blocklist.AppBlocklistFragment"
+        android:name="com.example.privasee.ui.user.userSettings.userAppControl.controlled.UserAppControlledFragment"
         android:label="AppBlocklistFragment" >
         <action
             android:id="@+id/action_appBlocklistFragment_to_appWhitelistFragment"

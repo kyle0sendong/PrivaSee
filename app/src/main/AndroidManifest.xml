@@ -24,21 +24,21 @@
         android:theme="@style/Theme.PrivaSee"
         tools:targetApi="31">
         <activity
-            android:name=".ui.appMonitoring.AppMonitoringActivity"
+            android:name=".ui.user.userSettings.userAppMonitoring.UserAppMonitoringActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.appControl.AppControllingActivity"
+            android:name=".ui.user.userSettings.userAppControl.UserAppControllingActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.appControl.applock.BlockScreen"
+            android:name=".ui.user.userSettings.userAppControl.applock.BlockScreen"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -66,7 +66,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.users.addUser.AddUserCapturePhoto"
+            android:name=".ui.user.userList.addUser.AddUserCapturePhoto"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

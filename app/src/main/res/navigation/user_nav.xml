@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/addUserFragment"
-        android:name="com.example.privasee.ui.users.addUser.AddUserFragment"
+        android:name="com.example.privasee.ui.user.userList.addUser.AddUserFragment"
         android:label="fragment_add_user"
         tools:layout="@layout/fragment_add_user" >
         <action
@@ -18,9 +18,9 @@
 
     <fragment
         android:id="@+id/userFragment"
-        android:name="com.example.privasee.ui.users.listUser.UserFragment"
+        android:name="com.example.privasee.ui.user.userList.UserListFragment"
         android:label="fragment_user"
-        tools:layout="@layout/fragment_user" >
+        tools:layout="@layout/fragment_user_list" >
         <action
             android:id="@+id/action_userFragment_to_addUserFragment"
             app:destination="@id/addUserFragment" />
@@ -30,9 +30,9 @@
     </fragment>
     <fragment
         android:id="@+id/updateUserFragment"
-        android:name="com.example.privasee.ui.users.updateUser.UpdateUserFragment"
+        android:name="com.example.privasee.ui.user.userSettings.userInfoUpdate.UserInfoUpdateFragment"
         android:label="fragment_update_user"
-        tools:layout="@layout/fragment_update_user" >
+        tools:layout="@layout/fragment_user_info_update" >
         <action
             android:id="@+id/action_updateUserFragment_to_userFragment"
             app:destination="@id/userFragment" />

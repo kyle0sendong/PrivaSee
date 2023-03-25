@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.privasee.databinding.FragmentMonitorAccessBinding
-import com.example.privasee.ui.appMonitoring.AppMonitoringActivity
+import com.example.privasee.ui.user.userSettings.userAppMonitoring.UserAppMonitoringActivity
 
 class MonitorAccessFragment : Fragment() {
 
@@ -22,7 +22,7 @@ class MonitorAccessFragment : Fragment() {
 
         // Test
         binding.test123.setOnClickListener {
-            Intent(requireContext(), AppMonitoringActivity::class.java).also {
+            Intent(requireContext(), UserAppMonitoringActivity::class.java).also {
                 startActivity(it)
             }
         }

@@ -18,7 +18,7 @@ import com.example.privasee.database.viewmodel.AppViewModel
 import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentSetupOwnerBinding
-import com.example.privasee.ui.appMonitoring.AppMonitoringActivity
+import com.example.privasee.ui.user.userSettings.userAppMonitoring.UserAppMonitoringActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -81,7 +81,7 @@ class SetupOwnerFragment : Fragment() {
         }
 
         binding.btnSelectApps.setOnClickListener {
-            Intent(requireContext(), AppMonitoringActivity::class.java).also {
+            Intent(requireContext(), UserAppMonitoringActivity::class.java).also {
                 startActivity(it)
             }
         }

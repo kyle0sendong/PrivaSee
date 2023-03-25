@@ -6,7 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
-import com.example.privasee.ui.appControl.applock.BlockScreen
+import com.example.privasee.ui.user.userSettings.userAppControl.applock.BlockScreen
 
 
 class AppAccessService : AccessibilityService() {
