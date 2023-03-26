@@ -21,19 +21,6 @@ class MonitorAccessFragment : Fragment() {
     ): View {
         _binding = FragmentMonitorAccessBinding.inflate(inflater, container, false)
 
-        // Test
-        binding.btnTestMonitoredAccess.setOnClickListener {
-            Intent(requireContext(), UserAppMonitoringActivity::class.java).also {
-                startActivity(it)
-            }
-        }
-
-        binding.btnTestControlledAccess.setOnClickListener {
-            Intent(requireContext(), UserAppControllingActivity::class.java).also {
-                startActivity(it)
-            }
-        }
-
         return binding.root
     }
 
