@@ -2,13 +2,11 @@ package com.example.privasee.ui.userList.userInfoUpdate.userAppMonitoring
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.privasee.R
 import com.example.privasee.databinding.ActivityUserAppMonitoringBinding
-import com.example.privasee.ui.user.userSettings.userAppMonitoring.unmonitored.UserAppUnmonitoredFragmentDirections
 
 class UserAppMonitoringActivity : AppCompatActivity() {
 

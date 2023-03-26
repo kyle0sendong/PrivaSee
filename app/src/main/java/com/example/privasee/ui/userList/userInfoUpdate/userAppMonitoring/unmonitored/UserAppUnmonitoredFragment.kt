@@ -1,6 +1,5 @@
 package com.example.privasee.ui.userList.userInfoUpdate.userAppMonitoring.unmonitored
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,8 +15,6 @@ import com.example.privasee.R
 import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentUserAppUnmonitoredBinding
-import com.example.privasee.ui.user.userSettings.userAppMonitoring.monitored.UserAppMonitoredFragmentArgs
-import com.example.privasee.ui.user.userSettings.userInfoUpdate.UserInfoUpdateFragmentArgs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
