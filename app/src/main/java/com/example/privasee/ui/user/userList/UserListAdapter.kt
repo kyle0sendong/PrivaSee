@@ -39,7 +39,7 @@ class UserListAdapter(): RecyclerView.Adapter<UserListAdapter.UserViewHolder>() 
 
     fun setData(user: List<User>) {
         this.userList = user
-        notifyDataSetChanged()
+        notifyItemInserted(userList.size-1)
     }
 
 }
