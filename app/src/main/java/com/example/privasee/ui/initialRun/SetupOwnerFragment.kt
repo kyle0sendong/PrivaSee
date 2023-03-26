@@ -81,8 +81,9 @@ class SetupOwnerFragment : Fragment() {
         }
 
         binding.btnSelectApps.setOnClickListener {
-            Intent(requireContext(), UserAppMonitoringActivity::class.java).also {
-                startActivity(it)
+            Intent(requireContext(), UserAppMonitoringActivity::class.java).also { intent ->
+                intent.putExtra("userId", ownerId)
+                startActivity(intent)
             }
         }
 
