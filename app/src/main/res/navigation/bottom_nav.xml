@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_control_access" />
     <fragment
         android:id="@+id/listUser"
-        android:name="com.example.privasee.ui.user.userList.UserListNavHost"
+        android:name="com.example.privasee.ui.userList.UserListNavHost"
         android:label="fragment_list_user"
         tools:layout="@layout/fragment_user_list_navhost" />
 

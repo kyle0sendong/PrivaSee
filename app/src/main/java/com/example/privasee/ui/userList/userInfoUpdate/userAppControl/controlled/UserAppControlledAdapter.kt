@@ -1,4 +1,4 @@
-package com.example.privasee.ui.user.userSettings.userAppControl.controlled
+package com.example.privasee.ui.userList.userInfoUpdate.userAppControl.controlled
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

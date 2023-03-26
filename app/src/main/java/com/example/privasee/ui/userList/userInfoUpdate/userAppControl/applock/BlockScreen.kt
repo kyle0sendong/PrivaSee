@@ -1,4 +1,4 @@
-package com.example.privasee.ui.user.userSettings.userAppControl.applock
+package com.example.privasee.ui.userList.userInfoUpdate.userAppControl.applock
 
 import android.graphics.PixelFormat
 import androidx.appcompat.app.AppCompatActivity

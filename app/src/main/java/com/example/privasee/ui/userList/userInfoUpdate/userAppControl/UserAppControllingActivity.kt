@@ -1,4 +1,4 @@
-package com.example.privasee.ui.user.userSettings.userAppControl
+package com.example.privasee.ui.userList.userInfoUpdate.userAppControl
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

@@ -1,16 +1,17 @@
-package com.example.privasee.ui.user.userSettings.userAppMonitoring.unmonitored
+package com.example.privasee.ui.userList.userInfoUpdate.userAppControl.uncontrolled
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.privasee.database.model.Restriction
 import com.example.privasee.databinding.RecyclerItemAppCbBinding
+import com.example.privasee.ui.userList.userInfoUpdate.userAppControl.controlled.UserAppControlledAdapter
 
-class UserAppUnmonitoredAdapter(): RecyclerView.Adapter<UserAppUnmonitoredAdapter.AppViewHolder>() {
+class UserAppUncontrolledAdapter(): RecyclerView.Adapter<UserAppUncontrolledAdapter.AppViewHolder>() {
 
     inner class AppViewHolder(val binding: RecyclerItemAppCbBinding): RecyclerView.ViewHolder(binding.root)
 
-    private var unmonitoredList = emptyList<Restriction>()
+    private var controlledList = emptyList<Restriction>()
     private val checkedApps = mutableListOf<Int>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppViewHolder {
@@ -20,31 +21,27 @@ class UserAppUnmonitoredAdapter(): RecyclerView.Adapter<UserAppUnmonitoredAdapte
     }
 
     override fun onBindViewHolder(holder: AppViewHolder, position: Int) {
+        val appName = controlledList[position].appName
 
         holder.binding.apply {
-            val appName = unmonitoredList[position].appName
-            holder.binding.apply {
-                tvAppName.text = appName
-                cbRestrict.isChecked = false
-            }
+            tvAppName.text = appName
+            cbRestrict.isChecked = false
         }
 
         holder.binding.cbRestrict.setOnCheckedChangeListener { _, isChecked ->
-            val restrictionId = this.unmonitoredList[position].id
-            if (isChecked) {
+            val restrictionId = this.controlledList[position].id
+            if (isChecked)
                 checkedApps.add(restrictionId)
-            }
         }
-
-    }
-
-    fun setData(data: List<Restriction>) {
-        this.unmonitoredList = data
-        notifyItemInserted(unmonitoredList.size-1)
     }
 
     override fun getItemCount(): Int {
-        return unmonitoredList.size
+        return controlledList.size
+    }
+
+    fun setData(data: List<Restriction>) {
+        this.controlledList = data
+        notifyItemInserted(controlledList.size-1)
     }
 
     fun getCheckedApps(): List<Int> {

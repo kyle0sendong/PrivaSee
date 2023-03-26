@@ -1,4 +1,4 @@
-package com.example.privasee.ui.user.userSettings.userAppMonitoring.monitored
+package com.example.privasee.ui.userList.userInfoUpdate.userAppMonitoring.monitored
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

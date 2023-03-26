@@ -1,4 +1,4 @@
-package com.example.privasee.ui.user.userSettings.userAppControl.uncontrolled
+package com.example.privasee.ui.userList.userInfoUpdate.userAppControl.uncontrolled
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,7 +14,7 @@ import com.example.privasee.R
 import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentUserAppUncontrolledBinding
-import com.example.privasee.ui.user.userSettings.userAppMonitoring.unmonitored.UserAppUnmonitoredAdapter
+import com.example.privasee.ui.userList.userInfoUpdate.userAppMonitoring.unmonitored.UserAppUnmonitoredAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

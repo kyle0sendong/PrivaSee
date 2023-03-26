@@ -1,4 +1,4 @@
-package com.example.privasee.ui.user.userList.addUser
+package com.example.privasee.ui.userList.addUser
 
 import android.Manifest
 import android.content.pm.PackageManager

@@ -1,4 +1,4 @@
-package com.example.privasee.ui.user.userSettings.userInfoUpdate
+package com.example.privasee.ui.userList.userInfoUpdate
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -17,8 +17,8 @@ import com.example.privasee.database.model.User
 import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentUserInfoUpdateBinding
-import com.example.privasee.ui.user.userSettings.userAppControl.UserAppControllingActivity
-import com.example.privasee.ui.user.userSettings.userAppMonitoring.UserAppMonitoringActivity
+import com.example.privasee.ui.userList.userInfoUpdate.userAppControl.UserAppControllingActivity
+import com.example.privasee.ui.userList.userInfoUpdate.userAppMonitoring.UserAppMonitoringActivity
 
 class UserInfoUpdateFragment : Fragment(), MenuProvider {
 

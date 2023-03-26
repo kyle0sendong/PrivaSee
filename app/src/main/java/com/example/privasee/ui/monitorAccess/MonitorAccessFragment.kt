@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.privasee.databinding.FragmentMonitorAccessBinding
-import com.example.privasee.ui.user.userSettings.userAppControl.UserAppControllingActivity
-import com.example.privasee.ui.user.userSettings.userAppMonitoring.UserAppMonitoringActivity
+import com.example.privasee.ui.userList.userInfoUpdate.userAppControl.UserAppControllingActivity
+import com.example.privasee.ui.userList.userInfoUpdate.userAppMonitoring.UserAppMonitoringActivity
 
 class MonitorAccessFragment : Fragment() {
 

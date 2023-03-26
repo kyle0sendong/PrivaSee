@@ -1,4 +1,4 @@
-package com.example.privasee.ui.user.userSettings.userAppMonitoring.unmonitored
+package com.example.privasee.ui.userList.userInfoUpdate.userAppMonitoring.unmonitored
 
 import android.annotation.SuppressLint
 import android.os.Bundle
