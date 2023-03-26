@@ -10,11 +10,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.privasee.R
 import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentUserAppUnmonitoredBinding
+import com.example.privasee.ui.user.userSettings.userAppMonitoring.monitored.UserAppMonitoredFragmentArgs
+import com.example.privasee.ui.user.userSettings.userInfoUpdate.UserInfoUpdateFragmentArgs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -30,7 +33,8 @@ class UserAppUnmonitoredFragment : Fragment() {
 
     private var ownerId: Int = 0
 
-    @SuppressLint("DetachAndAttachSameFragment")
+    private val args: UserAppUnmonitoredFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,14 +46,18 @@ class UserAppUnmonitoredFragment : Fragment() {
         binding.rvAppUnmonitored.adapter = adapter
         binding.rvAppUnmonitored.layoutManager = LinearLayoutManager(requireContext())
 
+        // Nav args
+        val userId = args.userId
+        val bundle = Bundle()
+        bundle.putInt("userId", userId)
+
         // Database queries
         mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
 
         // Observe Live data of unmonitored list
         lifecycleScope.launch(Dispatchers.IO) {
-            ownerId = mUserViewModel.getOwnerId(isOwner = true)
-            val unmonitoredList = mRestrictionViewModel.getAllUnmonitoredApps(ownerId)
+            val unmonitoredList = mRestrictionViewModel.getAllUnmonitoredApps(userId)
             withContext(Dispatchers.Main) {
                 unmonitoredList.observe(viewLifecycleOwner, Observer {
                     adapter.setData(it)
@@ -59,7 +67,7 @@ class UserAppUnmonitoredFragment : Fragment() {
 
         // Buttons
         binding.btnMonitoredList.setOnClickListener {
-            findNavController().navigate(R.id.action_appUnmonitoredFragment_to_appMonitoredFragment)
+            findNavController().navigate(R.id.action_appUnmonitoredFragment_to_appMonitoredFragment, bundle)
         }
 
         // Update new list of monitored apps
@@ -70,7 +78,7 @@ class UserAppUnmonitoredFragment : Fragment() {
                     mRestrictionViewModel.updateMonitoredApps(restrictionId, true)
             }
             if (newMonitoredList.isNotEmpty())
-                findNavController().navigate(R.id.action_appUnmonitoredFragment_to_appMonitoredFragment)
+                findNavController().navigate(R.id.action_appUnmonitoredFragment_to_appMonitoredFragment, bundle)
         }
 
         return binding.root

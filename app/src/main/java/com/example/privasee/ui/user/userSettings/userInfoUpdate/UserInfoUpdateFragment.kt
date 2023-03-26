@@ -1,6 +1,7 @@
 package com.example.privasee.ui.user.userSettings.userInfoUpdate
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -13,29 +14,53 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.privasee.R
 import com.example.privasee.database.model.User
+import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentUserInfoUpdateBinding
+import com.example.privasee.ui.user.userSettings.userAppControl.UserAppControllingActivity
+import com.example.privasee.ui.user.userSettings.userAppMonitoring.UserAppMonitoringActivity
 
 class UserInfoUpdateFragment : Fragment(), MenuProvider {
 
     private var _binding: FragmentUserInfoUpdateBinding? = null
     private val binding get() = _binding!!
+    private val args by navArgs<UserInfoUpdateFragmentArgs>()
 
     private lateinit var mUserViewModel: UserViewModel
-    private val args by navArgs<UserInfoUpdateFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentUserInfoUpdateBinding.inflate(inflater, container, false)
+
         mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
 
-        binding.updateName.setText(args.currentUser.name)
+        val userName = args.currentUser.name
+        val userId = args.currentUser.id
 
-        binding.updateButton.setOnClickListener {
-            updateItem()
+        binding.updateName.setText(userName)
+
+        binding.btnUserSetMonitored.setOnClickListener {
+            Intent(requireContext(), UserAppMonitoringActivity::class.java).also { intent ->
+                intent.putExtra("userId", userId)
+                startActivity(intent)
+            }
         }
+
+        binding.btnUserSetControlled.setOnClickListener {
+            Intent(requireContext(), UserAppControllingActivity::class.java).also { intent ->
+                intent.putExtra("userId", userId)
+                startActivity(intent)
+            }
+        }
+
+
+        binding.btnUserUpdateApply.setOnClickListener {
+            updateItem()
+            findNavController().navigate(R.id.action_updateUserFragment_to_userFragment)
+        }
+
 
         return binding.root
     }
@@ -85,7 +110,6 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
             val updatedUser = User(args.currentUser.id, name, args.currentUser.isOwner)
             mUserViewModel.updateUser(updatedUser)
             Toast.makeText(requireContext(), "Updated $name", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_updateUserFragment_to_userFragment)
         }
     }
 
