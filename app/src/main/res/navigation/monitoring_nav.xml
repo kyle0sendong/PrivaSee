@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_appMonitoredFragment_to_mainActivity2"
             app:destination="@id/mainActivity2" />
+        <argument
+            android:name="userId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/appUnmonitoredFragment"
@@ -28,6 +31,9 @@
         <action
             android:id="@+id/action_appUnmonitoredFragment_to_mainActivity2"
             app:destination="@id/mainActivity2" />
+        <argument
+            android:name="userId"
+            app:argType="integer" />
     </fragment>
     <activity
         android:id="@+id/mainActivity2"

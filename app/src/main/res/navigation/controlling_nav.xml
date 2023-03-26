@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_userAppControlledFragment_to_mainActivity3"
             app:destination="@id/mainActivity3" />
+        <argument
+            android:name="userId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/userAppUncontrolledFragment"
@@ -28,6 +31,9 @@
         <action
             android:id="@+id/action_userAppUncontrolledFragment_to_mainActivity3"
             app:destination="@id/mainActivity3" />
+        <argument
+            android:name="userId"
+            app:argType="integer" />
     </fragment>
     <activity
         android:id="@+id/mainActivity3"
