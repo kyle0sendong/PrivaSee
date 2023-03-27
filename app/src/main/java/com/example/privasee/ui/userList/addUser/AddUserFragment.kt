@@ -1,6 +1,5 @@
 package com.example.privasee.ui.userList.addUser
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -23,7 +21,6 @@ import com.example.privasee.databinding.FragmentAddUserBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class AddUserFragment : Fragment() {
@@ -52,19 +49,12 @@ class AddUserFragment : Fragment() {
             val user = User(0, name, false)
 
             if (checkInput(name)) {
+                mUserViewModel.addUser(user)
                 job = lifecycleScope.launch(Dispatchers.IO) {
-                    mUserViewModel.addUser(user)
-                    val latestUser = mUserViewModel.getLastInsertedUser()
+                    val latestUser = mUserViewModel.getUserId(name)
                     val appList = mAppViewModel.getAllData()
                     for (app in appList) {
-
-                        val restriction: Restriction = if (app.appName == "Facebook") { // test default monitored
-                            Restriction(0, app.appName, monitored = true, controlled = false, latestUser.id, app.id)
-                        } else {
-                            Restriction(0, app.appName, monitored = false, controlled = false, latestUser.id, app.id)
-                        }
-
-                        Log.d("test123", "$restriction")
+                        val restriction = Restriction(0, app.appName, monitored = false, controlled = false, latestUser, app.id)
                         mRestrictionViewModel.addRestriction(restriction)
                     }
                 }
