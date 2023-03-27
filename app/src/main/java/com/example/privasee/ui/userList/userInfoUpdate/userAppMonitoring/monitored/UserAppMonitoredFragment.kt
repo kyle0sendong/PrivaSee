@@ -1,7 +1,6 @@
 package com.example.privasee.ui.userList.userInfoUpdate.userAppMonitoring.monitored
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,7 +60,6 @@ class UserAppMonitoredFragment : Fragment() {
             withContext(Dispatchers.Main) {
 
                 monitoredList.observe(viewLifecycleOwner, Observer {
-                    Log.d("test123", "$userId Monitored $it")
                     adapter.setData(it)
                 })
             }
