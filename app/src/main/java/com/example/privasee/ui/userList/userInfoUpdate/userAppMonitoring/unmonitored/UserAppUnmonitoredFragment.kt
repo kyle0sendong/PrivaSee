@@ -1,6 +1,7 @@
 package com.example.privasee.ui.userList.userInfoUpdate.userAppMonitoring.unmonitored
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentUserAppUnmonitoredBinding
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -28,7 +30,8 @@ class UserAppUnmonitoredFragment : Fragment() {
     private lateinit var mUserViewModel: UserViewModel
     private lateinit var mRestrictionViewModel: RestrictionViewModel
 
-    private var ownerId: Int = 0
+    private var job1: Job? = null
+    private var job2: Job? = null
 
     private val args: UserAppUnmonitoredFragmentArgs by navArgs()
 
@@ -53,12 +56,15 @@ class UserAppUnmonitoredFragment : Fragment() {
         mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
 
         // Observe Live data of unmonitored list
-        lifecycleScope.launch(Dispatchers.IO) {
+        job1 = lifecycleScope.launch {
+
             val unmonitoredList = mRestrictionViewModel.getAllUnmonitoredApps(userId)
             withContext(Dispatchers.Main) {
-                unmonitoredList.observe(viewLifecycleOwner, Observer {
+
+                unmonitoredList.observe(viewLifecycleOwner) {
+                    Log.d("test123", "$userId Unmonitored $it")
                     adapter.setData(it)
-                })
+                }
             }
         }
 
@@ -70,7 +76,7 @@ class UserAppUnmonitoredFragment : Fragment() {
         // Update new list of monitored apps
         binding.btnApplyUnmonitored.setOnClickListener {
             val newMonitoredList = adapter.getCheckedApps()
-            lifecycleScope.launch(Dispatchers.IO) {
+            job2 = lifecycleScope.launch(Dispatchers.IO) {
                 for (restrictionId in newMonitoredList)
                     mRestrictionViewModel.updateMonitoredApps(restrictionId, true)
             }
@@ -83,6 +89,8 @@ class UserAppUnmonitoredFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        job1?.cancel()
+        job2?.cancel()
         _binding = null
     }
 }

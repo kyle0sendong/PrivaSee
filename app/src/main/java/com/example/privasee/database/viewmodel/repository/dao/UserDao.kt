@@ -23,7 +23,7 @@ interface UserDao {
     @Query("SELECT id FROM user WHERE isOwner = :isOwner")
     fun getOwnerId(isOwner: Boolean): Int
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addUser(user: User)
 
     @Delete
@@ -31,5 +31,8 @@ interface UserDao {
 
     @Update
     suspend fun updateUser(user: User)
+
+    @Query("SELECT * FROM user ORDER BY id DESC LIMIT 1")
+    fun getLastInsertedUser(): User
 
 }

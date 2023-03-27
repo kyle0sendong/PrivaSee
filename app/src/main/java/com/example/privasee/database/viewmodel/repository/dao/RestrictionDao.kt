@@ -13,7 +13,6 @@ interface RestrictionDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun addRestriction(restriction: Restriction)
 
-
     // App Monitoring Access queries
     @Query("SELECT * FROM restriction " +
             "WHERE monitored = true " +

@@ -16,6 +16,7 @@ import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentUserAppControlledBinding
 import com.example.privasee.ui.userList.userInfoUpdate.userAppMonitoring.monitored.UserAppMonitoredAdapter
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -28,6 +29,8 @@ class UserAppControlledFragment : Fragment() {
     private lateinit var mRestrictionViewModel: RestrictionViewModel
     private var ownerId: Int = 0
 
+    private var job: Job? = null
+    private var job2: Job? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,7 +46,7 @@ class UserAppControlledFragment : Fragment() {
         mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
 
-        lifecycleScope.launch(Dispatchers.IO) {
+        job = lifecycleScope.launch(Dispatchers.IO) {
             ownerId = mUserViewModel.getOwnerId(isOwner = true)
             val controlledList = mRestrictionViewModel.getAllControlledApps(ownerId)
             withContext(Dispatchers.Main) {
@@ -61,7 +64,7 @@ class UserAppControlledFragment : Fragment() {
         // Update new list of monitored apps
         binding.btnApplyControlled.setOnClickListener {
             val newUncontrolledList = adapter.getCheckedApps()
-            lifecycleScope.launch(Dispatchers.IO) {
+            job2 = lifecycleScope.launch(Dispatchers.IO) {
                 for (restrictionId in newUncontrolledList)
                     mRestrictionViewModel.updateControlledApps(restrictionId, false)
             }
@@ -74,6 +77,8 @@ class UserAppControlledFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        job?.cancel()
+        job2?.cancel()
         _binding = null
     }
 }

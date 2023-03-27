@@ -55,4 +55,8 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun getLastInsertedUser(): User {
+        return repository.getLastInsertedUser()
+    }
+
 }

@@ -20,6 +20,7 @@ import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentSetupOwnerBinding
 import com.example.privasee.ui.userList.userInfoUpdate.userAppMonitoring.UserAppMonitoringActivity
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -35,6 +36,7 @@ class SetupOwnerFragment : Fragment() {
 
     private var ownerId: Int = 0
 
+    private var job: Job? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -63,7 +65,7 @@ class SetupOwnerFragment : Fragment() {
             }
         }
 
-        lifecycleScope.launch(Dispatchers.IO) {
+        job = lifecycleScope.launch(Dispatchers.IO) {
 
             val appList = mAppViewModel.getAllDataLive()
             ownerId = mUserViewModel.getOwnerId(true)
@@ -89,6 +91,7 @@ class SetupOwnerFragment : Fragment() {
 
         binding.btnSetupOwnerFinish.setOnClickListener {
             findNavController().navigate(R.id.action_setupOwnerFragment_to_mainActivity)
+            requireActivity().finishAffinity()
         }
 
         return binding.root
@@ -96,7 +99,9 @@ class SetupOwnerFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        job?.cancel()
         _binding = null
+
     }
 
 }

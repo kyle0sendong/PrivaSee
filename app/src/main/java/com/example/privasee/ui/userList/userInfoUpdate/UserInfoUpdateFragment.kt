@@ -3,6 +3,7 @@ package com.example.privasee.ui.userList.userInfoUpdate
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
