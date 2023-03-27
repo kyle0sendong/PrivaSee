@@ -18,7 +18,8 @@
             app:destination="@id/mainActivity3" />
         <argument
             android:name="userId"
-            app:argType="integer" />
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/userAppUncontrolledFragment"
@@ -33,7 +34,8 @@
             app:destination="@id/mainActivity3" />
         <argument
             android:name="userId"
-            app:argType="integer" />
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <activity
         android:id="@+id/mainActivity3"

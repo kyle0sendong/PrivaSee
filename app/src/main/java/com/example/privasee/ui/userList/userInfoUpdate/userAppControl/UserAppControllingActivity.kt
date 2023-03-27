@@ -22,5 +22,12 @@ class UserAppControllingActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         setupActionBarWithNavController(navController)
 
+        val userId = intent.extras?.getInt("userId")
+        val bundle = Bundle()
+
+        if (userId != null)
+            bundle.putInt("userId", userId)
+
+        navController.setGraph(R.navigation.controlling_nav, bundle)
     }
 }

@@ -9,12 +9,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.privasee.R
 import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentUserAppControlledBinding
-import com.example.privasee.ui.userList.userInfoUpdate.userAppMonitoring.monitored.UserAppMonitoredAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -27,18 +27,25 @@ class UserAppControlledFragment : Fragment() {
 
     private lateinit var mUserViewModel: UserViewModel
     private lateinit var mRestrictionViewModel: RestrictionViewModel
-    private var ownerId: Int = 0
 
-    private var job: Job? = null
+    private val args: UserAppControlledFragmentArgs by navArgs()
+
+    private var job1: Job? = null
     private var job2: Job? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentUserAppControlledBinding.inflate(inflater, container, false)
 
+        // Nav args
+        val userId = args.userId
+        val bundle = Bundle()
+        bundle.putInt("userId", userId)
+
         // Recyclerview adapter
-        val adapter = UserAppMonitoredAdapter()
+        val adapter = UserAppControlledAdapter()
         binding.rvAppControlled.adapter = adapter
         binding.rvAppControlled.layoutManager = LinearLayoutManager(requireContext())
 
@@ -46,9 +53,8 @@ class UserAppControlledFragment : Fragment() {
         mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
 
-        job = lifecycleScope.launch(Dispatchers.IO) {
-            ownerId = mUserViewModel.getOwnerId(isOwner = true)
-            val controlledList = mRestrictionViewModel.getAllControlledApps(ownerId)
+        job1 = lifecycleScope.launch(Dispatchers.IO) {
+            val controlledList = mRestrictionViewModel.getAllControlledApps(userId)
             withContext(Dispatchers.Main) {
                 controlledList.observe(viewLifecycleOwner, Observer {
                     adapter.setData(it)
@@ -58,10 +64,10 @@ class UserAppControlledFragment : Fragment() {
 
         // Buttons
         binding.btnUncontrolledList.setOnClickListener {
-            findNavController().navigate(R.id.action_userAppControlledFragment_to_userAppUncontrolledFragment)
+            findNavController().navigate(R.id.action_userAppControlledFragment_to_userAppUncontrolledFragment, bundle)
         }
 
-        // Update new list of monitored apps
+        // Update new list of uncontrolled apps
         binding.btnApplyControlled.setOnClickListener {
             val newUncontrolledList = adapter.getCheckedApps()
             job2 = lifecycleScope.launch(Dispatchers.IO) {
@@ -69,7 +75,7 @@ class UserAppControlledFragment : Fragment() {
                     mRestrictionViewModel.updateControlledApps(restrictionId, false)
             }
             if (newUncontrolledList.isNotEmpty())
-                findNavController().navigate(R.id.action_userAppControlledFragment_to_userAppUncontrolledFragment)
+                findNavController().navigate(R.id.action_userAppControlledFragment_to_userAppUncontrolledFragment, bundle)
         }
 
         return binding.root
@@ -77,7 +83,7 @@ class UserAppControlledFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        job?.cancel()
+        job1?.cancel()
         job2?.cancel()
         _binding = null
     }

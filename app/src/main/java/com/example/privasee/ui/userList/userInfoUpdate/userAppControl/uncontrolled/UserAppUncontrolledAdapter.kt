@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.privasee.database.model.Restriction
 import com.example.privasee.databinding.RecyclerItemAppCbBinding
-import com.example.privasee.ui.userList.userInfoUpdate.userAppControl.controlled.UserAppControlledAdapter
 
 class UserAppUncontrolledAdapter(): RecyclerView.Adapter<UserAppUncontrolledAdapter.AppViewHolder>() {
 
