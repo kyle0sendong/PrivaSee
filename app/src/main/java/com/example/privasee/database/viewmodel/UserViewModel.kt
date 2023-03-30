@@ -33,8 +33,8 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         return repository.getUserId(name)
     }
 
-    fun getOwnerId(isOwner: Boolean): Int {
-        return repository.getOwnerId(isOwner)
+    fun getOwnerId(): Int {
+        return repository.getOwnerId()
     }
 
     fun addUser(user: User) {

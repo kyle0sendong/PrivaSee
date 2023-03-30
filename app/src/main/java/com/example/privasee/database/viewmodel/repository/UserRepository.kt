@@ -8,8 +8,8 @@ class UserRepository(private val userDao: UserDao) {
 
     val getAllDataLive: LiveData<List<User>> = userDao.getAllDataLive()
 
-    fun getOwnerId(isOwner: Boolean): Int {
-        return userDao.getOwnerId(isOwner)
+    fun getOwnerId(): Int {
+        return userDao.getOwnerId()
     }
 
     fun getAllData(): List<User> {

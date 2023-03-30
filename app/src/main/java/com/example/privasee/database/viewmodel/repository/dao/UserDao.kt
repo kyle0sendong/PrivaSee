@@ -20,8 +20,8 @@ interface UserDao {
     fun getUserId(name: String): Int
 
     // This is used in the system so that the owner entity will never be deleted.
-    @Query("SELECT id FROM user WHERE isOwner = :isOwner")
-    fun getOwnerId(isOwner: Boolean): Int
+    @Query("SELECT id FROM user WHERE isOwner = true")
+    fun getOwnerId(): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addUser(user: User)
