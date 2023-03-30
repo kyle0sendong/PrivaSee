@@ -11,7 +11,6 @@ import com.example.privasee.databinding.ActivityMainBinding
 import com.example.privasee.ui.initialRun.SetupActivity
 import com.example.privasee.utils.CheckPermissionUtils
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

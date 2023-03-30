@@ -12,6 +12,7 @@ import com.example.privasee.ui.userList.userInfoUpdate.userAppControl.applock.Bl
 class AppAccessService : AccessibilityService() {
 
     private var packageNames: MutableList<String> = mutableListOf()
+    private var testValue: String? = ""
     private var previousPackageName = ""
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
@@ -48,13 +49,37 @@ class AppAccessService : AccessibilityService() {
     override fun onServiceConnected() {
         super.onServiceConnected()
         // Load package names dynamically here and update packageNames list
-        val metadata = AccessibilityServiceInfo()
-        metadata.eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
-        // Test on 2 apps, youtube and photos
-        packageNames.add("com.google.android.youtube")
-        packageNames.add("com.google.android.apps.photos")
-        metadata.packageNames = packageNames.toTypedArray()
-        serviceInfo = metadata
+
+
+        Log.d("test1234", "onServiceConnected")
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val value = intent?.getStringExtra("key")
+        Log.d("test1234", "$value")
+
+        if(value == "lock") {
+            val metadata = AccessibilityServiceInfo()
+            metadata.eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
+            // Test on 2 apps, youtube and photos
+            packageNames.add("com.google.android.youtube")
+            packageNames.add("com.google.android.apps.photos")
+            metadata.packageNames = packageNames.toTypedArray()
+            serviceInfo = metadata
+
+        } else if (value == "removeLock") {
+            val metadata = AccessibilityServiceInfo()
+            metadata.eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
+            // Test on 2 apps, youtube and photos
+            packageNames.remove("com.google.android.youtube")
+            metadata.packageNames = packageNames.toTypedArray()
+            serviceInfo = metadata
+
+        }
+
+
+        // use the value here
+        return super.onStartCommand(intent, flags, startId)
     }
 
     override fun onInterrupt() {
