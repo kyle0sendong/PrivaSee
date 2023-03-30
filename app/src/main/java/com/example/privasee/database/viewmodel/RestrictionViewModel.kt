@@ -50,4 +50,8 @@ class RestrictionViewModel(application: Application): AndroidViewModel(applicati
     fun updateControlledApps(restrictionId: Int, isControlled: Boolean) {
         return repository.updateControlledApps(restrictionId, isControlled)
     }
+
+    fun getUserRestrictionCount(userId: Int): Int {
+        return repository.getUserRestrictionCount(userId)
+    }
 }

@@ -43,4 +43,8 @@ interface RestrictionDao {
             "WHERE id = :restrictionId")
     fun updateControlledApps(restrictionId: Int, isControlled: Boolean)
 
+    @Query("SELECT COUNT(*) FROM restriction " +
+            "WHERE userId = :userId")
+    fun getUserRestrictionCount(userId: Int): Int
+
 }

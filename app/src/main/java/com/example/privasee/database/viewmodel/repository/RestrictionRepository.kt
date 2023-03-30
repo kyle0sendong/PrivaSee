@@ -36,4 +36,8 @@ class RestrictionRepository(private val restrictionDao: RestrictionDao) {
         return restrictionDao.updateControlledApps(restrictionId, isControlled)
     }
 
+    fun getUserRestrictionCount(userId: Int): Int {
+        return restrictionDao.getUserRestrictionCount(userId)
+    }
+
 }
