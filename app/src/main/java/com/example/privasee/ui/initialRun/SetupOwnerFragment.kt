@@ -34,8 +34,6 @@ class SetupOwnerFragment : Fragment() {
     private lateinit var mAppViewModel: AppViewModel
     private lateinit var mRestrictionViewModel: RestrictionViewModel
 
-    private var ownerId: Int = 0
-
     private var job: Job? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,26 +63,9 @@ class SetupOwnerFragment : Fragment() {
             }
         }
 
-        job = lifecycleScope.launch(Dispatchers.IO) {
-
-            val appList = mAppViewModel.getAllDataLive()
-            ownerId = mUserViewModel.getOwnerId(true)
-
-            withContext(Dispatchers.Main) {
-                appList.observe(viewLifecycleOwner) {
-                    for(app in it) {
-                        val appName = app.appName
-                        val appId = app.id
-                        val restriction = Restriction(0, appName, monitored = false, controlled = false, ownerId, appId)
-                        mRestrictionViewModel.addRestriction(restriction)
-                    }
-                }
-            }
-        }
-
         binding.btnSelectApps.setOnClickListener {
             Intent(requireContext(), UserAppMonitoringActivity::class.java).also { intent ->
-                intent.putExtra("userId", ownerId)
+                intent.putExtra("userId", 1)
                 startActivity(intent)
             }
         }
