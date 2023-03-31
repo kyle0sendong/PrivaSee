@@ -1,6 +1,7 @@
 package com.example.privasee.database.viewmodel.repository
 
 import androidx.lifecycle.LiveData
+import androidx.room.Query
 import com.example.privasee.database.model.Restriction
 import com.example.privasee.database.viewmodel.repository.dao.RestrictionDao
 
@@ -38,6 +39,10 @@ class RestrictionRepository(private val restrictionDao: RestrictionDao) {
 
     fun getUserRestrictionCount(userId: Int): Int {
         return restrictionDao.getUserRestrictionCount(userId)
+    }
+
+    fun getPackageId(restrictionId: Int): Int {
+        return restrictionDao.getPackageId(restrictionId)
     }
 
 }

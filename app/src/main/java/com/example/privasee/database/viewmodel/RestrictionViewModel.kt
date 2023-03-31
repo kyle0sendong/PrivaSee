@@ -54,4 +54,9 @@ class RestrictionViewModel(application: Application): AndroidViewModel(applicati
     fun getUserRestrictionCount(userId: Int): Int {
         return repository.getUserRestrictionCount(userId)
     }
+
+    fun getPackageId(restrictionId: Int): Int {
+        return repository.getPackageId(restrictionId)
+    }
+
 }

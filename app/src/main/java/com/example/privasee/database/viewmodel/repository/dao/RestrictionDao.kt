@@ -47,4 +47,8 @@ interface RestrictionDao {
             "WHERE userId = :userId")
     fun getUserRestrictionCount(userId: Int): Int
 
+    @Query("SELECT packageId FROM restriction " +
+            "WHERE id = :restrictionId")
+    fun getPackageId(restrictionId: Int): Int
+
 }

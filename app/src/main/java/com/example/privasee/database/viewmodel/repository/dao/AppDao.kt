@@ -19,8 +19,14 @@ interface AppDao {
     @Query("SELECT id FROM app")
     fun getAllAppId(): List<Int>
 
-    @Query("SELECT appName FROM app WHERE id = :packageId")
-    fun getAppName(packageId: Int): String
+    @Query("SELECT * FROM app WHERE id = :appId")
+    fun getAppInfo(appId: Int): App
+
+    @Query("SELECT appName FROM app WHERE id = :appId")
+    fun getAppName(appId: Int): String
+
+    @Query("SELECT packageName FROM app WHERE id = :appId")
+    fun getPackageName(appId: Int): String
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun addApp(app: App)
