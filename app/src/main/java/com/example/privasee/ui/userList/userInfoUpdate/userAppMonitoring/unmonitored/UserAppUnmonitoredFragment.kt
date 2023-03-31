@@ -1,20 +1,20 @@
 package com.example.privasee.ui.userList.userInfoUpdate.userAppMonitoring.unmonitored
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.privasee.AppAccessService
 import com.example.privasee.R
+import com.example.privasee.database.viewmodel.AppViewModel
 import com.example.privasee.database.viewmodel.RestrictionViewModel
-import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentUserAppUnmonitoredBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -27,11 +27,12 @@ class UserAppUnmonitoredFragment : Fragment() {
     private var _binding: FragmentUserAppUnmonitoredBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var mUserViewModel: UserViewModel
     private lateinit var mRestrictionViewModel: RestrictionViewModel
+    private lateinit var mAppViewModel: AppViewModel
 
     private var job1: Job? = null
     private var job2: Job? = null
+    private var job3: Job? = null
 
     private val args: UserAppUnmonitoredFragmentArgs by navArgs()
 
@@ -46,23 +47,20 @@ class UserAppUnmonitoredFragment : Fragment() {
         binding.rvAppUnmonitored.adapter = adapter
         binding.rvAppUnmonitored.layoutManager = LinearLayoutManager(requireContext())
 
-        // Nav args
+        // Nav Arguments
         val userId = args.userId
         val bundle = Bundle()
         bundle.putInt("userId", userId)
 
         // Database queries
-        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
+        mAppViewModel = ViewModelProvider(this)[AppViewModel::class.java]
 
         // Observe Live data of unmonitored list
         job1 = lifecycleScope.launch {
-
             val unmonitoredList = mRestrictionViewModel.getAllUnmonitoredApps(userId)
             withContext(Dispatchers.Main) {
-
                 unmonitoredList.observe(viewLifecycleOwner) {
-                    Log.d("test123", "$userId Unmonitored $it")
                     adapter.setData(it)
                 }
             }
@@ -73,15 +71,37 @@ class UserAppUnmonitoredFragment : Fragment() {
             findNavController().navigate(R.id.action_appUnmonitoredFragment_to_appMonitoredFragment, bundle)
         }
 
-        // Update new list of monitored apps
+        // Update new list of monitored apps in database
         binding.btnApplyUnmonitored.setOnClickListener {
-            val newMonitoredList = adapter.getCheckedApps()
+            val newRestriction = adapter.getCheckedApps()
             job2 = lifecycleScope.launch(Dispatchers.IO) {
-                for (restrictionId in newMonitoredList)
+                for (restrictionId in newRestriction)
                     mRestrictionViewModel.updateMonitoredApps(restrictionId, true)
             }
-            if (newMonitoredList.isNotEmpty())
-                findNavController().navigate(R.id.action_appUnmonitoredFragment_to_appMonitoredFragment, bundle)
+
+            if (newRestriction.isNotEmpty()) {
+                // Send data to Accessibility Service on monitoring
+                job3 = lifecycleScope.launch(Dispatchers.IO) {
+                    val newMonitoredListPackageName: MutableList<String> = mutableListOf()
+                    val newMonitoredListAppName: MutableList<String> = mutableListOf()
+                    for (restrictionId in newRestriction) {
+                        val appId = mRestrictionViewModel.getPackageId(restrictionId)
+                        newMonitoredListPackageName.add(mAppViewModel.getPackageName(appId))
+                        newMonitoredListAppName.add(mAppViewModel.getAppName(appId))
+                    }
+                    val intent = Intent(requireContext(), AppAccessService::class.java)
+                    intent.putExtra("action", "addMonitor" )
+                    intent.putStringArrayListExtra("addMonitoredAppPackageName", ArrayList(newMonitoredListPackageName))
+                    intent.putStringArrayListExtra("addMonitoredAppName", ArrayList(newMonitoredListAppName))
+                    requireContext().startService(intent)
+                }
+
+                findNavController().navigate(
+                    R.id.action_appUnmonitoredFragment_to_appMonitoredFragment,
+                    bundle
+                )
+            }
+
         }
 
         return binding.root
@@ -91,6 +111,8 @@ class UserAppUnmonitoredFragment : Fragment() {
         super.onDestroyView()
         job1?.cancel()
         job2?.cancel()
+        job3?.cancel()
         _binding = null
     }
+
 }

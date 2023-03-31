@@ -12,8 +12,7 @@ import com.example.privasee.ui.userList.userInfoUpdate.userAppControl.applock.Bl
 class AppAccessService : AccessibilityService() {
 
     private var packageNames: MutableList<String> = mutableListOf()
-    private var testValue: String? = ""
-    private var previousPackageName = ""
+    private var previousPackageName = "initial"
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if(event?.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
@@ -33,52 +32,48 @@ class AppAccessService : AccessibilityService() {
                 startActivity(intent)
             }
 
-            // For blocklisted apps test
-            previousPackageName = packageName
-            val pm = applicationContext.packageManager
-            val appInfo = pm.getPackageInfo(packageName, PackageManager.GET_META_DATA)
-            val appName = appInfo.applicationInfo.loadLabel(pm).toString()
-            Log.d("testing", "$appName to foreground")
-
-            val intent = Intent(this, BlockScreen::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
+//            // For blocklisted apps test
+//            previousPackageName = packageName
+//            val pm = applicationContext.packageManager
+//            val appInfo = pm.getPackageInfo(packageName, PackageManager.GET_META_DATA)
+//            val appName = appInfo.applicationInfo.loadLabel(pm).toString()
+//            Log.d("testing", "$appName to foreground")
+//
+//            val intent = Intent(this, BlockScreen::class.java)
+//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//            startActivity(intent)
         }
     }
 
     override fun onServiceConnected() {
         super.onServiceConnected()
-        // Load package names dynamically here and update packageNames list
-
-
         Log.d("test1234", "onServiceConnected")
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val value = intent?.getStringExtra("key")
-        Log.d("test1234", "$value")
+        val action = intent?.getStringExtra("action")
 
-        if(value == "lock") {
+        if(action == "addMonitor") {
             val metadata = AccessibilityServiceInfo()
             metadata.eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
-            // Test on 2 apps, youtube and photos
-            packageNames.add("com.google.android.youtube")
-            packageNames.add("com.google.android.apps.photos")
+
+            val addMonitor = intent.getStringArrayListExtra("addMonitoredAppPackageName")
+            Log.d("test1234", "Check List: Add to monitoring $addMonitor ")
+//            packageNames.add("com.google.android.apps.photos")
             metadata.packageNames = packageNames.toTypedArray()
             serviceInfo = metadata
-
-        } else if (value == "removeLock") {
-            val metadata = AccessibilityServiceInfo()
-            metadata.eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
-            // Test on 2 apps, youtube and photos
-            packageNames.remove("com.google.android.youtube")
-            metadata.packageNames = packageNames.toTypedArray()
-            serviceInfo = metadata
-
         }
 
+        if (action == "removeMonitor") {
+            val metadata = AccessibilityServiceInfo()
+            metadata.eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
 
-        // use the value here
+            val removeMonitor = intent.getStringArrayListExtra("removeMonitoredAppPackageName")
+            Log.d("test1234", "Check List: Removing monitoring list $removeMonitor ")
+            metadata.packageNames = packageNames.toTypedArray()
+            serviceInfo = metadata
+        }
+
         return super.onStartCommand(intent, flags, startId)
     }
 
