@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/testTtv"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.controlAccess.ControlAccessFragment">
@@ -10,33 +11,53 @@
         android:id="@+id/btnTestService1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="156dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="167dp"
         android:text="add"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerUsers" />
 
     <Button
         android:id="@+id/btnTestService2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="169dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="148dp"
+        android:layout_marginStart="157dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="159dp"
         android:text="remove"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnTestService1" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Control Access"
+    <Spinner
+        android:id="@+id/spinnerUsers"
+        android:layout_width="297dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="57dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="44dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnTestService1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/tvTest123"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="177dp"
+        android:layout_marginBottom="346dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnTestService2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
