@@ -85,16 +85,13 @@ class UserAppMonitoredFragment : Fragment() {
                 // Send data to Accessibility Service on monitoring
                 job3 = lifecycleScope.launch(Dispatchers.IO) {
                     val newMonitoredListPackageName: MutableList<String> = mutableListOf()
-                    val newMonitoredListAppName: MutableList<String> = mutableListOf()
                     for (restrictionId in newRestriction) {
                         val appId = mRestrictionViewModel.getPackageId(restrictionId)
                         newMonitoredListPackageName.add(mAppViewModel.getPackageName(appId))
-                        newMonitoredListAppName.add(mAppViewModel.getAppName(appId))
                     }
                     val intent = Intent(requireContext(), AppAccessService::class.java)
                     intent.putExtra("action", "removeMonitor" )
                     intent.putStringArrayListExtra("removeMonitoredAppPackageName", ArrayList(newMonitoredListPackageName))
-                    intent.putStringArrayListExtra("removeMonitoredAppName", ArrayList(newMonitoredListAppName))
                     requireContext().startService(intent)
                 }
 
