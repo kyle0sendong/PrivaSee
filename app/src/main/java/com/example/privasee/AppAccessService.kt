@@ -3,16 +3,10 @@ package com.example.privasee
 import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.AccessibilityServiceInfo
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NO_USER_ACTION
 import android.content.pm.PackageManager
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
-import com.example.privasee.database.model.User
-import com.example.privasee.database.viewmodel.RecordViewModel
-import com.example.privasee.database.viewmodel.UserViewModel
-import com.example.privasee.ui.userList.userInfoUpdate.userAppControl.applock.BlockScreen
 
 class AppAccessService : AccessibilityService() {
 
@@ -51,32 +45,26 @@ class AppAccessService : AccessibilityService() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val monitorAction = intent?.getStringExtra("action")
-        controlAction = intent?.getStringExtra("controlAction").toString()
-        if(monitorAction == "addMonitor") {
-            val metadata = AccessibilityServiceInfo()
-            metadata.eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
 
-            val addMonitor = intent.getStringArrayListExtra("addMonitoredAppPackageName")
+        val metadata = AccessibilityServiceInfo()
+        metadata.eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
 
-            Log.d("tagimandos", "intent $addMonitor")
-            if (addMonitor != null)
-                for(appPackageName in addMonitor)
-                    packageNames.add(appPackageName)
+        val action = intent?.getStringExtra("action")
+        val packageNames = intent?.getStringArrayListExtra("packageNames")
 
-            metadata.packageNames = packageNames.toTypedArray()
-            serviceInfo = metadata
-        }
+        if (packageNames != null) {
 
-        if (monitorAction == "removeMonitor") {
-            val metadata = AccessibilityServiceInfo()
-            metadata.eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
+            if(action == "addMonitor") {
+                Log.d("tagimandos", "intent $packageNames")
+                for(packageName in packageNames)
+                    this.packageNames.add(packageName)
+            }
 
-            val removeMonitor = intent.getStringArrayListExtra("removeMonitoredAppPackageName")
-            Log.d("tagimandos", "intent $removeMonitor")
-            if (removeMonitor != null)
-                for(appPackageName in removeMonitor)
-                    packageNames.remove(appPackageName)
+            if (action == "removeMonitor") {
+                Log.d("tagimandos", "intent $packageNames")
+                for(packageName in packageNames)
+                    this.packageNames.remove(packageName)
+            }
 
             metadata.packageNames = packageNames.toTypedArray()
             serviceInfo = metadata

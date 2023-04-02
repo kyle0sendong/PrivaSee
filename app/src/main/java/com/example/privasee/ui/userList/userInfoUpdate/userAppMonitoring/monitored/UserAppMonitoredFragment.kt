@@ -91,7 +91,7 @@ class UserAppMonitoredFragment : Fragment() {
                     }
                     val intent = Intent(requireContext(), AppAccessService::class.java)
                     intent.putExtra("action", "removeMonitor" )
-                    intent.putStringArrayListExtra("removeMonitoredAppPackageName", ArrayList(newMonitoredListPackageName))
+                    intent.putStringArrayListExtra("packageNames", ArrayList(newMonitoredListPackageName))
                     requireContext().startService(intent)
                 }
 
