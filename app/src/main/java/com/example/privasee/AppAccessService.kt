@@ -6,18 +6,17 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
-import androidx.core.content.ContextCompat
+import com.example.privasee.ui.userList.userInfoUpdate.userAppControl.applock.BlockScreen
 
 class AppAccessService : AccessibilityService() {
 
     private var packageNames: MutableList<String> = mutableListOf()
+    private var controlledApps: MutableList<String> = mutableListOf()
     private var previousPackageName = "initial"
-
-    private var controlAction: String = "removeLock"
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
 
-        if (packageNames.size > 0) {
+        if(packageNames.size > 0) {
 
             if(event?.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
 
@@ -34,10 +33,21 @@ class AppAccessService : AccessibilityService() {
                 } else {
                     previousPackageName = currentlyOpenedApp
                     // start intent service, start verifying etc
-                    Log.d("tagimandos", "$appName")
-                    val intent = Intent(this, TestIntentService::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    ContextCompat.startForegroundService(this, intent)
+                    Log.d("tagimandos", "monitoring $appName")
+//                    val intent = Intent(this, TestIntentService::class.java)
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                    ContextCompat.startForegroundService(this, intent)
+                }
+
+                if(controlledApps.size > 0) {
+                    for(packageName in controlledApps) {
+                        if(packageName == currentlyOpenedApp) {
+                            Log.d("tagimandos", "lock screen on $appName")
+                            val intent = Intent(this, BlockScreen::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(intent)
+                        }
+                    }
                 }
             }
         }
@@ -55,15 +65,31 @@ class AppAccessService : AccessibilityService() {
         if (packageNames != null) {
 
             if(action == "addMonitor") {
-                Log.d("tagimandos", "intent $packageNames")
+                Log.d("tagimandos", "add monitor $packageNames")
                 for(packageName in packageNames)
                     this.packageNames.add(packageName)
             }
 
             if (action == "removeMonitor") {
-                Log.d("tagimandos", "intent $packageNames")
+                Log.d("tagimandos", "remove monitor $packageNames")
                 for(packageName in packageNames)
                     this.packageNames.remove(packageName)
+            }
+
+            if (action == "addLock") {
+                Log.d("tagimandos", "add lock$packageNames")
+                for(packageName in packageNames) {
+                    this.packageNames.add(packageName)
+                    this.controlledApps.add(packageName)
+                }
+            }
+
+            if (action == "removeLock") {
+                Log.d("tagimandos", "remove lock $packageNames")
+                for(packageName in packageNames) {
+                    this.packageNames.remove(packageName)
+                    this.controlledApps.remove(packageName)
+                }
             }
 
             metadata.packageNames = packageNames.toTypedArray()
