@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/addUserFragment"
         android:name="com.example.privasee.ui.userList.addUser.AddUserFragment"
-        android:label="fragment_add_user"
+        android:label="Add New User"
         tools:layout="@layout/fragment_add_user" >
         <action
             android:id="@+id/action_addUserFragment_to_userFragment"
@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/userFragment"
         android:name="com.example.privasee.ui.userList.UserListFragment"
-        android:label="fragment_user"
+        android:label="Users"
         tools:layout="@layout/fragment_user_list" >
         <action
             android:id="@+id/action_userFragment_to_addUserFragment"
@@ -31,7 +31,7 @@
     <fragment
         android:id="@+id/updateUserFragment"
         android:name="com.example.privasee.ui.userList.userInfoUpdate.UserInfoUpdateFragment"
-        android:label="fragment_update_user"
+        android:label="User Information"
         tools:layout="@layout/fragment_user_info_update" >
         <action
             android:id="@+id/action_updateUserFragment_to_userFragment"

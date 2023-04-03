@@ -3,7 +3,6 @@ package com.example.privasee.ui.userList.userInfoUpdate
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.privasee.R
 import com.example.privasee.database.model.User
 import com.example.privasee.database.viewmodel.RestrictionViewModel
@@ -32,6 +32,7 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
     private val args by navArgs<UserInfoUpdateFragmentArgs>()
 
     private lateinit var mUserViewModel: UserViewModel
+    private lateinit var mRestrictionViewModel: RestrictionViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,14 +41,37 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
         _binding = FragmentUserInfoUpdateBinding.inflate(inflater, container, false)
 
         mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+        mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
 
         val userName = args.currentUser.name
         val userId = args.currentUser.id
+        val userIsOwner = args.currentUser.isOwner
 
-        if (args.currentUser.isOwner) // hide controlled apps for owner
+        // Recyclerview Adapter
+        val adapter = UserInfoUpdateAdapter()
+        binding.rvAppList.adapter = adapter
+        binding.rvAppList.layoutManager = LinearLayoutManager(requireContext())
+
+        if (userIsOwner) { // hide controlled apps for owner and send monitored app list
+            val restrictionList = "Monitored App List"
+            binding.tvRestrictionType.text = restrictionList
             binding.btnUserSetControlled.isVisible = false
-        else // hide monitored apps for non-owner
+            lifecycleScope.launch(Dispatchers.Main) {
+                mRestrictionViewModel.getAllMonitoredApps(userId).observe(viewLifecycleOwner) {
+                    adapter.setData(it)
+                }
+            }
+        }
+        else { // hide monitored apps for non-owner and send controlled app list
+            val restrictionList = "Controlled App List"
+            binding.tvRestrictionType.text = restrictionList
             binding.btnUserSetMonitored.isVisible = false
+            lifecycleScope.launch(Dispatchers.Main) {
+                mRestrictionViewModel.getAllControlledApps(userId).observe(viewLifecycleOwner) {
+                    adapter.setData(it)
+                }
+            }
+        }
 
         binding.updateName.setText(userName)
 
@@ -65,7 +89,7 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
             }
         }
 
-        binding.btnUserUpdateApply.setOnClickListener {
+        binding.btnUserUpdateSave.setOnClickListener {
             updateItem()
             findNavController().navigate(R.id.action_updateUserFragment_to_userFragment)
         }
@@ -121,26 +145,23 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
         }
     }
 
-
     private fun checkInput(name: String): Boolean {
         return name.isNotEmpty()
     }
-
 
     override fun onResume() {
         super.onResume()
         (activity as? AppCompatActivity)?.supportActionBar?.show()
     }
 
-
     override fun onPause() {
         super.onPause()
         (activity as? AppCompatActivity)?.supportActionBar?.hide()
     }
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 }

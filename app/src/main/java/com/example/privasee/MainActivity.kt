@@ -63,4 +63,6 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
+    override fun onBackPressed() {} // Disable back button
+
 }
