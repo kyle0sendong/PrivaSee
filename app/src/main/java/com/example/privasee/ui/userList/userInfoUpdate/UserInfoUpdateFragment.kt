@@ -44,7 +44,7 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
         val userName = args.currentUser.name
         val userId = args.currentUser.id
 
-        if (userId == 1) // owner will always be 1, hide controlled apps for owner
+        if (args.currentUser.isOwner) // hide controlled apps for owner
             binding.btnUserSetControlled.isVisible = false
         else // hide monitored apps for non-owner
             binding.btnUserSetMonitored.isVisible = false
