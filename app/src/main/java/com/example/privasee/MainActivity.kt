@@ -3,12 +3,9 @@ package com.example.privasee
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -16,8 +13,6 @@ import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.ActivityMainBinding
 import com.example.privasee.ui.initialRun.SetupActivity
 import com.example.privasee.utils.CheckPermissionUtils
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
