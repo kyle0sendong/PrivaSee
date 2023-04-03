@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         val isFirstTimeOpen = sharedPreferences.getBoolean("isFirstTimeOpen", true)
 
         mUserViewModel.getAllDataLive.observe(this, Observer { userList ->
-            Log.d("tagimandos", "owner id $userList")
             if (isFirstTimeOpen || userList.isEmpty()) {
                 // Start initial run
                 val intent = Intent(this@MainActivity, SetupActivity::class.java)
