@@ -3,41 +3,59 @@ package com.example.privasee
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.ActivityMainBinding
 import com.example.privasee.ui.initialRun.SetupActivity
 import com.example.privasee.utils.CheckPermissionUtils
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomNavController: NavController
 
+    private lateinit var mUserViewModel: UserViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         supportActionBar?.hide()
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        bottomNavController = findNavController(R.id.fcvBotNav)
+        binding.botNav.setupWithNavController(bottomNavController)
+
+        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+
+        // Checking if first time has been opened or when owner is non-existent
         val sharedPreferences = getSharedPreferences("isFirstTimeOpen", Context.MODE_PRIVATE)
         val isFirstTimeOpen = sharedPreferences.getBoolean("isFirstTimeOpen", true)
 
-        if (isFirstTimeOpen) {
-            // Start initial run
-            Intent(this, SetupActivity::class.java).also {
-                startActivity(it)
-            }
-            sharedPreferences.edit().putBoolean("isFirstTimeOpen", false).apply()
-        } else {
-            CheckPermissionUtils.checkAccessibilityPermission(this)
-        }
+        mUserViewModel.getAllDataLive.observe(this, Observer { userList ->
+            Log.d("tagimandos", "owner id $userList")
+            if (isFirstTimeOpen || userList.isEmpty()) {
+                // Start initial run
+                val intent = Intent(this@MainActivity, SetupActivity::class.java)
+                startActivity(intent)
+                sharedPreferences.edit().putBoolean("isFirstTimeOpen", false).apply()
 
-        bottomNavController = findNavController(R.id.fcvBotNav)
-        binding.botNav.setupWithNavController(bottomNavController)
+            } else
+                CheckPermissionUtils.checkAccessibilityPermission(this)
+        })
+
+
 
     }
 
