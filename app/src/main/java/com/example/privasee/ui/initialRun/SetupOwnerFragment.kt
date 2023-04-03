@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -45,9 +46,8 @@ class SetupOwnerFragment : Fragment() {
         mAppViewModel = ViewModelProvider(this)[AppViewModel::class.java]
         mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
 
-        // Initialize the Owner information
-        val userInfo = User(0, "owner", isOwner = true)
-        mUserViewModel.addUser(userInfo)
+
+        val name = binding.etSetName.text.toString()
 
         val intent = Intent(Intent.ACTION_MAIN)
         intent.addCategory(Intent.CATEGORY_LAUNCHER)
@@ -71,8 +71,16 @@ class SetupOwnerFragment : Fragment() {
         }
 
         binding.btnSetupOwnerFinish.setOnClickListener {
-            findNavController().navigate(R.id.action_setupOwnerFragment_to_mainActivity)
-            requireActivity().finishAffinity()
+
+            // Initialize the Owner information
+            if(name.isNotEmpty()) {
+                val userInfo = User(0, name, isOwner = true)
+                mUserViewModel.addUser(userInfo)
+                findNavController().navigate(R.id.action_setupOwnerFragment_to_mainActivity)
+                requireActivity().finishAffinity()
+            } else {
+                Toast.makeText(requireContext(), "PLease input your name", Toast.LENGTH_SHORT).show()
+            }
         }
 
         return binding.root
