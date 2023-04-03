@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/tvOwner"
         android:layout_width="350dp"
-        android:layout_height="350dp"
+        android:layout_height="300dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="30dp"
@@ -27,10 +27,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="Register Face"
-        app:layout_constraintEnd_toEndOf="@+id/btnSelectApps"
-        app:layout_constraintHorizontal_bias="0.517"
-        app:layout_constraintStart_toStartOf="@+id/btnSelectApps"
-        app:layout_constraintTop_toBottomOf="@+id/btnSelectApps" />
+        app:layout_constraintEnd_toEndOf="@+id/etSetName"
+        app:layout_constraintStart_toStartOf="@+id/etSetName"
+        app:layout_constraintTop_toBottomOf="@+id/etSetName" />
 
     <Button
         android:id="@+id/btnSelectApps"
@@ -38,9 +37,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="Select Apps to Monitor"
-        app:layout_constraintEnd_toEndOf="@+id/tvOwner"
-        app:layout_constraintStart_toStartOf="@+id/tvOwner"
-        app:layout_constraintTop_toBottomOf="@+id/tvOwner" />
+        app:layout_constraintEnd_toEndOf="@+id/btnOwnerRegisterFace"
+        app:layout_constraintStart_toStartOf="@+id/btnOwnerRegisterFace"
+        app:layout_constraintTop_toBottomOf="@+id/btnOwnerRegisterFace" />
 
     <Button
         android:id="@+id/btnSetupOwnerFinish"
@@ -51,4 +50,17 @@
         android:text="Finish"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/etSetName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:hint="Name"
+        app:layout_constraintEnd_toEndOf="@+id/tvOwner"
+        app:layout_constraintStart_toStartOf="@+id/tvOwner"
+        app:layout_constraintTop_toBottomOf="@+id/tvOwner" />
 </androidx.constraintlayout.widget.ConstraintLayout>
