@@ -24,7 +24,7 @@
         android:theme="@style/Theme.PrivaSee"
         tools:targetApi="31">
         <service
-            android:name=".TestIntentService"
+            android:name=".DbQueryIntentService"
             android:enabled="true"
             android:exported="false" >
         </service>
