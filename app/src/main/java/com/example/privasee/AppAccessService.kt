@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
+import androidx.core.content.ContextCompat
 import com.example.privasee.ui.userList.userInfoUpdate.userAppControl.applock.BlockScreen
 
 class AppAccessService : AccessibilityService() {
@@ -34,9 +35,11 @@ class AppAccessService : AccessibilityService() {
                     previousPackageName = currentlyOpenedApp
                     // start intent service, start verifying etc
                     Log.d("tagimandos", "monitoring $appName")
-//                    val intent = Intent(this, TestIntentService::class.java)
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//                    ContextCompat.startForegroundService(this, intent)
+                    val intent = Intent(this, DbQueryIntentService::class.java)
+                    intent.putExtra("query", "insertRecord")
+                    intent.putExtra("appName", appName)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    ContextCompat.startForegroundService(this, intent)
                 }
 
                 if(controlledApps.size > 0) {
