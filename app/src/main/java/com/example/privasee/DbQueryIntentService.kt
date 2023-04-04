@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.privasee.database.model.User
 import com.example.privasee.database.viewmodel.UserViewModel
 
-class TestIntentService : IntentService("TestIntentService") {
+class DatabaseIntentService : IntentService("TestIntentService") {
 
     private lateinit var mUserViewModel: UserViewModel
 
