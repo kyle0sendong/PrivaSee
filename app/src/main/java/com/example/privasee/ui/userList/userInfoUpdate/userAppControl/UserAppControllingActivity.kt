@@ -29,6 +29,7 @@ class UserAppControllingActivity : AppCompatActivity() {
     private var job: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        supportActionBar?.hide()
         super.onCreate(savedInstanceState)
         binding = ActivityUserAppControllingBinding.inflate(layoutInflater)
         setContentView(binding.root)

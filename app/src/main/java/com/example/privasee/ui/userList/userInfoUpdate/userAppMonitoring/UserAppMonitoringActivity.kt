@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.privasee.R
@@ -29,6 +30,7 @@ class UserAppMonitoringActivity : AppCompatActivity() {
     private var job: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        supportActionBar?.hide()
         super.onCreate(savedInstanceState)
         binding = ActivityUserAppMonitoringBinding.inflate(layoutInflater)
         setContentView(binding.root)
