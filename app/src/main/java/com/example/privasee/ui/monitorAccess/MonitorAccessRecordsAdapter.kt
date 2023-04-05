@@ -24,7 +24,6 @@ class MonitorAccessRecordsAdapter(): RecyclerView.Adapter<MonitorAccessRecordsAd
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val currentRecord = recordList[position]
 
-
         if(currentRecord.day > 0) {
             val day = currentRecord.day
             val month = Month.of(currentRecord.month).name
