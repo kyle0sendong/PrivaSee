@@ -1,6 +1,5 @@
 package com.example.privasee.ui.userList
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -33,7 +32,6 @@ class UserListAdapter(): RecyclerView.Adapter<UserListAdapter.UserViewHolder>() 
             else
                 tvIsOwner.isVisible = false
 
-            Log.d("tagimandos", "userlistadapter $currentUser")
             recyclerItemUser.setOnClickListener {
                 val action = UserListFragmentDirections.actionUserFragmentToUpdateUserFragment(currentUser)
                 recyclerItemUser.findNavController().navigate(action)

@@ -76,7 +76,7 @@ class DbQueryIntentService : IntentService("TestIntentService") {
                 val restrictionList = mRestrictionViewModel.getAllMonitoredAppList(ownerId)
                 val monitoredList: MutableList<String> = mutableListOf()
                 for(restriction in restrictionList) {
-                    val packageName = mAppViewModel.getPackageName(restriction.packageId)
+                    val packageName = mAppViewModel.getPackageName(restriction.appName)
                     monitoredList.add(packageName)
                 }
 

@@ -87,8 +87,7 @@ class ControlAccessFragment : Fragment() {
                                 lifecycleScope.launch(Dispatchers.IO) {
                                     val controlledAppPackageNames: MutableList<String> = mutableListOf()
                                     for(restrictedApp in controlledList) {
-                                        val appId = restrictedApp.packageId
-                                        val packageName = mAppViewModel.getPackageName(appId)
+                                        val packageName = mAppViewModel.getPackageName(restrictedApp.appName)
                                         controlledAppPackageNames.add(packageName)
                                     }
 
