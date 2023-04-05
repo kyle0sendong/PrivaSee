@@ -8,13 +8,23 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.privasee.database.model.Record
-import com.example.privasee.database.model.User
+import com.example.privasee.database.viewmodel.AppViewModel
 import com.example.privasee.database.viewmodel.RecordViewModel
+import com.example.privasee.database.viewmodel.RestrictionViewModel
+import com.example.privasee.database.viewmodel.UserViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
 class DbQueryIntentService : IntentService("TestIntentService") {
 
     private lateinit var mRecordViewModel: RecordViewModel
+    private lateinit var mRestrictionViewModel: RestrictionViewModel
+    private lateinit var mUserViewModel: UserViewModel
+    private lateinit var mAppViewModel: AppViewModel
+
+    private val ioScope = CoroutineScope(Dispatchers.IO)
 
     override fun onHandleIntent(intent: Intent?) {
 
@@ -28,10 +38,10 @@ class DbQueryIntentService : IntentService("TestIntentService") {
         val notification = NotificationCompat.Builder(this, CHANNEL_ID) // No notifs
             .setPriority(NotificationCompat.PRIORITY_MIN)
             .build()
-
         // Start foreground
         startForeground(NOTIFICATION_ID, notification)
 
+        // Take the intent extra 'query'
         val query = intent?.getStringExtra("query")
 
         if(query == "insertRecord") {
@@ -51,6 +61,30 @@ class DbQueryIntentService : IntentService("TestIntentService") {
             if (record != null)
                 mRecordViewModel.addRecord(record)
 
+        }
+
+        // This is used for initializing the monitored app in the app access service
+        // every phone reboot
+        // Or when the app has been force closed
+        if(query == "getMonitoredApps") {
+            mRestrictionViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(RestrictionViewModel::class.java)
+            mAppViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(AppViewModel::class.java)
+            mUserViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(UserViewModel::class.java)
+
+            ioScope.launch {
+                val ownerId = mUserViewModel.getOwnerId()
+                val restrictionList = mRestrictionViewModel.getAllMonitoredAppList(ownerId)
+                val monitoredList: MutableList<String> = mutableListOf()
+                for(restriction in restrictionList) {
+                    val packageName = mAppViewModel.getPackageName(restriction.packageId)
+                    monitoredList.add(packageName)
+                }
+
+                val intent = Intent(this@DbQueryIntentService, AppAccessService::class.java)
+                intent.putExtra("action", "addMonitor" )
+                intent.putStringArrayListExtra("packageNames", ArrayList(monitoredList))
+                this@DbQueryIntentService.startService(intent)
+            }
         }
 
         stopSelf() // Staph

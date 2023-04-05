@@ -30,7 +30,6 @@ class AppAccessService : AccessibilityService() {
                 // Triggering only once, for repeated opens
                 if (previousPackageName == currentlyOpenedApp) {
                     previousPackageName = currentlyOpenedApp
-
                 } else {
                     previousPackageName = currentlyOpenedApp
                     // start intent service, start verifying etc
@@ -52,6 +51,7 @@ class AppAccessService : AccessibilityService() {
                         }
                     }
                 }
+
             }
         }
 
@@ -108,7 +108,10 @@ class AppAccessService : AccessibilityService() {
 
     override fun onServiceConnected() {
         super.onServiceConnected()
-        Log.d("tagimandos", "On service connect")
+        val intent = Intent(this, DbQueryIntentService::class.java)
+        intent.putExtra("query", "getMonitoredApps")
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        ContextCompat.startForegroundService(this, intent)
     }
 
 }
