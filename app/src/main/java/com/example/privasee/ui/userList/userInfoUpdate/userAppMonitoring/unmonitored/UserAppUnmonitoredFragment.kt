@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -32,7 +33,6 @@ class UserAppUnmonitoredFragment : Fragment() {
 
     private var job1: Job? = null
     private var job2: Job? = null
-    private var job3: Job? = null
 
     private val args: UserAppUnmonitoredFragmentArgs by navArgs()
 
@@ -42,21 +42,21 @@ class UserAppUnmonitoredFragment : Fragment() {
     ): View {
         _binding = FragmentUserAppUnmonitoredBinding.inflate(inflater, container, false)
 
+        // Database view models
+        mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
+        mAppViewModel = ViewModelProvider(this)[AppViewModel::class.java]
+
         // Recyclerview adapter
         val adapter = UserAppUnmonitoredAdapter()
         binding.rvAppUnmonitored.adapter = adapter
         binding.rvAppUnmonitored.layoutManager = LinearLayoutManager(requireContext())
 
-        // Nav Arguments
+        // Nav args, take user id then put it in an extra bundle for navigating
         val userId = args.userId
         val bundle = Bundle()
         bundle.putInt("userId", userId)
 
-        // Database queries
-        mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
-        mAppViewModel = ViewModelProvider(this)[AppViewModel::class.java]
-
-        // Observe Live data of unmonitored list
+        // Display list of controlled apps on recyclerview
         job1 = lifecycleScope.launch {
             val unmonitoredList = mRestrictionViewModel.getAllUnmonitoredApps(userId)
             withContext(Dispatchers.Main) {
@@ -66,22 +66,25 @@ class UserAppUnmonitoredFragment : Fragment() {
             }
         }
 
-        // Buttons
         binding.btnMonitoredList.setOnClickListener {
             findNavController().navigate(R.id.action_appUnmonitoredFragment_to_appMonitoredFragment, bundle)
         }
 
-        // Update new list of monitored apps in database
         binding.btnApplyUnmonitored.setOnClickListener {
+
             val newRestriction = adapter.getCheckedApps()
-            job2 = lifecycleScope.launch(Dispatchers.IO) {
-                for (restrictionId in newRestriction)
-                    mRestrictionViewModel.updateMonitoredApps(restrictionId, true)
-            }
 
             if (newRestriction.isNotEmpty()) {
+
                 // Send data to Accessibility Service on monitoring
-                job3 = lifecycleScope.launch(Dispatchers.IO) {
+                job2 = lifecycleScope.launch(Dispatchers.IO) {
+
+                    // Update Monitored Apps in database
+                    for (restrictionId in newRestriction)
+                        mRestrictionViewModel.updateMonitoredApps(restrictionId, true)
+
+                    // Add to package names to monitored list then send it to accessibility service
+                    // Take effect immediately on accessibility service's monitoring
                     val newMonitoredListPackageName: MutableList<String> = mutableListOf()
                     for (restrictionId in newRestriction) {
                         val appId = mRestrictionViewModel.getPackageId(restrictionId)
@@ -97,6 +100,9 @@ class UserAppUnmonitoredFragment : Fragment() {
                     R.id.action_appUnmonitoredFragment_to_appMonitoredFragment,
                     bundle
                 )
+
+            } else {
+                Toast.makeText(requireContext(), "Please select apps to monitor or just press back to return", Toast.LENGTH_SHORT).show()
             }
 
         }
@@ -108,7 +114,6 @@ class UserAppUnmonitoredFragment : Fragment() {
         super.onDestroyView()
         job1?.cancel()
         job2?.cancel()
-        job3?.cancel()
         _binding = null
     }
 

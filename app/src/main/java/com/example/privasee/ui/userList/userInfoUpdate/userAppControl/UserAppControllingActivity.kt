@@ -11,7 +11,6 @@ import com.example.privasee.R
 import com.example.privasee.database.model.Restriction
 import com.example.privasee.database.viewmodel.AppViewModel
 import com.example.privasee.database.viewmodel.RestrictionViewModel
-import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.ActivityUserAppControllingBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -23,7 +22,6 @@ class UserAppControllingActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     private lateinit var mRestrictionViewModel: RestrictionViewModel
-    private lateinit var mUserViewModel: UserViewModel
     private lateinit var mAppViewModel: AppViewModel
 
     private var job: Job? = null
@@ -45,9 +43,9 @@ class UserAppControllingActivity : AppCompatActivity() {
             bundle.putInt("userId", userId)
 
             mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
-            mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
             mAppViewModel = ViewModelProvider(this)[AppViewModel::class.java]
 
+            // Initializes restriction list for this user
             job = lifecycleScope.launch(Dispatchers.IO) {
                 val userRestrictionCount = mRestrictionViewModel.getUserRestrictionCount(userId)
                 if (userRestrictionCount < 1) {
@@ -58,6 +56,7 @@ class UserAppControllingActivity : AppCompatActivity() {
                     }
                 }
             }
+
         }
 
         navController.setGraph(R.navigation.controlling_nav, bundle)

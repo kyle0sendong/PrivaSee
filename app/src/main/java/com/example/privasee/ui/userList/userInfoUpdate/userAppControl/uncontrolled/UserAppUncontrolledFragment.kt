@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -39,30 +40,29 @@ class UserAppUncontrolledFragment : Fragment() {
     ): View {
         _binding = FragmentUserAppUncontrolledBinding.inflate(inflater, container, false)
 
-        // Nav args
+        // Database view models
+        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+        mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
+
+        // Nav args, take user id then put it in an extra bundle for navigating
         val userId = args.userId
         val bundle = Bundle()
         bundle.putInt("userId", userId)
 
-        // Recyclerview adapter
+        // Setting Recyclerview Adapter
         val adapter = UserAppUncontrolledAdapter()
         binding.rvAppUncontrolled.adapter = adapter
         binding.rvAppUncontrolled.layoutManager = LinearLayoutManager(requireContext())
 
-        // Database queries
-        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
-        mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
-
+        // Display list of controlled apps on recyclerview
         job1 = lifecycleScope.launch(Dispatchers.IO) {
-            val uncontrolledList = mRestrictionViewModel.getAllUncontrolledApps(userId)
             withContext(Dispatchers.Main) {
-                uncontrolledList.observe(viewLifecycleOwner, Observer {
+                mRestrictionViewModel.getAllUncontrolledApps(userId).observe(viewLifecycleOwner, Observer {
                     adapter.setData(it)
                 })
             }
         }
 
-        // Buttons
         binding.btnControlledList.setOnClickListener {
             findNavController().navigate(R.id.action_userAppUncontrolledFragment_to_userAppControlledFragment, bundle)
         }
@@ -70,12 +70,16 @@ class UserAppUncontrolledFragment : Fragment() {
         // Update new list of controlled apps
         binding.btnApplyUncontrolled.setOnClickListener {
             val newControlledList = adapter.getCheckedApps()
-            job2 = lifecycleScope.launch(Dispatchers.IO) {
-                for (restrictionId in newControlledList)
-                    mRestrictionViewModel.updateControlledApps(restrictionId, true)
-            }
-            if (newControlledList.isNotEmpty())
+            if (newControlledList.isNotEmpty()) {
+                job2 = lifecycleScope.launch(Dispatchers.IO) {
+                    for (restrictionId in newControlledList)
+                        mRestrictionViewModel.updateControlledApps(restrictionId, true)
+                }
                 findNavController().navigate(R.id.action_userAppUncontrolledFragment_to_userAppControlledFragment, bundle)
+            } else {
+                Toast.makeText(requireContext(), "Please select apps to add for app locking or just press back to return", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
         return binding.root
