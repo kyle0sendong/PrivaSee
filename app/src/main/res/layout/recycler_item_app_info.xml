@@ -3,29 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp">
 
     <TextView
         android:id="@+id/tvAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="70dp"
+        android:fontFamily="@font/andika_new_basic"
         android:textSize="16sp"
-        android:fontFamily="@font/open_sans"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imgAppIcon"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.484" />
-
-    <ImageView
-        android:id="@+id/imgAppIcon"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="4dp"
-        android:padding="5dp"
-        android:src="@drawable/untitled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="App Name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
