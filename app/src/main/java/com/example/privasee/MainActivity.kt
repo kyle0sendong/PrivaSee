@@ -39,21 +39,19 @@ class MainActivity : AppCompatActivity() {
         val isFirstTimeOpen = sharedPreferences.getBoolean("isFirstTimeOpen", true)
 
         mUserViewModel.getAllDataLive.observe(this, Observer { userList ->
+
             if (isFirstTimeOpen || userList.isEmpty()) {
                 // Start initial run
                 val intent = Intent(this@MainActivity, SetupActivity::class.java)
                 startActivity(intent)
                 sharedPreferences.edit().putBoolean("isFirstTimeOpen", false).apply()
-
             } else
                 CheckPermissionUtils.checkAccessibilityPermission(this)
+
         })
-
-
-
     }
 
-    override fun onSupportNavigateUp(): Boolean { // make the back button in AddFragment functional
+    override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.fcvUser)
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
