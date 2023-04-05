@@ -16,15 +16,6 @@ interface AppDao {
     @Query("SELECT * FROM app")
     fun getAllData(): List<App>
 
-    @Query("SELECT id FROM app")
-    fun getAllAppId(): List<Int>
-
-    @Query("SELECT * FROM app WHERE id = :appId")
-    fun getAppInfo(appId: Int): App
-
-    @Query("SELECT appName FROM app WHERE id = :appId")
-    fun getAppName(appId: Int): String
-
     @Query("SELECT packageName FROM app WHERE id = :appId")
     fun getPackageName(appId: Int): String
 

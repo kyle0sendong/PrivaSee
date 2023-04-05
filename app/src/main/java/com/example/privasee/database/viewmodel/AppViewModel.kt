@@ -27,18 +27,6 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         return repository.getAllData()
     }
 
-    fun getAppInfo(appId: Int): App {
-        return repository.getAppInfo(appId)
-    }
-
-    fun readAllAppId(): List<Int> {
-        return repository.getAllAppId()
-    }
-
-    fun getAppName(appId: Int): String {
-        return repository.getAppName(appId)
-    }
-
     fun getPackageName(appId: Int): String {
         return repository.getPackageName(appId)
     }

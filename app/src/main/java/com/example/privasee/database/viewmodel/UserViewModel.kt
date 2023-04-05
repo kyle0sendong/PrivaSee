@@ -25,14 +25,6 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         return repository.getAllData()
     }
 
-    fun getAllUserId(): List<Int> {
-        return repository.getAllUserId()
-    }
-
-    fun getUserId(name: String): Int {
-        return repository.getUserId(name)
-    }
-
     fun getOwnerId(): Int {
         return repository.getOwnerId()
     }
@@ -53,10 +45,6 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteUser(user)
         }
-    }
-
-    fun getLastInsertedUser(): User {
-        return repository.getLastInsertedUser()
     }
 
 }

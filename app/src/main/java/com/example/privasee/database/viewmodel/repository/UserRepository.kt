@@ -16,14 +16,6 @@ class UserRepository(private val userDao: UserDao) {
         return userDao.getAllData()
     }
 
-    fun getAllUserId(): List<Int> {
-        return userDao.getAllUserId()
-    }
-
-    fun getUserId(name: String): Int {
-        return userDao.getUserId(name)
-    }
-
     suspend fun addUser(user: User) {
         userDao.addUser(user)
     }
@@ -36,7 +28,4 @@ class UserRepository(private val userDao: UserDao) {
         userDao.deleteUser(user)
     }
 
-    fun getLastInsertedUser(): User {
-        return userDao.getLastInsertedUser()
-    }
 }

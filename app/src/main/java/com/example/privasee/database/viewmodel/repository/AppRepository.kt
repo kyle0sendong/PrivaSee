@@ -15,20 +15,8 @@ class AppRepository(private val appDao: AppDao) {
         appDao.addApp(app)
     }
 
-    fun getAllAppId(): List<Int> {
-        return appDao.getAllAppId()
-    }
-
     fun getAllData(): List<App> {
         return appDao.getAllData()
-    }
-
-    fun getAppInfo(appId: Int): App {
-        return appDao.getAppInfo(appId)
-    }
-
-    fun getAppName(appId: Int): String {
-        return appDao.getAppName(appId)
     }
 
     fun getPackageName(appId: Int): String {
