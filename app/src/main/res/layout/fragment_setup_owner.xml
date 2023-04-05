@@ -26,20 +26,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="Register Face"
+        android:text="Enroll Face"
         app:layout_constraintEnd_toEndOf="@+id/etSetName"
         app:layout_constraintStart_toStartOf="@+id/etSetName"
         app:layout_constraintTop_toBottomOf="@+id/etSetName" />
-
-    <Button
-        android:id="@+id/btnSelectApps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="Select Apps to Monitor"
-        app:layout_constraintEnd_toEndOf="@+id/btnOwnerRegisterFace"
-        app:layout_constraintStart_toStartOf="@+id/btnOwnerRegisterFace"
-        app:layout_constraintTop_toBottomOf="@+id/btnOwnerRegisterFace" />
 
     <Button
         android:id="@+id/btnSetupOwnerFinish"
