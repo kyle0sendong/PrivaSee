@@ -1,6 +1,7 @@
 package com.example.privasee.database.viewmodel.repository
 
 import androidx.lifecycle.LiveData
+import androidx.room.Delete
 import androidx.room.Query
 import com.example.privasee.database.model.Restriction
 import com.example.privasee.database.viewmodel.repository.dao.RestrictionDao
@@ -9,6 +10,18 @@ class RestrictionRepository(private val restrictionDao: RestrictionDao) {
 
     suspend fun addRestriction(restriction: Restriction) {
         restrictionDao.addRestriction(restriction)
+    }
+
+    fun getRestrictionUsingAppName(appName: String): Restriction {
+        return restrictionDao.getRestrictionUsingAppName(appName)
+    }
+
+    fun getAppName(id: Int): String {
+        return restrictionDao.getAppName(id)
+    }
+
+    suspend fun deleteRestriction(restriction: Restriction) {
+        restrictionDao.deleteRestriction(restriction)
     }
 
     // Monitoring app access repository
@@ -39,10 +52,6 @@ class RestrictionRepository(private val restrictionDao: RestrictionDao) {
 
     fun getUserRestrictionCount(userId: Int): Int {
         return restrictionDao.getUserRestrictionCount(userId)
-    }
-
-    fun getPackageId(restrictionId: Int): Int {
-        return restrictionDao.getPackageId(restrictionId)
     }
 
     fun getAllMonitoredAppList(userId: Int): List<Restriction> {

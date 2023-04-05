@@ -25,6 +25,20 @@ class RestrictionViewModel(application: Application): AndroidViewModel(applicati
         }
     }
 
+    fun getRestrictionUsingAppName(appName: String): Restriction {
+        return repository.getRestrictionUsingAppName(appName)
+    }
+
+    fun getAppName(id: Int): String {
+        return repository.getAppName(id)
+    }
+
+    fun deleteRestriction(restriction: Restriction) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteRestriction(restriction)
+        }
+    }
+
     // Monitoring Access viewmodel
     fun getAllMonitoredApps(userId: Int): LiveData<List<Restriction>> {
         return repository.getAllMonitoredApps(userId)
@@ -53,10 +67,6 @@ class RestrictionViewModel(application: Application): AndroidViewModel(applicati
 
     fun getUserRestrictionCount(userId: Int): Int {
         return repository.getUserRestrictionCount(userId)
-    }
-
-    fun getPackageId(restrictionId: Int): Int {
-        return repository.getPackageId(restrictionId)
     }
 
     fun getAllMonitoredAppList(userId: Int): List<Restriction> {

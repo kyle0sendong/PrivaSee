@@ -1,10 +1,7 @@
 package com.example.privasee.database.viewmodel.repository.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.privasee.database.model.Restriction
 
 @Dao
@@ -12,6 +9,17 @@ interface RestrictionDao {
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun addRestriction(restriction: Restriction)
+
+    @Query("SELECT * FROM restriction " +
+            "WHERE appName = :appName")
+    fun getRestrictionUsingAppName(appName: String): Restriction
+
+    @Query("SELECT appName FROM restriction " +
+            "WHERE id = :id")
+    fun getAppName(id: Int): String
+
+    @Delete
+    suspend fun deleteRestriction(restriction: Restriction)
 
     // App Monitoring Access queries
     @Query("SELECT * FROM restriction " +
@@ -50,10 +58,6 @@ interface RestrictionDao {
     @Query("SELECT COUNT(*) FROM restriction " +
             "WHERE userId = :userId")
     fun getUserRestrictionCount(userId: Int): Int
-
-    @Query("SELECT packageId FROM restriction " +
-            "WHERE id = :restrictionId")
-    fun getPackageId(restrictionId: Int): Int
 
     // Non live data for monitored apps
     @Query("SELECT * FROM restriction " +
