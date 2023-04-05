@@ -45,4 +45,8 @@ class RestrictionRepository(private val restrictionDao: RestrictionDao) {
         return restrictionDao.getPackageId(restrictionId)
     }
 
+    fun getAllMonitoredAppList(userId: Int): List<Restriction> {
+        return restrictionDao.getAllMonitoredAppList(userId)
+    }
+
 }

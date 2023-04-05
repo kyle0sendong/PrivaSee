@@ -59,4 +59,9 @@ class RestrictionViewModel(application: Application): AndroidViewModel(applicati
         return repository.getPackageId(restrictionId)
     }
 
+    fun getAllMonitoredAppList(userId: Int): List<Restriction> {
+        return repository.getAllMonitoredAppList(userId)
+    }
+
+
 }

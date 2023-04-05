@@ -51,4 +51,10 @@ interface RestrictionDao {
             "WHERE id = :restrictionId")
     fun getPackageId(restrictionId: Int): Int
 
+    // Non live data for monitored apps
+    @Query("SELECT * FROM restriction " +
+            "WHERE monitored = true " +
+            "AND userId = :userId")
+    fun getAllMonitoredAppList(userId: Int): List<Restriction>
+
 }
