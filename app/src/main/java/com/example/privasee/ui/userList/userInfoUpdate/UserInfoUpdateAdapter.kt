@@ -32,7 +32,7 @@ class UserInfoUpdateAdapter(): RecyclerView.Adapter<UserInfoUpdateAdapter.UserVi
 
     fun setData(data: List<Restriction>) {
         this.restrictionList = data
-        notifyItemInserted(restrictionList.size-1)
+        notifyDataSetChanged()
     }
 
 }
