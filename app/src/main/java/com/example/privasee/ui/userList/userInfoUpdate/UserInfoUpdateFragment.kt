@@ -23,6 +23,7 @@ import com.example.privasee.databinding.FragmentUserInfoUpdateBinding
 import com.example.privasee.ui.userList.userInfoUpdate.userAppControl.UserAppControllingActivity
 import com.example.privasee.ui.userList.userInfoUpdate.userAppMonitoring.UserAppMonitoringActivity
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class UserInfoUpdateFragment : Fragment(), MenuProvider {
@@ -33,6 +34,9 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
 
     private lateinit var mUserViewModel: UserViewModel
     private lateinit var mRestrictionViewModel: RestrictionViewModel
+
+    private var job1: Job? = null
+    private var job2: Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +60,7 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
             val restrictionList = "Monitored App List"
             binding.tvRestrictionType.text = restrictionList
             binding.btnUserSetControlled.isVisible = false
-            lifecycleScope.launch(Dispatchers.Main) {
+            job1 = lifecycleScope.launch(Dispatchers.Main) {
                 mRestrictionViewModel.getAllMonitoredApps(userId).observe(viewLifecycleOwner) {
                     adapter.setData(it)
                 }
@@ -66,7 +70,7 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
             val restrictionList = "Controlled App List"
             binding.tvRestrictionType.text = restrictionList
             binding.btnUserSetMonitored.isVisible = false
-            lifecycleScope.launch(Dispatchers.Main) {
+            job2 = lifecycleScope.launch(Dispatchers.Main) {
                 mRestrictionViewModel.getAllControlledApps(userId).observe(viewLifecycleOwner) {
                     adapter.setData(it)
                 }
@@ -97,17 +101,14 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity?.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.delete_menu, menu)
     }
-
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         if (menuItem.itemId == R.id.delete_menu) {
@@ -161,6 +162,8 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        job1?.cancel()
+        job2?.cancel()
         _binding = null
     }
 
