@@ -89,8 +89,8 @@ class UserAppMonitoredFragment : Fragment() {
                     // Take effect immediately on accessibility service's monitoring
                     val newMonitoredListPackageName: MutableList<String> = mutableListOf()
                     for (restrictionId in newRestriction) {
-                        val appId = mRestrictionViewModel.getPackageId(restrictionId)
-                        newMonitoredListPackageName.add(mAppViewModel.getPackageName(appId))
+                        val appName = mRestrictionViewModel.getAppName(restrictionId)
+                        newMonitoredListPackageName.add(mAppViewModel.getPackageName(appName))
                     }
                     val intent = Intent(requireContext(), AppAccessService::class.java)
                     intent.putExtra("action", "removeMonitor" )
