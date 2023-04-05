@@ -16,12 +16,14 @@ interface RestrictionDao {
     // App Monitoring Access queries
     @Query("SELECT * FROM restriction " +
             "WHERE monitored = true " +
-            "AND userId = :userId")
+            "AND userId = :userId " +
+            "ORDER BY appName ASC")
     fun getAllMonitoredApps(userId: Int): LiveData<List<Restriction>>
 
     @Query("SELECT * FROM restriction " +
             "WHERE monitored = false " +
-            "AND userId = :userId")
+            "AND userId = :userId " +
+            "ORDER BY appName ASC")
     fun getAllUnmonitoredApps(userId: Int): LiveData<List<Restriction>>
 
     @Query("UPDATE restriction SET monitored = :isMonitored " +
@@ -31,12 +33,14 @@ interface RestrictionDao {
     // App Controlling Access queries
     @Query("SELECT * FROM restriction " +
             "WHERE controlled = true " +
-            "AND userId = :userId")
+            "AND userId = :userId " +
+            "ORDER BY appName ASC")
     fun getAllControlledApps(userId: Int): LiveData<List<Restriction>>
 
     @Query("SELECT * FROM restriction " +
             "WHERE controlled = false " +
-            "AND userId = :userId")
+            "AND userId = :userId " +
+            "ORDER BY appName ASC")
     fun getAllUncontrolledApps(userId: Int): LiveData<List<Restriction>>
 
     @Query("UPDATE restriction SET controlled = :isControlled " +
