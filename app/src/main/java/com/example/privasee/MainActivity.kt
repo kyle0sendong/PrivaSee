@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -86,32 +85,12 @@ class MainActivity : AppCompatActivity() {
             val navController = findNavController(R.id.monitor_start)
             return navController.navigateUp() || super.onSupportNavigateUp()
         }else{
-            val  navController = findNavController(R.id.list_user_fcv)
+            val  navController = findNavController(R.id.fcvUser)
             return navController.navigateUp() || super.onSupportNavigateUp()
         }
 
     }
 
-    private fun autoGivePermission(){
-        if(allPermissionGranted()){
-
-            val sp = PreferenceManager.getDefaultSharedPreferences(this)
-            val editor = sp.edit()
-            editor.apply(){
-                putBoolean("IS_CAMERA_PERMISSION_ENABLED", true)
-            }.apply()
-
-            Toast.makeText(this,
-                "Camera permission granted",
-                Toast.LENGTH_SHORT).show()
-        }else{
-            ActivityCompat.requestPermissions(
-                this, Constants.REQUIRED_PERMISSIONS,
-                Constants.REQUEST_CODE_PERMISSIONS
-            )
-        }
-
-    }
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -141,16 +120,6 @@ class MainActivity : AppCompatActivity() {
             Constants.REQUEST_CODE_PERMISSIONS -> innerCheck("Camera")
         }
 
-        /* if(requestCode == Constants.REQUEST_CODE_PERMISSIONS){
-             if(allPermissionGranted()){
-                 startCamera()
-             }else{
-                 Toast.makeText(this,
-                     "Permission not Granted",
-                     Toast.LENGTH_SHORT).show()
-                // finish()
-             }
-         }*/
     }
 
     private fun allPermissionGranted()=
