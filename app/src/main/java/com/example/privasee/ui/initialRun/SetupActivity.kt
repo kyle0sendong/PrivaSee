@@ -19,12 +19,12 @@ class SetupActivity : AppCompatActivity() {
         binding = ActivitySetupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)
-
 //         Make this activity the nav host fragment for the navgraph for the initial run fragments
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcvSetup) as NavHostFragment
         setupNavController = navHostFragment.navController
-        setupActionBarWithNavController(setupNavController)
+
+        // Light theme for no reason does not have an action bar set.
+//        setupActionBarWithNavController(setupNavController)
 
     }
 
