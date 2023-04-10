@@ -22,17 +22,11 @@ class SetupTermsFragment : Fragment() {
     ): View {
         _binding = FragmentSetupTermsBinding.inflate(inflater, container, false)
 
-       // binding.btnTermsNext.isEnabled = false
-
-
-
         binding.btnTermsNext.setOnClickListener {
             if(termsCheckBox.isChecked){
-                findNavController().navigate(R.id.action_setupTermsFragment_to_setupPermissionsFragment)
+                findNavController().navigate(R.id.action_setupTermsFragment_to_setupOwnerFragment)
             }else{
-
                 Toast.makeText(requireContext(), "Please Agree with the Terms and Conditions first.", Toast.LENGTH_LONG).show()
-
             }
         }
 

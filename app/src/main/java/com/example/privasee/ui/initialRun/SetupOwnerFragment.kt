@@ -19,7 +19,7 @@ import com.example.privasee.database.viewmodel.AppViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentSetupOwnerBinding
 import com.example.privasee.ui.users.addUser.AddUserCapturePhoto
-import com.example.privasee.ui.users.userInfoUpdate.userAppControl.applock.BlockScreen
+import com.example.privasee.utils.CheckPermissionUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -48,9 +48,12 @@ class SetupOwnerFragment : Fragment() {
 
             val name = binding.etSetName.text.toString()
             val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
+            val isPermissionGranted = CheckPermissionUtils.isPermissionGranted(requireContext())
+
+            //&& (sp.getBoolean("isEnrolled", false) removed checking of enrolled face for testing
 
             // Initialize the Owner information
-            if(name.isNotEmpty() && (sp.getBoolean("isEnrolled", false))) {
+            if(name.isNotEmpty() && isPermissionGranted) {
                 val userInfo = User(0, name, isOwner = true)
                 mUserViewModel.addUser(userInfo)
                 saveInstalledAppsToDB()
@@ -58,12 +61,20 @@ class SetupOwnerFragment : Fragment() {
                 requireActivity().finishAffinity()
             } else if(!(name.isNotEmpty())){
                 Toast.makeText(requireContext(), "Please input your name", Toast.LENGTH_SHORT).show()
-            }else{
+            } else if(!isPermissionGranted) {
+                Toast.makeText(requireContext(), "Please enable Accessibility Service settings first before proceeding", Toast.LENGTH_SHORT).show()
+            } else {
                 Toast.makeText(requireContext(), "Please enroll your face", Toast.LENGTH_SHORT).show()
             }
 
+        }
 
-
+        binding.btnEnableAccessibilityService.setOnClickListener {
+            val isPermissionGranted = CheckPermissionUtils.isPermissionGranted(requireContext())
+            if(!isPermissionGranted)
+                CheckPermissionUtils.openAccessibilityServiceSettings(requireContext())
+            else
+                Toast.makeText(requireContext(), "Accessibility Service is already enabled. Please proceed", Toast.LENGTH_SHORT).show()
         }
 
         binding.btnOwnerRegisterFace.setOnClickListener {
