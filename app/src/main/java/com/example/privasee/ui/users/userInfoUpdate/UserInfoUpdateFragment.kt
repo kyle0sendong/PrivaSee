@@ -1,5 +1,6 @@
 package com.example.privasee.ui.users.userInfoUpdate
 
+
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
@@ -21,10 +22,7 @@ import com.example.privasee.database.model.User
 import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentUserInfoUpdateBinding
-import com.example.privasee.ui.userList.userInfoUpdate.UserInfoUpdateAdapter
 import com.example.privasee.ui.users.addUser.AddUserCapturePhoto
-//import com.example.privasee.ui.userList.userInfoUpdate.userAppControl.UserAppControllingActivity
-//import com.example.privasee.ui.userList.userInfoUpdate.userAppMonitoring.UserAppMonitoringActivity
 import com.example.privasee.ui.users.userInfoUpdate.userAppControl.UserAppControllingActivity
 import com.example.privasee.ui.users.userInfoUpdate.userAppMonitoring.UserAppMonitoringActivity
 import kotlinx.coroutines.Dispatchers
@@ -86,6 +84,10 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
 
         binding.updateName.setText(userName)
 
+        binding.btnDeleteUser.setOnClickListener {
+            deleteUser()
+        }
+
         binding.btnUserSetMonitored.setOnClickListener {
             Intent(requireContext(), UserAppMonitoringActivity::class.java).also { intent ->
                 intent.putExtra("userId", userId)
@@ -108,10 +110,8 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
 
         binding.btnUserUpdateSave.setOnClickListener {
             updateItem()
-          //  getFragmentManager()?.popBackStackImmediate()
-                findNavController().navigate(R.id.action_updateUserFragment_to_userFragment)
+            findNavController().navigate(R.id.action_updateUserFragment_to_userFragment)
         }
-
 
         val callback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
@@ -129,19 +129,6 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
         activity?.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        menuInflater.inflate(R.menu.delete_menu, menu)
-    }
-
-    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        if (menuItem.itemId == R.id.delete_menu) {
-            deleteUser()
-            return true
-        }
-        return false
-    }
-
-
     private fun deleteUser() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Yes") { _, _ ->
@@ -158,10 +145,8 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
         builder.create().show()
     }
 
-
     private fun updateItem(){
         val name = binding.updateName.text.toString()
-
         if(checkInput(name)) {
             val updatedUser = User(args.currentUser.id, name, args.currentUser.isOwner)
             mUserViewModel.updateUser(updatedUser)
@@ -188,6 +173,13 @@ class UserInfoUpdateFragment : Fragment(), MenuProvider {
         job1?.cancel()
         job2?.cancel()
         _binding = null
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return false
     }
 
 }
