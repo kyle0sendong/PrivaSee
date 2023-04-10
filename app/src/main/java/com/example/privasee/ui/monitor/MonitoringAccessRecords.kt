@@ -2,7 +2,6 @@ package com.example.privasee.ui.monitor
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,8 +62,6 @@ class MonitoringAccessRecords : Fragment() {
 
         return binding.root
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()

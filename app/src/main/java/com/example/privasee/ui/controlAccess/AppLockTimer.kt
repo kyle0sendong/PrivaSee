@@ -3,18 +3,11 @@ package com.example.privasee.ui.controlAccess
 import android.content.Intent
 import android.os.CountDownTimer
 import android.os.IBinder
-import android.util.Log
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LifecycleService
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
 import com.example.privasee.AppAccessService
-import com.example.privasee.ui.users.userInfoUpdate.userAppControl.applock.BlockScreen
-import com.example.privasee.ui.users.userInfoUpdate.userAppControl.applock.BlockScreen2
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
-
 
 
 class AppLockTimer :  LifecycleService() {
@@ -54,7 +47,6 @@ class AppLockTimer :  LifecycleService() {
                 val editor = sp.edit()
 
                 if( sp.getBoolean("IS_APPLOCK_TIMER_RUNNING", false)){
-                    Log.i("TAG","Countdown seconds remaining:" + millisUntilFinished / 1000);
                     intent.putExtra("countdown",millisUntilFinished)
                     sendBroadcastMessage(intent)
                 }else{
@@ -68,7 +60,6 @@ class AppLockTimer :  LifecycleService() {
             }
 
             override fun onFinish() {
-                Log.d("tagimandos", "App lock removed")
                 val intent = Intent(this@AppLockTimer, AppAccessService::class.java)
                 intent.putStringArrayListExtra("removeLock", packageNames)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -87,7 +78,6 @@ class AppLockTimer :  LifecycleService() {
     override fun onDestroy() {
         this.stopSelf()
         super.onDestroy()
-        Log.e("Service", "Service Stopped...")
 
     }
 

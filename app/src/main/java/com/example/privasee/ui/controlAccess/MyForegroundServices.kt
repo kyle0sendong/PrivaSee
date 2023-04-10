@@ -4,36 +4,13 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.net.Uri
 import android.os.CountDownTimer
 import android.os.IBinder
-import android.util.Base64
-import android.util.Log
-import android.widget.Toast
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleService
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
-import com.chaquo.python.Python
-import com.chaquo.python.android.AndroidPlatform
 import com.example.privasee.R
-import com.example.privasee.ui.controlAccess.AppLockTimer.Companion.intent
-import com.example.privasee.ui.monitor.Constants
-import kotlinx.coroutines.Job
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.text.SimpleDateFormat
-import java.util.*
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 
@@ -80,8 +57,6 @@ class MyForegroundServices :  LifecycleService() {
                 val sp = PreferenceManager.getDefaultSharedPreferences(this@MyForegroundServices)
 
                 if((sp.getBoolean("IS_ACTIVITY_RUNNING", false))){ //continue broadcast
-                    Log.i("TAG","Countdown seconds remaining:" + millisUntilFinished / 1000);
-
                     intent.putExtra("countdown",millisUntilFinished)
                     sendBroadcastMessage(intent)
                 } else

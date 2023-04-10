@@ -7,7 +7,6 @@ import android.app.TimePickerDialog.OnTimeSetListener
 import android.app.admin.DevicePolicyManager
 import android.content.*
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -157,7 +156,6 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
      override fun onPause() {
         super.onPause()
          LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(broadcastReceiver)
-        Log.i("OnPause", "Unregistered broadcast receiver")
     }
 
      override fun onStop() {

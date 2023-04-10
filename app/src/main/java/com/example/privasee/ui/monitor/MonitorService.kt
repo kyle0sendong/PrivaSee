@@ -1,48 +1,30 @@
 package com.example.privasee.ui.monitor
 
-import android.accessibilityservice.AccessibilityServiceInfo
-import android.app.AlertDialog
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.admin.DevicePolicyManager
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Color
-import android.net.Uri
 import android.os.CountDownTimer
 import android.os.IBinder
 import android.util.Base64
 import android.util.Log
-import android.view.WindowManager
-import android.view.accessibility.AccessibilityEvent
-import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleService
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
 import com.example.privasee.DbQueryIntentService
 import com.example.privasee.R
-import com.example.privasee.ui.controlAccess.ControlAccessFragment
-import com.example.privasee.ui.users.userInfoUpdate.userAppControl.applock.BlockScreen
-import kotlinx.android.synthetic.main.fragment_monitor.*
 import kotlinx.coroutines.Job
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
 
 
 class MonitorService :  LifecycleService() {

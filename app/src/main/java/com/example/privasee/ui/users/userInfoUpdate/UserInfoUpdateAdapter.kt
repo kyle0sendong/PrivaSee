@@ -1,4 +1,4 @@
-package com.example.privasee.ui.userList.userInfoUpdate
+package com.example.privasee.ui.users.userInfoUpdate
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

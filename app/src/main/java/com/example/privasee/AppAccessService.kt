@@ -4,7 +4,6 @@ import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.AccessibilityServiceInfo
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import androidx.core.content.ContextCompat
 import com.example.privasee.ui.monitor.MonitorService
@@ -36,8 +35,6 @@ class AppAccessService : AccessibilityService() {
                         if(packageName == currentlyOpenedApp){
                             previousPackageName = currentlyOpenedApp
                             // start intent service, start verifying etc
-                            Log.d("tagimandos", "monitoring $appName")
-
                             val intent = Intent(this, MonitorService::class.java)
                             intent.putExtra("appName", appName)
                             startService(intent)
@@ -49,7 +46,6 @@ class AppAccessService : AccessibilityService() {
             if(controlledApps.size > 0) {
                 for(packageName in controlledApps) {
                     if(packageName == currentlyOpenedApp) {
-                        Log.d("tagimandos", "lock screen on $appName")
                         val intent = Intent(this, BlockScreen::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
@@ -71,26 +67,22 @@ class AppAccessService : AccessibilityService() {
         if (packageNames != null) {
 
             if(action == "addMonitor") {
-                Log.d("tagimandos", "add monitor $packageNames")
                 for(packageName in packageNames)
                     this.packageNames.add(packageName)
             }
 
             if (action == "removeMonitor") {
-                Log.d("tagimandos", "remove monitor $packageNames")
                 for(packageName in packageNames)
                     this.packageNames.remove(packageName)
             }
 
             if (action == "addLock") {
-                Log.d("tagimandos", "add lock$packageNames")
                 for(packageName in packageNames) {
                     this.controlledApps.add(packageName)
                 }
             }
 
             if (action == "removeLock") {
-                Log.d("tagimandos", "remove lock $packageNames")
                 for(packageName in packageNames) {
                     this.controlledApps.remove(packageName)
                 }

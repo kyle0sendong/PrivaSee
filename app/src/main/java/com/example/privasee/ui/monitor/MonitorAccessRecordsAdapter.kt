@@ -48,7 +48,6 @@ class MonitorAccessRecordsAdapter(): RecyclerView.Adapter<MonitorAccessRecordsAd
             }
         } else {
             val emptyString = "-"
-            val tempString = "Empty Record"
             holder.binding.apply {
                 tvRecordsDate.text = emptyString
                 tvRecordsTime.text = emptyString

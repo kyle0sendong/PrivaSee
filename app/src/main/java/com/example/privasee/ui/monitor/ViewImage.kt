@@ -1,7 +1,5 @@
 package com.example.privasee.ui.monitor
 
-//import com.example.privasee.ui.userList.userInfoUpdate.userAppControl.UserAppControllingActivity
-//import com.example.privasee.ui.userList.userInfoUpdate.userAppMonitoring.UserAppMonitoringActivity
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater

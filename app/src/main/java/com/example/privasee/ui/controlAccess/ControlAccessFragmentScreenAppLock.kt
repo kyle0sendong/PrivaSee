@@ -1,13 +1,14 @@
 package com.example.privasee.ui.controlAccess
 
 import android.app.Activity
-import android.app.ActivityManager
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
 import android.app.admin.DevicePolicyManager
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,14 +20,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
+import com.example.privasee.AppAccessService
 import com.example.privasee.R
 import com.example.privasee.database.model.User
 import com.example.privasee.database.viewmodel.AppViewModel
 import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentControlAccessApplockBinding
-import com.example.privasee.AppAccessService
-import com.example.privasee.ui.users.userInfoUpdate.userAppControl.UserAppControllingActivity
 import com.example.privasee.utils.CheckPermissionUtils
 import kotlinx.android.synthetic.main.fragment_control_access_applock.*
 import kotlinx.coroutines.Dispatchers
@@ -140,7 +140,6 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
                                                 ).show()
 
                                                 // Add Lock
-                                                Log.d("tagimandos", "App lock started")
                                                 val intent = Intent(requireContext(), AppAccessService::class.java)
                                                 intent.putExtra("action", "addLock")
                                                 intent.putStringArrayListExtra("packageNames", ArrayList(controlledAppPackageNames))
@@ -286,7 +285,6 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
     override fun onPause() {
         super.onPause()
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(broadcastReceiver)
-        Log.i("OnPause", "Unregistered broadcast receiver")
     }
 
     override fun onStop() {
