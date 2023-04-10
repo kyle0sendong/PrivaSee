@@ -62,10 +62,8 @@ class SetupOwnerFragment : Fragment() {
             val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
             val isPermissionGranted = CheckPermissionUtils.isPermissionGranted(requireContext())
 
-            //&& (sp.getBoolean("isEnrolled", false) removed checking of enrolled face for testing
-
             // Initialize the Owner information
-            if(name.isNotEmpty() && isPermissionGranted && isAdminPermissionEnabled) {
+            if(name.isNotEmpty() && isPermissionGranted && isAdminPermissionEnabled && sp.getBoolean("isEnrolled", false)) {
                 val userInfo = User(0, name, isOwner = true)
                 mUserViewModel.addUser(userInfo)
                 saveInstalledAppsToDB()
