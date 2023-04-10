@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/recyclerItemUser"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:id="@+id/recyclerItemUser">
 
     <ImageView
         android:id="@+id/imageView"
@@ -15,7 +15,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="1dp"
         android:layout_marginBottom="1dp"
-        android:src="@drawable/untitled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

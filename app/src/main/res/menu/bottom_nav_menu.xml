@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:title="Monitor"
-        android:id="@+id/monitorFragment"
+        android:id="@+id/monitorStart"
         android:icon="@drawable/monitor" />
 
     <item
         android:title="Control Access"
-        android:id="@+id/controlAccessFragment"
+        android:id="@+id/controlAccessStart"
         android:icon="@drawable/control_access" />
 
     <item

@@ -7,7 +7,9 @@ import android.content.pm.PackageManager
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import androidx.core.content.ContextCompat
-import com.example.privasee.ui.userList.userInfoUpdate.userAppControl.applock.BlockScreen
+import com.example.privasee.ui.monitor.MonitorService
+import com.example.privasee.ui.users.userInfoUpdate.userAppControl.applock.BlockScreen
+
 
 class AppAccessService : AccessibilityService() {
 
@@ -23,6 +25,7 @@ class AppAccessService : AccessibilityService() {
 
                 val currentlyOpenedApp = event.packageName.toString()
 
+
                 val pm = applicationContext.packageManager
                 val appInfo = pm.getPackageInfo(currentlyOpenedApp, PackageManager.GET_META_DATA)
                 val appName = appInfo.applicationInfo.loadLabel(pm).toString()
@@ -30,15 +33,21 @@ class AppAccessService : AccessibilityService() {
                 // Triggering only once, for repeated opens
                 if (previousPackageName == currentlyOpenedApp) {
                     previousPackageName = currentlyOpenedApp
+
                 } else {
-                    previousPackageName = currentlyOpenedApp
-                    // start intent service, start verifying etc
-                    Log.d("tagimandos", "monitoring $appName")
-                    val intent = Intent(this, DbQueryIntentService::class.java)
-                    intent.putExtra("query", "insertRecord")
-                    intent.putExtra("appName", appName)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    ContextCompat.startForegroundService(this, intent)
+
+                    for(packageName in packageNames){
+                        if(packageName == currentlyOpenedApp){
+                            previousPackageName = currentlyOpenedApp
+                            // start intent service, start verifying etc
+                            Log.d("tagimandos", "monitoring $appName")
+
+                            val intent = Intent(this, MonitorService::class.java)
+                            intent.putExtra("appName", appName)
+                            startService(intent)
+                        }
+                    }
+
                 }
 
                 if(controlledApps.size > 0) {
@@ -51,7 +60,6 @@ class AppAccessService : AccessibilityService() {
                         }
                     }
                 }
-
             }
         }
 
@@ -82,7 +90,7 @@ class AppAccessService : AccessibilityService() {
             if (action == "addLock") {
                 Log.d("tagimandos", "add lock$packageNames")
                 for(packageName in packageNames) {
-                    this.packageNames.add(packageName)
+                   // this.packageNames.add(packageName)
                     this.controlledApps.add(packageName)
                 }
             }
@@ -90,7 +98,7 @@ class AppAccessService : AccessibilityService() {
             if (action == "removeLock") {
                 Log.d("tagimandos", "remove lock $packageNames")
                 for(packageName in packageNames) {
-                    this.packageNames.remove(packageName)
+                  //  this.packageNames.remove(packageName)
                     this.controlledApps.remove(packageName)
                 }
             }

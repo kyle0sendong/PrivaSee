@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.userList.userInfoUpdate.userAppMonitoring.unmonitored.UserAppUnmonitoredFragment">
+    tools:context=".ui.users.userInfoUpdate.userAppMonitoring.unmonitored.UserAppUnmonitoredFragment">
 
     <!--Disabled button for unmonitored -->
     <Button
@@ -31,7 +31,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvAppUnmonitored"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="500dp"
         android:layout_marginTop="120dp"
         app:layout_constraintEnd_toEndOf="parent"

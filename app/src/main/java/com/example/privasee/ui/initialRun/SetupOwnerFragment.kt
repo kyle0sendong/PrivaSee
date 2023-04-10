@@ -11,12 +11,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import com.example.privasee.R
 import com.example.privasee.database.model.App
 import com.example.privasee.database.model.User
 import com.example.privasee.database.viewmodel.AppViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentSetupOwnerBinding
+import com.example.privasee.ui.users.addUser.AddUserCapturePhoto
+import com.example.privasee.ui.users.userInfoUpdate.userAppControl.applock.BlockScreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -44,18 +47,29 @@ class SetupOwnerFragment : Fragment() {
         binding.btnSetupOwnerFinish.setOnClickListener {
 
             val name = binding.etSetName.text.toString()
+            val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
 
             // Initialize the Owner information
-            if(name.isNotEmpty()) {
+            if(name.isNotEmpty() && (sp.getBoolean("isEnrolled", false))) {
                 val userInfo = User(0, name, isOwner = true)
                 mUserViewModel.addUser(userInfo)
                 saveInstalledAppsToDB()
                 findNavController().navigate(R.id.action_setupOwnerFragment_to_mainActivity)
                 requireActivity().finishAffinity()
-            } else
+            } else if(!(name.isNotEmpty())){
                 Toast.makeText(requireContext(), "Please input your name", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(requireContext(), "Please enroll your face", Toast.LENGTH_SHORT).show()
+            }
 
 
+
+        }
+
+        binding.btnOwnerRegisterFace.setOnClickListener {
+            val intent = Intent(requireContext(), AddUserCapturePhoto::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
         }
 
         return binding.root

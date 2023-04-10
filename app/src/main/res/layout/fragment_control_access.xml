@@ -2,48 +2,33 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/testTtv"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.controlAccess.ControlAccessFragment">
 
     <Button
-        android:id="@+id/btnTestService1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="156dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="167dp"
-        android:text="add"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerUsers" />
-
-    <Button
-        android:id="@+id/btnTestService2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="157dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="159dp"
-        android:text="remove"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnTestService1" />
-
-    <Spinner
-        android:id="@+id/spinnerUsers"
-        android:layout_width="297dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="57dp"
-        android:layout_marginTop="39dp"
-        android:layout_marginEnd="57dp"
-        android:layout_marginBottom="44dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnTestService1"
+        android:id="@+id/applock"
+        android:layout_width="209dp"
+        android:layout_height="55dp"
+        android:text="App Block"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintVertical_bias="0.424" />
+
+
+    <Button
+        android:id="@+id/scrnTimeLimit"
+        android:layout_width="209dp"
+        android:layout_height="55dp"
+        android:text="Screen Time Limit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.321" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

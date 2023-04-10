@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/userAppMonitoredFragment"
-        android:name="com.example.privasee.ui.userList.userInfoUpdate.userAppMonitoring.monitored.UserAppMonitoredFragment"
+        android:name="com.example.privasee.ui.users.userInfoUpdate.userAppMonitoring.monitored.UserAppMonitoredFragment"
         android:label="fragment_app_monitored"
         tools:layout="@layout/fragment_user_app_monitored" >
         <action
@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/userAppUnmonitoredFragment"
-        android:name="com.example.privasee.ui.userList.userInfoUpdate.userAppMonitoring.unmonitored.UserAppUnmonitoredFragment"
+        android:name="com.example.privasee.ui.users.userInfoUpdate.userAppMonitoring.unmonitored.UserAppUnmonitoredFragment"
         android:label="fragment_app_unmonitored"
         tools:layout="@layout/fragment_user_app_unmonitored" >
         <action
