@@ -84,11 +84,7 @@ class SetupOwnerFragment : Fragment() {
         }
 
         binding.btnEnableAccessibilityService.setOnClickListener {
-            val isPermissionGranted = CheckPermissionUtils.isPermissionGranted(requireContext())
-            if(!isPermissionGranted)
-                CheckPermissionUtils.openAccessibilityServiceSettings(requireContext())
-            else
-                Toast.makeText(requireContext(), "Accessibility Service is already enabled. Please proceed", Toast.LENGTH_SHORT).show()
+            CheckPermissionUtils.openAccessibilityServiceSettings(requireContext())
         }
 
         binding.btnOwnerRegisterFace.setOnClickListener {

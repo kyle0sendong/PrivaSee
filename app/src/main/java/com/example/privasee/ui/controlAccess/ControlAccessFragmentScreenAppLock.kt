@@ -241,7 +241,7 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         accessibility.setOnClickListener {
-            CheckPermissionUtils.checkAccessibilityPermission(requireContext())
+            CheckPermissionUtils.openAccessibilityServiceSettings(requireContext())
         }
 
         timeButton2.setOnClickListener {
