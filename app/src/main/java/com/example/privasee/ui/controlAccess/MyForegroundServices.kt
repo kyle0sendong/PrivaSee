@@ -64,6 +64,14 @@ class MyForegroundServices :  LifecycleService() {
             }
 
             override fun onFinish() {
+                val sp = PreferenceManager.getDefaultSharedPreferences(this@MyForegroundServices)
+                val editor = sp.edit()
+
+                // Put false to enable app locking
+                editor.apply() {
+                    putBoolean("IS_ACTIVITY_RUNNING", false)
+                }.apply()
+
                 ControlAccessFragmentScreenTimeLimit.devicePolicyManager!!.lockNow()
             }
         }.start()
