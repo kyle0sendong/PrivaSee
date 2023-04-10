@@ -1,6 +1,5 @@
 package com.example.privasee.ui.controlAccess
 
-import android.app.Activity
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
 import android.app.admin.DevicePolicyManager
@@ -51,6 +50,7 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
         devicePolicyManager = requireActivity().getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
 
         _binding = FragmentControlAccessApplockBinding.inflate(inflater, container, false)
+
         mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
         mAppViewModel = ViewModelProvider(this)[AppViewModel::class.java]
@@ -72,12 +72,15 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
                     }
 
                     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+
                         val view = if (convertView == null) {
                             val inflater = LayoutInflater.from(context)
                             inflater.inflate(R.layout.spinner_item_user, parent, false)
                         } else
                             convertView
+
                         val user = getItem(position)
+
                         if (user != null)
                             (view.findViewById<TextView>(android.R.id.text1)).text = user.name
 
@@ -147,12 +150,11 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
 
                                                 activity!!.startService(
                                                     Intent(
-                                                        activity,
+                                                        context,
                                                         AppLockTimer::class.java
                                                     ).putExtra("Timer",timerInt.toString())
                                                         .putStringArrayListExtra("controlledAppPackageNames", controlledAppPackageNames.toArrayList())
                                                 )
-
 
                                             } else {
                                                 Toast.makeText(
@@ -161,7 +163,6 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
                                                     Toast.LENGTH_SHORT
                                                 ).show()
                                             }
-
 
                                         }
 
@@ -184,10 +185,9 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
 
                                             activity!!.stopService(
                                                 Intent(
-                                                    activity,
+                                                    context,
                                                     AppLockTimer::class.java
                                                 ))
-
 
                                             val intent = Intent(requireContext(), AppAccessService::class.java)
                                             intent.putExtra("action", "removeLock")
@@ -319,24 +319,6 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when (requestCode) {
-            RESULT_ENABLE -> if (resultCode == Activity.RESULT_OK) {
-                Toast.makeText(
-                    requireContext(),
-                    "You have enabled the Admin Device features",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Problem to enable the Admin Device features",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data)
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -344,7 +326,6 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
     }
 
     companion object {
-        const val RESULT_ENABLE = 11
         var devicePolicyManager: DevicePolicyManager? = null
     }
 }

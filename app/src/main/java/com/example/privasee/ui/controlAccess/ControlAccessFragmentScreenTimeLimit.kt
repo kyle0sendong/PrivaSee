@@ -7,6 +7,7 @@ import android.app.TimePickerDialog.OnTimeSetListener
 import android.app.admin.DevicePolicyManager
 import android.content.*
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -128,6 +129,7 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
     }
 
     fun popTimePicker() {
+        // var timeButton: Button? = null
         var hour = 0
         var minute = 0
 
@@ -139,6 +141,7 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
                     kotlin.String.format(Locale.getDefault(), "%02d:%02d", hour, minute)
             }
 
+        // int style = AlertDialog.THEME_HOLO_DARK;
         val timePickerDialog =
             TimePickerDialog(requireContext(),  /*style,*/onTimeSetListener, hour, minute, true)
         timePickerDialog.setTitle("Select Time")
@@ -156,6 +159,7 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
      override fun onPause() {
         super.onPause()
          LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(broadcastReceiver)
+        Log.i("OnPause", "Unregistered broadcast receiver")
     }
 
      override fun onStop() {
