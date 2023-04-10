@@ -31,7 +31,7 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         devicePolicyManager = requireActivity().getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
         activityManager = requireActivity().getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
@@ -58,7 +58,7 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
 
         setTimer.setOnClickListener {
             val active = devicePolicyManager!!.isAdminActive(compName!!)
-            var timerString = timeButton.getText().toString()
+            val timerString = timeButton.getText().toString()
 
             if (active && !( timerString.equals("select time", ignoreCase = true))) {
 
@@ -77,7 +77,7 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
 
                 val duration = 60 * hour + minutes //add up our values
 
-                var timerInt = duration.toLong()
+                val timerInt = duration.toLong()
 
                 requireActivity().startForegroundService(
                     Intent(context, MyForegroundServices::class.java)
@@ -105,8 +105,8 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
             editor.apply() {
                 putBoolean("IS_ACTIVITY_RUNNING", false)
             }.apply()
-
-            remainingTime.setText("Timer is not set")
+            val tempString = "Timer is not set"
+            remainingTime.text = tempString
 
             Toast.makeText(requireContext(), "Timer has been stopped", Toast.LENGTH_LONG).show()
 
@@ -114,8 +114,6 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
                     Intent(context, MyForegroundServices::class.java))
 
         }
-
-
 
         givePermission.setOnClickListener {
             val intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN)
@@ -192,16 +190,10 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
             var minutes = (seconds/60)
             val hours = (minutes/60)
 
-            seconds = seconds % 60
-            minutes = minutes % 60
+            seconds %= 60
+            minutes %= 60
 
-
-            remainingTime.setText(String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds))
-
-
-           // val millisUntilFinished = intent.getLongExtra("countdown", 30000)
-           // remainingTime.setText(java.lang.Long.toString(millisUntilFinished / 1000))
-            //remainingTime.setText("flsjflksdjf")
+            remainingTime.text = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds)
         }
     }
 
@@ -212,8 +204,8 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
                 MyForegroundServices.COUNTDOWN_BR))
 
         val isActive = devicePolicyManager!!.isAdminActive(compName!!)
-        disablePermission.setVisibility(if (isActive) View.VISIBLE else View.GONE)
-        givePermission.setVisibility(if (isActive) View.GONE else View.VISIBLE)
+        disablePermission.visibility = if (isActive) View.VISIBLE else View.GONE
+        givePermission.visibility = if (isActive) View.GONE else View.VISIBLE
 
     }
 

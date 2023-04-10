@@ -13,18 +13,15 @@ import com.example.privasee.R
 import com.example.privasee.databinding.FragmentControlAccessBinding
 import kotlinx.android.synthetic.main.fragment_control_access.*
 
-
 class ControlAccessFragment : Fragment() {
 
     private var _binding: FragmentControlAccessBinding? = null
     private val binding get() = _binding!!
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
 
         _binding = FragmentControlAccessBinding.inflate(inflater, container, false)
 
@@ -57,16 +54,8 @@ class ControlAccessFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-       // editTime.inputType = InputType.TYPE_CLASS_NUMBER
 
         val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
-
-        /*if(sp.contains("theTime") != null){
-            var t = sp.getLong("theTime", 0).toInt()
-            editTime.setText("$t")
-        }else{
-            editTime.setText("0")
-        }*/
 
         if(sp.getBoolean("IS_APPLOCK_TIMER_RUNNING", false)){
             binding.scrnTimeLimit.isEnabled = false
@@ -85,9 +74,6 @@ class ControlAccessFragment : Fragment() {
             findNavController().navigate(R.id.action_controlAccessFragment_to_screenTimeLimit)
         }
 
-
-
     }
-
 
 }
