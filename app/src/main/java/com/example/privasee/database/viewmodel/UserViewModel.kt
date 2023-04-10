@@ -20,6 +20,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     val getAllDataLive: LiveData<List<User>> = repository.getAllDataLive
+    val getAllNonOwner: LiveData<List<User>> = repository.getAllNonOwner
 
     fun getAllData(): List<User> {
         return repository.getAllData()

@@ -7,6 +7,7 @@ import com.example.privasee.database.model.User
 class UserRepository(private val userDao: UserDao) {
 
     val getAllDataLive: LiveData<List<User>> = userDao.getAllDataLive()
+    val getAllNonOwner: LiveData<List<User>> = userDao.getAllNonOwner()
 
     fun getOwnerId(): Int {
         return userDao.getOwnerId()

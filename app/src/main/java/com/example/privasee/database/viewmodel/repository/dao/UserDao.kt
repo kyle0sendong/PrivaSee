@@ -10,6 +10,11 @@ interface UserDao {
     @Query("SELECT * FROM user ORDER BY id ASC")
     fun getAllDataLive(): LiveData<List<User>>
 
+    @Query("SELECT * FROM user " +
+            "WHERE isOwner = false " +
+            "ORDER BY id ASC")
+    fun getAllNonOwner(): LiveData<List<User>>
+
     @Query("SELECT * FROM user ORDER BY id ASC")
     fun getAllData(): List<User>
 

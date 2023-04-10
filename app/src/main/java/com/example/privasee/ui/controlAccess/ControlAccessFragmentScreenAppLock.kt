@@ -1,11 +1,12 @@
 package com.example.privasee.ui.controlAccess
 
 import android.app.Activity
-import android.app.ActivityManager
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
-import android.app.admin.DevicePolicyManager
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,20 +20,18 @@ import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
+import com.example.privasee.AppAccessService
 import com.example.privasee.R
 import com.example.privasee.database.model.User
 import com.example.privasee.database.viewmodel.AppViewModel
 import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentControlAccessApplockBinding
-import com.example.privasee.AppAccessService
-import com.example.privasee.ui.users.userInfoUpdate.userAppControl.UserAppControllingActivity
 import com.example.privasee.utils.CheckPermissionUtils
 import kotlinx.android.synthetic.main.fragment_control_access_applock.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
-
 
 class ControlAccessFragmentScreenAppLock : Fragment() {
 
@@ -46,19 +45,16 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentControlAccessApplockBinding.inflate(inflater, container, false)
         mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         mRestrictionViewModel = ViewModelProvider(this)[RestrictionViewModel::class.java]
         mAppViewModel = ViewModelProvider(this)[AppViewModel::class.java]
 
-
-
-
         lifecycleScope.launch(Dispatchers.Main) {
 
-            mUserViewModel.getAllDataLive.observe(viewLifecycleOwner) {
+            mUserViewModel.getAllNonOwner.observe(viewLifecycleOwner) {
 
                 val spinner = binding.root.findViewById<Spinner>(R.id.spinnerUsers)
 
@@ -185,15 +181,12 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
                                                     AppLockTimer::class.java
                                                 ))
 
-
                                             val intent = Intent(requireContext(), AppAccessService::class.java)
                                             intent.putExtra("action", "removeLock")
                                             intent.putStringArrayListExtra("packageNames", ArrayList(controlledAppPackageNames))
                                             requireContext().startService(intent)
                                         }
 
-                                    }else{
-                                       // Toast.makeText(requireContext(), "No Controlled Apps Listed", Toast.LENGTH_LONG).show()
                                     }
 
                                 }
@@ -205,7 +198,7 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
 
 
                     override fun onNothingSelected(parent: AdapterView<*>) {
-                        // Do wNothing
+                        // Do nothing
                     }
                 }
 
@@ -238,7 +231,7 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
         return ArrayList(this)
     }
 
-    fun popTimePicker() {
+    private fun popTimePicker() {
         // var timeButton: Button? = null
         var hour = 0
         var minute = 0
@@ -285,23 +278,17 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
     private fun updateGUI(intent: Intent) {
         if (intent.extras != null) {
 
-
-
             val millisUntilFinished = intent.getLongExtra("countdown", 30000)
 
             var seconds = (millisUntilFinished/1000)
             var minutes = (seconds/60)
             val hours = (minutes/60)
 
-            seconds = seconds % 60
-            minutes = minutes % 60
-
+            seconds %= 60
+            minutes %= 60
 
             remainingTime2.setText(String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds))
 
-
-          //      remainingTime2.setText(java.lang.Long.toString(millisUntilFinished / 1000))
-            //remainingTime.setText("flsjflksdjf")
         }
     }
 
@@ -310,7 +297,6 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
 
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(broadcastReceiver, IntentFilter(
             AppLockTimer.COUNTDOWN_BR))
-
 
     }
 
@@ -340,7 +326,5 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
 
     companion object {
         const val RESULT_ENABLE = 11
-        var devicePolicyManager: DevicePolicyManager? = null
-        private var activityManager: ActivityManager? = null
-        private var compName: ComponentName? = null    }
+    }
 }
