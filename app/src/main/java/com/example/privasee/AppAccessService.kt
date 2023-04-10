@@ -19,23 +19,19 @@ class AppAccessService : AccessibilityService() {
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
 
-        if(packageNames.size > 0) {
+        if(event?.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
 
-            if(event?.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
+            val currentlyOpenedApp = event.packageName.toString()
 
-                val currentlyOpenedApp = event.packageName.toString()
+            val pm = applicationContext.packageManager
+            val appInfo = pm.getPackageInfo(currentlyOpenedApp, PackageManager.GET_META_DATA)
+            val appName = appInfo.applicationInfo.loadLabel(pm).toString()
 
-
-                val pm = applicationContext.packageManager
-                val appInfo = pm.getPackageInfo(currentlyOpenedApp, PackageManager.GET_META_DATA)
-                val appName = appInfo.applicationInfo.loadLabel(pm).toString()
-
+            if(packageNames.size > 0) {
                 // Triggering only once, for repeated opens
                 if (previousPackageName == currentlyOpenedApp) {
                     previousPackageName = currentlyOpenedApp
-
                 } else {
-
                     for(packageName in packageNames){
                         if(packageName == currentlyOpenedApp){
                             previousPackageName = currentlyOpenedApp
@@ -47,17 +43,16 @@ class AppAccessService : AccessibilityService() {
                             startService(intent)
                         }
                     }
-
                 }
+            }
 
-                if(controlledApps.size > 0) {
-                    for(packageName in controlledApps) {
-                        if(packageName == currentlyOpenedApp) {
-                            Log.d("tagimandos", "lock screen on $appName")
-                            val intent = Intent(this, BlockScreen::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            startActivity(intent)
-                        }
+            if(controlledApps.size > 0) {
+                for(packageName in controlledApps) {
+                    if(packageName == currentlyOpenedApp) {
+                        Log.d("tagimandos", "lock screen on $appName")
+                        val intent = Intent(this, BlockScreen::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
                     }
                 }
             }
@@ -90,7 +85,6 @@ class AppAccessService : AccessibilityService() {
             if (action == "addLock") {
                 Log.d("tagimandos", "add lock$packageNames")
                 for(packageName in packageNames) {
-                    this.packageNames.add(packageName)
                     this.controlledApps.add(packageName)
                 }
             }
@@ -98,7 +92,6 @@ class AppAccessService : AccessibilityService() {
             if (action == "removeLock") {
                 Log.d("tagimandos", "remove lock $packageNames")
                 for(packageName in packageNames) {
-                    this.packageNames.remove(packageName)
                     this.controlledApps.remove(packageName)
                 }
             }
