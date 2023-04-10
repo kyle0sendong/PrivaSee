@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -66,8 +67,10 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
                     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                         val view = super.getView(position, convertView, parent)
                         val user = getItem(position)
-                        if (user != null)
+                        if (user != null) {
                             (view.findViewById<TextView>(android.R.id.text1)).text = user.name
+                            (view.findViewById<TextView>(android.R.id.text1)).setTextColor(Color.parseColor("#989898"))
+                        }
                         return view
                     }
 
@@ -81,9 +84,10 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
 
                         val user = getItem(position)
 
-                        if (user != null)
+                        if (user != null) {
                             (view.findViewById<TextView>(android.R.id.text1)).text = user.name
-
+                            (view.findViewById<TextView>(android.R.id.text1)).setTextColor(Color.parseColor("#989898"))
+                        }
                         return view
                     }
                 }
