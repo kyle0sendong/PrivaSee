@@ -6,22 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".ui.initialRun.SetupActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+<!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:id="@+id/appbar_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            android:id="@+id/toolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="?attr/actionBarSize"-->
+<!--            android:elevation="4dp"-->
+<!--            android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />-->
 
-    </com.google.android.material.appbar.AppBarLayout>
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
 
     <fragment
         android:id="@+id/fcvSetup"

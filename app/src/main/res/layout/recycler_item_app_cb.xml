@@ -9,6 +9,13 @@
     android:padding="5dp">
 
 
+    <androidx.constraintlayout.widget.Barrier
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        tools:layout_editor_absoluteX="117dp"
+        tools:layout_editor_absoluteY="66dp" />
+
     <ImageView
         android:id="@+id/imgAppIcon"
         android:layout_width="42dp"

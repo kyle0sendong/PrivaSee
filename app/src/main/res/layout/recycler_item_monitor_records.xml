@@ -26,13 +26,13 @@
         android:id="@+id/tvRecordsAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="24dp"
         android:fontFamily="@font/roboto_mono"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvImageView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.511"
+        app:layout_constraintVertical_bias="0.232"
         tools:text="Youtube Music" />
 
     <TextView
@@ -58,18 +58,27 @@
         app:layout_constraintStart_toStartOf="@+id/tvRecordsDate"
         app:layout_constraintTop_toBottomOf="@+id/tvRecordsDate"
         tools:text="11:43 PM" />
+
     <TextView
         android:id="@+id/tvRecordsStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/andika_new_basic"
         android:textSize="13sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/tvRecordsTime"
-        app:layout_constraintTop_toBottomOf="@+id/tvRecordsTime"
-        tools:text="11:43 PM" />
+        app:layout_constraintEnd_toEndOf="@+id/tvRecordsAppName"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/tvRecordsAppName"
+        app:layout_constraintTop_toBottomOf="@+id/tvRecordsAppName"
+        tools:text="No face detected" />
 
+    <androidx.constraintlayout.widget.Barrier
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        tools:layout_editor_absoluteX="117dp"
+        tools:layout_editor_absoluteY="66dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

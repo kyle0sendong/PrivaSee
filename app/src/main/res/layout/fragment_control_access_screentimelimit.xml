@@ -8,96 +8,99 @@
 
 
     <Button
+        android:id="@+id/setTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:text="Start Time Restriction"
+        app:layout_constraintEnd_toEndOf="@+id/remainingTime"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/remainingTime"
+        app:layout_constraintTop_toBottomOf="@+id/remainingTime" />
+
+    <Button
         android:id="@+id/givePermission"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
         android:text="Enable Admin Permission"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.146" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/disablePermission"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
         android:text="Disable Admin Permission"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.156" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/timeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="220dp"
         android:width="300dp"
         android:height="100dp"
         android:onClick="popTimePicker"
         android:text="Select Time"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.267" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/cancelTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancel Timer"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setTimer"
-        app:layout_constraintVertical_bias="0.074" />
-
-    <Button
-        android:id="@+id/setTimer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Set Timer"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeButton"
-        app:layout_constraintVertical_bias="0.129" />
-
-    <TextView
-        android:id="@+id/remainingTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginEnd="177dp"
-        android:layout_marginBottom="187dp"
-        android:text="Timer is not set"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.996" />
+        android:layout_marginTop="24dp"
+        android:text="Stop Time Restriction"
+        app:layout_constraintEnd_toEndOf="@+id/setTimer"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/setTimer"
+        app:layout_constraintTop_toBottomOf="@+id/setTimer" />
 
     <TextView
         android:id="@+id/faceLockStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/cancelTimer"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toStartOf="@+id/cancelTimer"
+        app:layout_constraintTop_toBottomOf="@+id/cancelTimer" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="329dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="72dp"
+        android:fontFamily="@font/roboto_slab"
+        android:gravity="center"
+        android:text="Admin Permission allows the app to automatically close the screen after the timer ends"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.364"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.924" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/remainingTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Timer is not set"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/timeButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/timeButton"
+        app:layout_constraintTop_toBottomOf="@+id/timeButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
