@@ -3,11 +3,12 @@ package com.example.privasee.ui.monitor
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.text.InputType
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
@@ -19,8 +20,6 @@ import androidx.preference.PreferenceManager
 import com.example.privasee.Constants
 import com.example.privasee.R
 import com.example.privasee.databinding.FragmentMonitorBinding
-import kotlinx.android.synthetic.main.fragment_add_user.*
-import kotlinx.android.synthetic.main.fragment_control_access.*
 import kotlinx.android.synthetic.main.fragment_monitor.*
 
 
@@ -29,7 +28,6 @@ class MonitorFragment : Fragment() {
     private var _binding: FragmentMonitorBinding? = null
     private val binding get() = _binding!!
 
-    val thresholdForSnapshots = arrayOf(6000, 8000, 10000 )
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -82,7 +80,7 @@ class MonitorFragment : Fragment() {
 
        setSnapshotThreshold.setOnClickListener {
 
-           var threshold = editThreshold.text.toString()
+           val threshold = editThreshold.text.toString()
 
            val editor = sp.edit()
 
@@ -91,30 +89,27 @@ class MonitorFragment : Fragment() {
                editor.apply(){
                    putInt("threshold", threshold.toInt())
                }.apply()
-
-               setThreshold.text = "Current Threshold is $threshold"
+                val thresholdText = "Current Threshold is $threshold"
+               setThreshold.text = thresholdText
 
            }else{
-
-               setThreshold.text = "Please Input Threshold"
-
+               val thresholdText = "Please Input Threshold"
+               setThreshold.text = thresholdText
                Toast.makeText(requireContext(), "Please input Threshold", Toast.LENGTH_SHORT).show()
            }
        }
 
     }
     private fun checkForPermissions(permission: String, name: String, requestCode: Int){ //if not granted, it asks for permission
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            when {
+        when {
 
-                ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED -> {
-                    Toast.makeText(requireContext(), "$name permission granted", Toast.LENGTH_SHORT).show()
-                }
-                shouldShowRequestPermissionRationale(permission) -> showDialog(permission, name, requestCode) //explains why permission is needed after they rejected it the first time
+            ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED -> {
+                Toast.makeText(requireContext(), "$name permission granted", Toast.LENGTH_SHORT).show()
+            }
+            shouldShowRequestPermissionRationale(permission) -> showDialog(permission, name, requestCode) //explains why permission is needed after they rejected it the first time
 
-                else -> {
-                    goToSettings()
-                }
+            else -> {
+                goToSettings()
             }
         }
     }
@@ -140,7 +135,5 @@ class MonitorFragment : Fragment() {
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
-
-
 
 }

@@ -6,9 +6,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.provider.Settings
 import android.util.Base64
 import android.util.Log
@@ -26,7 +24,6 @@ import androidx.preference.PreferenceManager
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
 import com.example.privasee.R
-import com.example.privasee.database.viewmodel.RecordViewModel
 import com.example.privasee.databinding.ActivityAddUserCapturePhotoBinding
 import com.example.privasee.ui.monitor.Constants
 import kotlinx.android.synthetic.main.activity_add_user_capture_photo.*
@@ -48,8 +45,6 @@ class AddUserCapturePhoto: AppCompatActivity() {
     private lateinit var loadingDialog : LoadingDialog
     var counter = 1
     var dialogCounter = 0
-
-    private lateinit var mRecordViewModel: RecordViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityAddUserCapturePhotoBinding.inflate(layoutInflater)
@@ -101,19 +96,15 @@ class AddUserCapturePhoto: AppCompatActivity() {
     }
 
     private fun checkForPermissions(permission: String, name: String, requestCode: Int){ //if not granted, it asks for permission
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            when {
+        when {
 
-                ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED -> {
-                    Toast.makeText(this, "$name permission granted", Toast.LENGTH_SHORT).show()
-                }
-                shouldShowRequestPermissionRationale(permission) -> showDialog(permission, name, requestCode) //explains why permission is needed after they rejected it the first time
+            ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED -> {
+                Toast.makeText(this, "$name permission granted", Toast.LENGTH_SHORT).show()
+            }
+            shouldShowRequestPermissionRationale(permission) -> showDialog(permission, name, requestCode) //explains why permission is needed after they rejected it the first time
 
-                else -> {
-                    goToSettings()
-                   // finish()
-                    //startActivity(getIntent());
-                }
+            else -> {
+                goToSettings()
             }
         }
     }
@@ -154,20 +145,18 @@ class AddUserCapturePhoto: AppCompatActivity() {
     private fun takePhoto() {
         val imageCapture = imageCapture ?: return
 
-        var pathSnapshot = "$outputDirectory/raw photo"
-        var fullpath = File(pathSnapshot)
+        val pathSnapshot = "$outputDirectory/raw photo"
+        val fullpath = File(pathSnapshot)
 
         if (!fullpath.exists()) {
             fullpath.mkdirs()
         }
 
-        var fileName = SimpleDateFormat(
+        val fileName = SimpleDateFormat(
             Constants.FILE_NAME_FORMAT,
             Locale.getDefault())
             .format(System
                 .currentTimeMillis()) + ".jpg"
-
-      // var fileName = "$counter.jpg"
 
         val photoFile = File(
             "$fullpath",fileName)
@@ -178,10 +167,6 @@ class AddUserCapturePhoto: AppCompatActivity() {
             outputOption, ContextCompat.getMainExecutor(this),
             object :ImageCapture.OnImageSavedCallback{
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    val savedUri = Uri.fromFile(photoFile)
-                    val msg = "Photo Saved"
-
-                    //Toast.makeText( baseContext, "$msg $savedUri", Toast.LENGTH_LONG).show()
 
                     val sp = PreferenceManager.getDefaultSharedPreferences(this@AddUserCapturePhoto)
 
@@ -218,7 +203,6 @@ class AddUserCapturePhoto: AppCompatActivity() {
 
 
         if(str == "No face detected"){
-            // val imageStringSplit = string.substring(string.lastIndexOf("/")+1); //split file path, take last(file)
             noFaceDetectedDialog()
         }else{
             val sp = PreferenceManager.getDefaultSharedPreferences(this)
@@ -248,11 +232,6 @@ class AddUserCapturePhoto: AppCompatActivity() {
         val str = obj.toString()
 
         if(str == "No face detected"){
-            // val imageStringSplit = string.substring(string.lastIndexOf("/")+1); //split file path, take last(file)
-
-           // Toast.makeText(this, "No face detected", Toast.LENGTH_LONG).show()
-           // out.flush()
-           // out.close()
 
             if(dialogCounter == 0){
                 noFaceDetectedDialog ()
@@ -295,16 +274,13 @@ class AddUserCapturePhoto: AppCompatActivity() {
         val editor = sp.edit()
 
         // var path = getOutputDirectory()
-        var pathFd = "$outputDirectory/face recognition"
-
-        var fullpath = File(pathFd)
+        val pathFd = "$outputDirectory/face recognition"
+        val fullpath = File(pathFd)
 
         val imageStringSplit = string.substring(string.lastIndexOf("/")+1); //split file path, take last(file)
-
         val file = File("$pathFd", imageStringSplit)
 
         if(counter == 1) {
-
             editor.apply() {
                 putString("ownerPic",file.toString() )
             }.apply()
@@ -349,10 +325,10 @@ class AddUserCapturePhoto: AppCompatActivity() {
             }
 
 
-         //   var v = sp.getInt("loadingStopCounter", 0).toString()
+            //   var v = sp.getInt("loadingStopCounter", 0).toString()
             imageNumber.setText("$counter")
 
-          //  Toast.makeText(this, "$v", Toast.LENGTH_SHORT).show()
+            //  Toast.makeText(this, "$v", Toast.LENGTH_SHORT).show()
             //faceRecognition(string)
             out.flush()
             out.close()

@@ -6,7 +6,6 @@ import android.provider.Settings
 import android.view.accessibility.AccessibilityManager
 import android.widget.Toast
 
-
 object CheckPermissionUtils {
 
     fun checkAccessibilityPermission(context : Context) {
@@ -22,9 +21,9 @@ object CheckPermissionUtils {
     }
 
     fun isPermissionGranted(context: Context): Boolean {
-        val accessibilityManager = context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
-        val isAccessibilityEnabled = accessibilityManager.isEnabled
-        return isAccessibilityEnabled
+        val accessibilityManager =
+            context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
+        return accessibilityManager.isEnabled
     }
 
     fun openAccessibilityServiceSettings(context: Context) {

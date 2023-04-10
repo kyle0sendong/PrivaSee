@@ -3,10 +3,9 @@ package com.example.privasee
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -19,7 +18,6 @@ import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.ActivityMainBinding
 import com.example.privasee.ui.initialRun.SetupActivity
 import com.example.privasee.utils.CheckPermissionUtils
-import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
@@ -28,31 +26,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bottomNavController: NavController
 
     private lateinit var mUserViewModel: UserViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
-
-      supportActionBar?.hide()
+        supportActionBar?.hide()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
-     //  val toolbar = findViewById<Toolbar>(R.id.toolbar)
-       //setSupportActionBar(toolbar)
-
-        /* val sharedPreferences = getSharedPreferences("isFirstTimeOpen", Context.MODE_PRIVATE)
-         val isFirstTimeOpen = sharedPreferences.getBoolean("isFirstTimeOpen", true)
-         if (isFirstTimeOpen) {
-             // Start initial run
-             Intent(this, SetupActivity::class.java).also {
-                 startActivity(it)
-             }
-val sharedPreferences = getSharedPreferences("isFirstTimeOpen", Context.MODE_PRIVATE)
-         } else {
-             CheckPermissionUtils.checkAccessibilityPermission(this)
-         }
- */
-//        val bottomNavigationView = binding.bottomNavMenu
 
         bottomNavController = findNavController(R.id.fcvBotNav)
         binding.botNav.setupWithNavController(bottomNavController)
@@ -84,8 +64,6 @@ val sharedPreferences = getSharedPreferences("isFirstTimeOpen", Context.MODE_PRI
         editor.apply(){
             putString("workingDirectory", getOutputDirectory().toString())
         }.apply()
-
-        //autoGivePermission()
 
     }
 
@@ -181,7 +159,5 @@ val sharedPreferences = getSharedPreferences("isFirstTimeOpen", Context.MODE_PRI
                 baseContext, it
             ) == PackageManager.PERMISSION_GRANTED
         }
-
-
 
 }

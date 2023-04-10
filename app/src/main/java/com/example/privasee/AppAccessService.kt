@@ -90,7 +90,7 @@ class AppAccessService : AccessibilityService() {
             if (action == "addLock") {
                 Log.d("tagimandos", "add lock$packageNames")
                 for(packageName in packageNames) {
-                   // this.packageNames.add(packageName)
+                    this.packageNames.add(packageName)
                     this.controlledApps.add(packageName)
                 }
             }
@@ -98,7 +98,7 @@ class AppAccessService : AccessibilityService() {
             if (action == "removeLock") {
                 Log.d("tagimandos", "remove lock $packageNames")
                 for(packageName in packageNames) {
-                  //  this.packageNames.remove(packageName)
+                    this.packageNames.remove(packageName)
                     this.controlledApps.remove(packageName)
                 }
             }

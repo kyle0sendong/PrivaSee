@@ -58,10 +58,7 @@ class DbQueryIntentService : IntentService("TestIntentService") {
             val time = calendar.timeInMillis
 
             val appName = intent.getStringExtra("appName")
-       //     val status = intent.getStringExtra("status").toString()
             val fileLocation = intent.getStringExtra("image").toString() //file location
-        //    val bitmap = BitmapFactory.decodeFile(intent.getStringExtra("image").toString())
-           // val snapshotImage = getStringImage(bitmap)
 
             mRecordViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(RecordViewModel::class.java)
             val record = appName?.let { Record(0, day, month, year, time, fileLocation, it) }
@@ -69,7 +66,6 @@ class DbQueryIntentService : IntentService("TestIntentService") {
 
             if (record != null)
                 mRecordViewModel.addRecord(record)
-
         }
 
         // This is used for initializing the monitored app in the app access service

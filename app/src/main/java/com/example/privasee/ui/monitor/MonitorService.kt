@@ -53,14 +53,8 @@ class MonitorService :  LifecycleService() {
     private lateinit var cameraExecutor: ExecutorService
     lateinit var job: Job
     lateinit var filelist: MutableList<Bitmap>
-    var faceLockCounter = 0
-
-    var isRunning: Boolean = true
-
     var isSnapshotDone = false
-
     var appname = ""
-
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
@@ -68,10 +62,8 @@ class MonitorService :  LifecycleService() {
         outputDirectory = File(".$outputDirectory")
         cameraExecutor = Executors.newSingleThreadExecutor()
 
-        if (intent != null) {
+        if (intent != null)
             appname = intent.getStringExtra("appName").toString()
-        }
-
 
         startCamera()
 
@@ -122,17 +114,7 @@ class MonitorService :  LifecycleService() {
             outputOption, ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageSavedCallback{
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    val savedUri = Uri.fromFile(photoFile)
-                    val msg = "Photo Saved"
-
-                /*    Toast.makeText(
-                        this@MonitorService,
-                        "$msg $savedUri",
-                        Toast.LENGTH_LONG).
-                    show()*/
-
                   faceDetection(photoFile.toString())
-
                 }
 
                 override fun onError(exception: ImageCaptureException) {
@@ -161,8 +143,8 @@ class MonitorService :  LifecycleService() {
         val str = obj.toString()
 
         if(str == "No face detected"){
-           // val imageStringSplit = string.substring(string.lastIndexOf("/")+1); //split file path, take last(file)
 
+           // val imageStringSplit = string.substring(string.lastIndexOf("/")+1); //split file path, take last(file)
            // Toast.makeText(this, "No face detected", Toast.LENGTH_LONG).show()
 
             val intent = Intent(this, DbQueryIntentService::class.java)
@@ -181,7 +163,6 @@ class MonitorService :  LifecycleService() {
             //now convert it to bitmap
             val bmp = BitmapFactory.decodeByteArray(data, 0, data.size)
 
-
            // createDirectoryAndSaveFile(bmp, string)
             faceRecognition(bmp, string)
         }
@@ -198,25 +179,23 @@ class MonitorService :  LifecycleService() {
 
         filelist = mutableListOf()
 
-        var pathFd = "$outputDirectory/face recognition"
-        var fullpath = File(pathFd)
+        val pathFd = "$outputDirectory/face recognition"
+        val fullpath = File(pathFd)
 
         if(!fullpath.exists()){
             fullpath.mkdirs()
         }
 
-        var list = imageReader(fullpath)
+        val list = imageReader(fullpath)
         val training = list.toTypedArray()
         val trainingString = arrayOfNulls<String>(training.size)
 
-
-            for((x, i) in training.withIndex()){
-                val imageFile = i.toString()
-                val bitmap = BitmapFactory.decodeFile(imageFile)
-                val imageString = getStringImage(bitmap)
-                trainingString[x] = imageString
-            }
-
+        for((x, i) in training.withIndex()){
+            val imageFile = i.toString()
+            val bitmap = BitmapFactory.decodeFile(imageFile)
+            val imageString = getStringImage(bitmap)
+            trainingString[x] = imageString
+        }
 
         val pyobj = py.getModule("face_recognition") //give name of python file
         val obj = pyobj.callAttr("train", *trainingString ) //call main method
@@ -267,55 +246,24 @@ class MonitorService :  LifecycleService() {
            }.apply()
        }
 
-       // isSnapshotDone = true
-
+        // isSnapshotDone = true
         //sendBroadcastMessage(objFinal.toString())
     }
 
-    private fun createDirectoryAndSaveFile(bitmap: Bitmap, string: String) {
-       // var path = getOutputDirectory()
-        var pathFd = "$outputDirectory/face detection"
-        var fullpath = File(pathFd)
-
-        val imageStringSplit = string.substring(string.lastIndexOf("/")+1); //split file path, take last(file)
-
-        val file = File("$pathFd", imageStringSplit)
-
-        if (!fullpath.exists()) {
-            fullpath.mkdirs()
-        }
-
-        if (file.exists()) {
-            file.delete()
-        }
-
-        try {
-            val out = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
-      //      Toast.makeText(this, "Successfuly Saved", Toast.LENGTH_SHORT).show()
-            //faceRecognition(string)
-            out.flush()
-            out.close()
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-      //      Toast.makeText(this, "Fuck cant be Saved", Toast.LENGTH_SHORT).show()
-        }
-
-    }
 
     fun imageReader(root: File): ArrayList<File> {
         val a: ArrayList < File > = ArrayList()
         if (root.exists()) {
             val files = root.listFiles()
-            if (files.isNotEmpty()) {
-                for (i in 0..files.size - 1) {
+            if (files != null) {
+                for (i in files.indices) {
                     if (files[i].name.endsWith(".jpg")) {
                         a.add(files[i])
                     }
                 }
             }
         }
-        return a!!
+        return a
     }
 
     private fun getStringImage(bitmap: Bitmap): String {
@@ -336,7 +284,6 @@ class MonitorService :  LifecycleService() {
         cameraProviderFuture.addListener({
 
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
-
             /* val preview = Preview.Builder()
                    .build()
                    .also {mPreview ->
@@ -345,17 +292,11 @@ class MonitorService :  LifecycleService() {
                        )
 
                    }*/
-
             imageCapture = ImageCapture.Builder().build()
-
             val cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
-
             try{
-
                 cameraProvider.unbindAll()
-
                 cameraProvider.bindToLifecycle(this, cameraSelector,imageCapture)
-
             }catch (e: java.lang.Exception){
                 Log.d(Constants.TAG, "startCamera FAIL: ", e)
             }
@@ -392,3 +333,34 @@ class MonitorService :  LifecycleService() {
     }
 
 }
+
+//private fun createDirectoryAndSaveFile(bitmap: Bitmap, string: String) {
+//    // var path = getOutputDirectory()
+//    var pathFd = "$outputDirectory/face detection"
+//    var fullpath = File(pathFd)
+//
+//    val imageStringSplit = string.substring(string.lastIndexOf("/")+1); //split file path, take last(file)
+//
+//    val file = File("$pathFd", imageStringSplit)
+//
+//    if (!fullpath.exists()) {
+//        fullpath.mkdirs()
+//    }
+//
+//    if (file.exists()) {
+//        file.delete()
+//    }
+//
+//    try {
+//        val out = FileOutputStream(file)
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+//        //      Toast.makeText(this, "Successfuly Saved", Toast.LENGTH_SHORT).show()
+//        //faceRecognition(string)
+//        out.flush()
+//        out.close()
+//    } catch (e: java.lang.Exception) {
+//        e.printStackTrace()
+//        //      Toast.makeText(this, "Fuck cant be Saved", Toast.LENGTH_SHORT).show()
+//    }
+//
+//}
