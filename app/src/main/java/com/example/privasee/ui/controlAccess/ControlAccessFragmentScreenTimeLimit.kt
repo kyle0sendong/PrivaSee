@@ -37,7 +37,6 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
         activityManager = requireActivity().getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         compName = ComponentName(requireContext(), MyAdmin::class.java)
 
-
         _binding = FragmentControlAccessScreentimelimitBinding.inflate(inflater, container, false)
 
         val callback = object : OnBackPressedCallback(true){
@@ -48,7 +47,6 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback (callback)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,7 +56,7 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
 
         setTimer.setOnClickListener {
             val active = devicePolicyManager!!.isAdminActive(compName!!)
-            val timerString = timeButton.getText().toString()
+            val timerString = timeButton.text.toString()
 
             if (active && !( timerString.equals("select time", ignoreCase = true))) {
 
@@ -70,15 +68,10 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
 
                 val units = timerString.split(":".toRegex()).dropLastWhile { it.isEmpty() }
                     .toTypedArray() //will break the string up into an array
-
                 val hour = units[0].toInt() //first element
-
                 val minutes = units[1].toInt() //second element
-
                 val duration = 60 * hour + minutes //add up our values
-
                 val timerInt = duration.toLong()
-
                 requireActivity().startForegroundService(
                     Intent(context, MyForegroundServices::class.java)
                         .putExtra("screenTimer",timerInt))
@@ -89,9 +82,8 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
                     "You need to set Timer first",
                     Toast.LENGTH_SHORT
                 ).show()
-            }
 
-            else {
+            } else {
                 Toast.makeText(
                     requireContext(),
                     "You need to enable the Admin Device Features",
@@ -110,9 +102,8 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
 
             Toast.makeText(requireContext(), "Timer has been stopped", Toast.LENGTH_LONG).show()
 
-                requireActivity().stopService(
-                    Intent(context, MyForegroundServices::class.java))
-
+            requireActivity().stopService(
+                Intent(context, MyForegroundServices::class.java))
         }
 
         givePermission.setOnClickListener {
@@ -138,7 +129,6 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
     }
 
     fun popTimePicker() {
-        // var timeButton: Button? = null
         var hour = 0
         var minute = 0
 
@@ -150,7 +140,6 @@ class ControlAccessFragmentScreenTimeLimit : Fragment() {
                     kotlin.String.format(Locale.getDefault(), "%02d:%02d", hour, minute)
             }
 
-        // int style = AlertDialog.THEME_HOLO_DARK;
         val timePickerDialog =
             TimePickerDialog(requireContext(),  /*style,*/onTimeSetListener, hour, minute, true)
         timePickerDialog.setTitle("Select Time")

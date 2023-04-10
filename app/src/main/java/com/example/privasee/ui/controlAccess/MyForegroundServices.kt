@@ -4,14 +4,36 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.net.Uri
 import android.os.CountDownTimer
 import android.os.IBinder
+import android.util.Base64
 import android.util.Log
+import android.widget.Toast
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleService
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
+import com.chaquo.python.Python
+import com.chaquo.python.android.AndroidPlatform
 import com.example.privasee.R
+import com.example.privasee.ui.controlAccess.AppLockTimer.Companion.intent
+import com.example.privasee.ui.monitor.Constants
+import kotlinx.coroutines.Job
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 
@@ -20,9 +42,7 @@ class MyForegroundServices :  LifecycleService() {
     private var screenTimer: Long? = 0
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
         screenTimer = intent?.getLongExtra("screenTimer", 1000)
-
         startTimer()
 
         val channelId = "Foreground Service ID"
@@ -51,9 +71,8 @@ class MyForegroundServices :  LifecycleService() {
     }
 
     private fun startTimer() {
-
-         var mCountDownTimer: CountDownTimer? = null
-         val mTimeLeftInMillis : Long = TimeUnit.MINUTES.toMillis(screenTimer!!)
+        var mCountDownTimer: CountDownTimer? = null
+        var mTimeLeftInMillis : Long = TimeUnit.MINUTES.toMillis(screenTimer!!)
 
         mCountDownTimer = object : CountDownTimer(mTimeLeftInMillis, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -65,15 +84,12 @@ class MyForegroundServices :  LifecycleService() {
 
                     intent.putExtra("countdown",millisUntilFinished)
                     sendBroadcastMessage(intent)
-
-                }else{
+                } else
                     mCountDownTimer?.cancel() //stop timer
-                }
-
             }
 
             override fun onFinish() {
-                    ControlAccessFragmentScreenTimeLimit.devicePolicyManager!!.lockNow()
+                ControlAccessFragmentScreenTimeLimit.devicePolicyManager!!.lockNow()
             }
         }.start()
     }
@@ -88,7 +104,7 @@ class MyForegroundServices :  LifecycleService() {
     }
 
     companion object {
-        const val COUNTDOWN_BR = "com.example.privasee.ui.monitor"
+        val COUNTDOWN_BR = "com.example.privasee.ui.monitor"
         var intent = Intent(COUNTDOWN_BR)
     }
 
