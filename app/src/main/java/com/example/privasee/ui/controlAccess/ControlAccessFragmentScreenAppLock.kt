@@ -1,12 +1,11 @@
 package com.example.privasee.ui.controlAccess
 
 import android.app.Activity
+import android.app.ActivityManager
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.app.admin.DevicePolicyManager
+import android.content.*
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,18 +19,20 @@ import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
-import com.example.privasee.AppAccessService
 import com.example.privasee.R
 import com.example.privasee.database.model.User
 import com.example.privasee.database.viewmodel.AppViewModel
 import com.example.privasee.database.viewmodel.RestrictionViewModel
 import com.example.privasee.database.viewmodel.UserViewModel
 import com.example.privasee.databinding.FragmentControlAccessApplockBinding
+import com.example.privasee.AppAccessService
+import com.example.privasee.ui.users.userInfoUpdate.userAppControl.UserAppControllingActivity
 import com.example.privasee.utils.CheckPermissionUtils
 import kotlinx.android.synthetic.main.fragment_control_access_applock.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
+
 
 class ControlAccessFragmentScreenAppLock : Fragment() {
 
@@ -46,6 +47,8 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        devicePolicyManager = requireActivity().getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
 
         _binding = FragmentControlAccessApplockBinding.inflate(inflater, container, false)
         mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
@@ -103,7 +106,7 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
                                 lifecycleScope.launch(Dispatchers.IO) {
                                     val controlledAppPackageNames: MutableList<String> = mutableListOf()
                                     for(restrictedApp in controlledList) {
-                                       // val appId = restrictedApp.packageId
+                                        // val appId = restrictedApp.packageId
                                         val packageName = mAppViewModel.getPackageName(restrictedApp.appName)
                                         controlledAppPackageNames.add(packageName)
                                     }
@@ -111,21 +114,17 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
                                     // Set on click listener for adding or removing app lock
                                     if (controlledAppPackageNames.size > 0) {
 
-                                        binding.btnTestService1.setOnClickListener {
+                                        binding.btnStartAppBlock.setOnClickListener {
 
-                                            var timerString = timeButton2.getText().toString()
+                                            val timerString = timeButton2.text.toString()
 
                                             if (!( timerString.equals("select time", ignoreCase = true))){
                                                 val units = timerString.split(":".toRegex()).dropLastWhile { it.isEmpty() }
                                                     .toTypedArray() //will break the string up into an array
-
                                                 val hour = units[0].toInt() //first element
-
                                                 val minutes = units[1].toInt() //second element
-
                                                 val duration = 60 * hour + minutes //add up our values
-
-                                                var timerInt = duration.toLong()
+                                                val timerInt = duration.toLong()
 
                                                 val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
                                                 val editor = sp.edit()
@@ -140,6 +139,13 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
                                                     Toast.LENGTH_SHORT
                                                 ).show()
 
+                                                // Add Lock
+                                                Log.d("tagimandos", "App lock started")
+                                                val intent = Intent(requireContext(), AppAccessService::class.java)
+                                                intent.putExtra("action", "addLock")
+                                                intent.putStringArrayListExtra("packageNames", ArrayList(controlledAppPackageNames))
+                                                requireContext().startService(intent)
+
                                                 activity!!.startService(
                                                     Intent(
                                                         activity,
@@ -147,7 +153,9 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
                                                     ).putExtra("Timer",timerInt.toString())
                                                         .putStringArrayListExtra("controlledAppPackageNames", controlledAppPackageNames.toArrayList())
                                                 )
-                                            }else{
+
+
+                                            } else {
                                                 Toast.makeText(
                                                     requireContext(),
                                                     "You have to set Timer first",
@@ -158,9 +166,9 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
 
                                         }
 
-                                        binding.btnTestService2.setOnClickListener {
-
-                                            remainingTime2.setText("Timer is not set")
+                                        binding.btnStopAppBlock.setOnClickListener {
+                                            val stringTimeNotSet = "Timer is not set"
+                                            remainingTime2.text = stringTimeNotSet
 
                                             Toast.makeText(
                                                 requireContext(),
@@ -181,16 +189,32 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
                                                     AppLockTimer::class.java
                                                 ))
 
+
                                             val intent = Intent(requireContext(), AppAccessService::class.java)
                                             intent.putExtra("action", "removeLock")
                                             intent.putStringArrayListExtra("packageNames", ArrayList(controlledAppPackageNames))
                                             requireContext().startService(intent)
                                         }
 
+                                    } else {
+
+                                        binding.btnStartAppBlock.setOnClickListener {
+                                            Toast.makeText(
+                                                requireContext(),
+                                                "Please Select Apps to Block First",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+
+                                        binding.btnStopAppBlock.setOnClickListener {
+                                            Toast.makeText(
+                                                requireContext(),
+                                                "Please Select Apps to Block First",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
                                     }
-
                                 }
-
                             }
 
                         }
@@ -198,7 +222,7 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
 
 
                     override fun onNothingSelected(parent: AdapterView<*>) {
-                        // Do nothing
+                        // Do wNothing
                     }
                 }
 
@@ -220,7 +244,7 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
         accessibility.setOnClickListener {
             CheckPermissionUtils.checkAccessibilityPermission(requireContext())
         }
-        
+
         timeButton2.setOnClickListener {
             popTimePicker()
         }
@@ -231,7 +255,7 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
         return ArrayList(this)
     }
 
-    private fun popTimePicker() {
+    fun popTimePicker() {
         // var timeButton: Button? = null
         var hour = 0
         var minute = 0
@@ -259,13 +283,13 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
         }
     }
 
-     override fun onPause() {
+    override fun onPause() {
         super.onPause()
-         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(broadcastReceiver)
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(broadcastReceiver)
         Log.i("OnPause", "Unregistered broadcast receiver")
     }
 
-     override fun onStop() {
+    override fun onStop() {
         try {
             LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(broadcastReceiver)
 
@@ -279,16 +303,13 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
         if (intent.extras != null) {
 
             val millisUntilFinished = intent.getLongExtra("countdown", 30000)
-
             var seconds = (millisUntilFinished/1000)
             var minutes = (seconds/60)
             val hours = (minutes/60)
-
             seconds %= 60
             minutes %= 60
 
             remainingTime2.setText(String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds))
-
         }
     }
 
@@ -300,7 +321,7 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
 
     }
 
-     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
             RESULT_ENABLE -> if (resultCode == Activity.RESULT_OK) {
                 Toast.makeText(
@@ -326,5 +347,6 @@ class ControlAccessFragmentScreenAppLock : Fragment() {
 
     companion object {
         const val RESULT_ENABLE = 11
+        var devicePolicyManager: DevicePolicyManager? = null
     }
 }

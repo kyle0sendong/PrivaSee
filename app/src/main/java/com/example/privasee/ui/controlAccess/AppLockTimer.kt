@@ -4,13 +4,21 @@ import android.content.Intent
 import android.os.CountDownTimer
 import android.os.IBinder
 import android.util.Log
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LifecycleService
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
+import com.example.privasee.AppAccessService
+import com.example.privasee.ui.users.userInfoUpdate.userAppControl.applock.BlockScreen
 import com.example.privasee.ui.users.userInfoUpdate.userAppControl.applock.BlockScreen2
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
+
+
 
 class AppLockTimer :  LifecycleService() {
+
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
@@ -29,19 +37,18 @@ class AppLockTimer :  LifecycleService() {
             startTimer(timer!!, packageNames)
         }
 
+
         return super.onStartCommand(intent, flags, startId)
     }
 
-    private fun startTimer(timer: Int, packageNames: java.util.ArrayList<String>?) {
+    private fun startTimer(timer: Int, packageNames: ArrayList<String>?) {
 
-         val startTimeInMillis = timer.toLong() //sp.getLong("theTime", 0)
-         var mCountDownTimer: CountDownTimer? = null
-         val mTimeLeftInMillis : Long = TimeUnit.MINUTES.toMillis(startTimeInMillis)
+        val startTimeInMillis = timer.toLong() //sp.getLong("theTime", 0)
+        var mCountDownTimer: CountDownTimer? = null
+        var mTimeLeftInMillis : Long = TimeUnit.MINUTES.toMillis(startTimeInMillis!!)
 
         mCountDownTimer = object : CountDownTimer(mTimeLeftInMillis, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-               //mTimeLeftInMillis = millisUntilFinished
-               // updateCountDownText()
 
                 val sp = PreferenceManager.getDefaultSharedPreferences(this@AppLockTimer)
                 val editor = sp.edit()
@@ -56,18 +63,21 @@ class AppLockTimer :  LifecycleService() {
                     }.apply()
 
                     mCountDownTimer?.cancel() //stop timer
-                    }
+                }
 
             }
 
             override fun onFinish() {
-                val intent = Intent(this@AppLockTimer, BlockScreen2::class.java)
-                intent.putStringArrayListExtra("packageNames", ArrayList(packageNames))
+                Log.d("tagimandos", "App lock removed")
+                val intent = Intent(this@AppLockTimer, AppAccessService::class.java)
+                intent.putStringArrayListExtra("removeLock", packageNames)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
+                this@AppLockTimer.startService(intent)
+                ControlAccessFragmentScreenAppLock.devicePolicyManager!!.lockNow()
             }
 
         }.start()
+
     }
 
     private fun sendBroadcastMessage(intent: Intent) {
